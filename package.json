@@ -10,8 +10,6 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src && prettier --ignore-path .eslintignore . --write"
   },
   "dependencies": {
-    "@fontsource/inter": "^5.2.5",
-    "@fontsource/poppins": "^5.2.5",
     "@headlessui/vue": "^1.7.13",
     "@heroicons/vue": "^2.0.14",
     "@kyvg/vue3-notification": "^3.4.1",

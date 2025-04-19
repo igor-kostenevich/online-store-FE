@@ -13,10 +13,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: {
-        },
-        secondary: {
-        },
+        primary: {},
+        secondary: {},
       },
       screen: {
         ...defaultTheme.screens,

@@ -82,7 +82,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: Array.isArray(error.response?.data?.detail) ? error.response.data.detail[0].msg : error ,
+        text: Array.isArray(error.response?.data?.detail) ? error.response.data.detail[0].msg : error,
         type: 'error',
       })
       throw error

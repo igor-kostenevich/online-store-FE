@@ -8,7 +8,7 @@ export function useCurrentRoute() {
   }
 
   function isCurrentRoutePath(path: string = '') {
-      return currentRoute.path.startsWith('/' + path);
+    return currentRoute.path.startsWith('/' + path)
   }
 
   return { isCurrentRouteName }

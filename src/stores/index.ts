@@ -1,4 +1,4 @@
-import { createPinia, Pinia, getActivePinia, StoreGeneric} from 'pinia'
+import { createPinia, Pinia, getActivePinia, StoreGeneric } from 'pinia'
 let pinia: Pinia = createPinia()
 
 export function resetPinia(): void {

@@ -1,6 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Button from '@/components/shader /Button.vue'
+</script>
 
 <template>
-  <div class="font-inter">Text with Inter</div>
-  <div class="font-poppins">Text with Poppins</div>
+  <div>
+    <Button>View All Products</Button>
+  </div>
 </template>

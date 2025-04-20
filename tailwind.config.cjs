@@ -31,8 +31,8 @@ module.exports = {
         buttons: {
           green: '#47B486',
           red: '#DB4444',
-          hoverRed: '#E2B93B',
-          hoverBlue: '#EB5757',
+          hoverRed: '#e07575',
+          hoverBlue: '#e07575',
         },
       },
       screen: {

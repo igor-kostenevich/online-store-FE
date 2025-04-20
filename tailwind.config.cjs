@@ -13,14 +13,34 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: {},
-        secondary: {},
+        primary: {
+          white: '#FFFFFF',
+          lightBlack: '#363738',
+        },
+
+        secondary: {
+          mediumWhite: '#F5F5F5',
+          light: '#FEFAF1',
+          red: '#DB4444',
+        },
+        text: {
+          base: '#FFFFFF',
+          gray: '#7d8184',
+          black: '#000000',
+        },
+        buttons: {
+          green: '#47B486',
+          red: '#DB4444',
+          hoverRed: '#E2B93B',
+          hoverBlue: '#EB5757',
+        },
       },
       screen: {
         ...defaultTheme.screens,
       },
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        inter: ['Inter', ...defaultTheme.fontFamily.sans],
+        poppins: ['Poppins', ...defaultTheme.fontFamily.sans],
       },
       fill: theme => theme('colors'),
     },

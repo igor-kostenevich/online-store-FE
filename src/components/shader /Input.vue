@@ -31,8 +31,9 @@ const inputClass = computed(() => {
 
     <div
       v-if="error"
-      class="error"
+      class="text-secondary-red mt-1 text-sm"
     >
+      >
       {{ error }}
     </div>
   </label>

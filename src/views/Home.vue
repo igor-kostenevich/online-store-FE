@@ -1,10 +1,3 @@
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-import AreaText from '@/components/shader /AreaText.vue'
-</script>
-
-<template>
-
-<AreaText area-placeholder="Your Massage"></AreaText>
-
-</template>
+<template>Hello world</template>

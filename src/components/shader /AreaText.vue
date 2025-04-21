@@ -13,7 +13,7 @@ defineProps<{
       :placeholder="areaPlaceholder"
       :disabled="disabled"
       :rows="height"
-      class="p-3 bg-secondary-mediumWhite font-poppins border border-transparent outline-none focus:border-buttons-green hover:border-buttons-hoverRed transition-colors duration-200 ease-in-out w-full disabled:cursor-not-allowed"
+      class="p-3 bg-secondary-mediumWhite font-sans border border-transparent outline-none focus:border-buttons-green hover:border-buttons-hoverRed transition-colors duration-200 ease-in-out w-full disabled:cursor-not-allowed"
     />
 
     <div

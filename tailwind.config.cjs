@@ -28,11 +28,15 @@ module.exports = {
           gray: '#7d8184',
           black: '#000000',
         },
-        buttons: {
-          green: '#47B486',
-          red: '#DB4444',
-          hoverRed: '#e07575',
-          hoverBlue: '#e07575',
+        button: {
+          primary: {
+            default: '#47B486',
+            hover: '#E2B93B',
+          },
+          secondary: {
+            default: '#DB4444',
+            hover: '#EB5757',
+          },
         },
       },
       screen: {

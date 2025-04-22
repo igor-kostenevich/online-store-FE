@@ -1,36 +1,30 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
+  view?: 'primary' | 'secondary'
   disabled?: boolean
 }>()
 </script>
 
 <template>
   <button
+    :disabled="props.disabled"
     :class="[
-      'button bg-buttons-red text-white pt-3 pb-3 pl-10 pr-10 text-base font-medium rounded-md hover:bg-buttons-hoverRed transition duration-150 ease-in-out ',
-      { disabled },
+      'text-base font-medium rounded-md px-10 py-3 transition duration-150 ease-in-out',
+
+      props.view !== 'secondary'
+        ? [
+            'text-white',
+            props.disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-button-secondary-hover hover:bg-button-secondary-default active:bg-button-primary-hover',
+          ]
+        : [
+            props.disabled
+              ? 'border border-gray-400 text-gray-400 cursor-not-allowed bg-white'
+              : 'border border-black text-black bg-white hover:bg-gray-100 active:bg-gray-200',
+          ],
+
+      'focus:outline-black active:outline focus:outline-1',
     ]"
   >
     <slot />
   </button>
 </template>
-
-<style scoped>
-.button {
-  transition: all 0.2s ease-in-out;
-}
-
-.button:active {
-  outline: 1px solid black;
-  color: black;
-  background: transparent;
-}
-.button:focus {
-  outline: 1px solid black;
-}
-
-.button.disabled {
-  cursor: not-allowed;
-  background-color: #e07575;
-}
-</style>

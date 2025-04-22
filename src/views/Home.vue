@@ -1,9 +1,5 @@
-<script setup lang="ts">
-import Button from '@/components/shader /Button.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>
-    <Button>View All Products</Button>
-  </div>
+  <div />
 </template>

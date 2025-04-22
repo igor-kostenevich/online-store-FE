@@ -43,7 +43,7 @@ const selectedPerson = ref(language[0])
               leave-to-class="opacity-0"
             >
               <ListboxOptions
-                class="absolute mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
+                class="absolute ListboxOptions mt-1 max-h-60 overflow-auto z-100 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
               >
                 <ListboxOption
                   v-for="person in language"
@@ -176,7 +176,7 @@ const selectedPerson = ref(language[0])
               <UserIcon class="h-5 w-5 text-black cursor-pointer mt-1" />
             </MenuButton>
 
-            <MenuItems class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md text-sm z-50">
+            <MenuItems class="absolute z-40 right-0 mt-2 w-48 bg-white shadow-lg rounded-md text-sm z-50">
               <MenuItem v-slot="{ active }">
                 <router-link
                   :to="{ path: '/account' }"
@@ -218,7 +218,7 @@ const selectedPerson = ref(language[0])
     <transition name="fade">
       <div
         v-if="isOpen"
-        class="lg:hidden absolute top-full left-0 w-full bg-white z-50 shadow-lg p-4 absolute top-[90px]"
+        class="lg:hidden absolute left-0 w-full bg-white z-50 shadow-lg p-4 absolute top-[90px]"
       >
         <div class="relative w-full mb-4">
           <input
@@ -249,5 +249,8 @@ const selectedPerson = ref(language[0])
 .fade-leave-to {
   opacity: 0;
   transform: translateY(-10px);
+}
+.ListboxOptions {
+  z-index: 40;
 }
 </style>

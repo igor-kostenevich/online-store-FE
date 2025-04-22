@@ -12,7 +12,7 @@ const selectedPerson = ref(language[0])
 
 <template>
   <div class="top_header header-top w-full items-center text-sm bg-text-black text-white">
-    <div class="container flex justify-between items-center ">
+    <div class="container flex justify-between items-center">
       <div class="w-full text-center">
         <div class="header-top__text">
           Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
@@ -43,7 +43,7 @@ const selectedPerson = ref(language[0])
               leave-to-class="opacity-0"
             >
               <ListboxOptions
-                class="absolute  mt-1 max-h-60 overflow-auto z-20 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
+                class="absolute mt-1 max-h-60 overflow-auto z-20 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
               >
                 <ListboxOption
                   v-for="person in language"
@@ -139,21 +139,20 @@ const selectedPerson = ref(language[0])
             to="/home"
             class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
             >Home</router-link
-
           >
           <router-link
             to="/contact"
-            class="text-sm font-medium  hover:text-amber-900 duration-300 ease-in"
+            class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
             >Contact</router-link
           >
           <router-link
             to="/about"
-            class="text-sm font-medium  hover:text-amber-900 duration-300 ease-in"
+            class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
             >About</router-link
           >
           <router-link
             to="/signup"
-            class="text-sm font-medium  hover:text-amber-900 duration-300 ease-in"
+            class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
             >Sign Up</router-link
           >
         </nav>
@@ -177,7 +176,7 @@ const selectedPerson = ref(language[0])
               <UserIcon class="h-5 w-5 text-black cursor-pointer mt-1" />
             </MenuButton>
 
-            <MenuItems class="absolute z-40 right-0 mt-2 w-48 bg-white shadow-lg rounded-md text-sm ">
+            <MenuItems class="absolute z-40 right-0 mt-2 w-48 bg-white shadow-lg rounded-md text-sm">
               <MenuItem v-slot="{ active }">
                 <router-link
                   :to="{ path: '/account' }"
@@ -219,7 +218,7 @@ const selectedPerson = ref(language[0])
     <transition name="fade">
       <div
         v-if="isOpen"
-        class="lg:hidden absolute left-0 w-full bg-white z-50 shadow-lg p-4  top-[90px]"
+        class="lg:hidden absolute left-0 w-full bg-white z-50 shadow-lg p-4 top-[90px]"
       >
         <div class="relative w-full mb-4">
           <input
@@ -251,5 +250,4 @@ const selectedPerson = ref(language[0])
   opacity: 0;
   transform: translateY(-10px);
 }
-
 </style>

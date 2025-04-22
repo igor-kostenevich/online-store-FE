@@ -1,3 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import BaseTextArea from '@/components/shared/BaseTextArea.vue'
+</script>
 
-<template>Hello world</template>
+<template>
+
+
+
+</template>

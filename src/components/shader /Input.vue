@@ -1,52 +1,53 @@
-/* eslint-disable */
 <script setup lang="ts">
 import { computed } from 'vue'
 
 const props = defineProps<{
-  disabled?: boolean
-  type: string
-  placeholder: string
+  modelValue: string
+  label?: string
   error?: string
-  view?: 'default' | 'secondary'
+  disabled?: boolean
+  placeholder?: string
+  type?: string
+}>()
+
+const emit = defineEmits<{
+  // eslint-disable-next-line no-unused-vars
+  (e: 'update:modelValue', value: string): void
 }>()
 
 const inputClass = computed(() => {
-  const base = 'input outline-none border-0 transition duration-200 ease-in'
-
-  const secondaryView = 'bg-[#e5e7eb] w-[470px] h-[50px] rounded-md px-3 py-2 focus:ring-2 focus:ring-buttons-green hover:bg-[#dcdcdc]'
-  const defaultView = 'bg-transparent w-[370px] border-b border-black focus:border-buttons-green focus:ring-0 hover:border-gray-500'
-
-  return `${base} ${props.view === 'secondary' ? secondaryView : defaultView}`
+  return [
+    'outline-none border-0 w-full transition duration-200 ease-in bg-transparent border-b border-black',
+    'focus:border-buttons-green hover:border-gray-400',
+    props.disabled ? 'cursor-not-allowed bg-gray-300' : '',
+    props.error ? 'border-red-500' : '',
+  ].join(' ')
 })
 </script>
 
 <template>
-  <label>
+  <label class="block w-full">
+    <span
+      v-if="label"
+      class="block mb-1 text-sm font-medium text-gray-700"
+    >
+      {{ label }}
+    </span>
+
     <input
-      :class="[inputClass, { disabled }]"
-      :type="type"
-      :disabled="disabled"
+      :type="type || 'text'"
       :placeholder="placeholder"
+      :value="modelValue"
+      :disabled="disabled"
+      :class="inputClass"
+      @input="event => emit('update:modelValue', (event.target as HTMLInputElement).value)"
     />
 
-    <div
+    <p
       v-if="error"
-      class="error"
+      class="text-red-500 text-xs mt-1"
     >
       {{ error }}
-    </div>
+    </p>
   </label>
 </template>
-
-<style scoped>
-.input.disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.error {
-  color: #db4444;
-  font-size: 0.875rem;
-  margin-top: 4px;
-}
-</style>

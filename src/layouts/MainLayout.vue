@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Footer from '@/components/Footer.vue'
+</script>
 
 <template>
   <main class="content h-full">
@@ -8,4 +10,6 @@
       </div>
     </div>
   </main>
+  <Footer></Footer>
+
 </template>

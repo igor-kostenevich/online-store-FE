@@ -14,7 +14,6 @@
     "@heroicons/vue": "^2.0.14",
     "@kyvg/vue3-notification": "^3.4.1",
     "axios": "^1.5.1",
-    "esLint": "npm:eslint@^8.57.1",
     "moment": "^2.29.4",
     "pinia": "^2.1.6",
     "vue": "^3.5.13",

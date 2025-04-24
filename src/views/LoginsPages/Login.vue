@@ -24,10 +24,10 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <div class="login">
+  <div >
     <div class="container">
-      <div class="login__body flex flex-col  md:flex-row gap-16">
-        <div class="login__image">
+      <div class=" flex flex-col  md:flex-row gap-16">
+        <div >
           <img
 class="  w-[500px ]md:w-[800px]"
                src="@/assets/images/loginImg.png"
@@ -36,13 +36,13 @@ class="  w-[500px ]md:w-[800px]"
         </div>
 
         <form
-          class="login__form pt-20"
+          class=" pt-20"
           @submit="onSubmit"
         >
-          <div class="login__title text-4xl">Log in to Exclusive</div>
-          <div class="login__subitle pt-2">Enter your details below</div>
+          <div class=" text-4xl">Log in to Exclusive</div>
+          <div class=" pt-2">Enter your details below</div>
 
-          <div class="inputs flex flex-col gap-5 pt-10">
+          <div class=" flex flex-col gap-5 pt-10">
             <BaseInput
               v-model="email"
               :error="emailError"
@@ -57,7 +57,7 @@ class="  w-[500px ]md:w-[800px]"
           </div>
 
 
-          <div class="buttons mt-7 flex items-center gap-4">
+          <div class=" mt-7 flex items-center gap-4">
             <BaseButton type="submit">
               Log In
             </BaseButton>

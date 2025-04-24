@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home.vue'
-
+import Login from '@/views/LoginsPages/Login.vue'
+import ResetPassword from '@/views/LoginsPages/ResetPassword.vue'
+import SignUp from '@/views/LoginsPages/Signup.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -11,6 +13,31 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     alias: '/home',
   },
+  {
+    path: '/login',
+    name: 'login',
+    meta: {
+      layout: 'main',
+    },
+    component:Login ,
+  },
+  {
+    path: '/sign-up',
+    name: 'sign-up',
+    meta: {
+      layout: 'main',
+    },
+    component:SignUp ,
+  },
+  {
+    path: '/reset-password',
+    name: 'reset-password',
+    meta: {
+      layout: 'main',
+    },
+    component:ResetPassword ,
+  },
+
   // {
   //   path: '/:notFound(.*)',
   //   name: 'error',

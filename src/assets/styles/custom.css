@@ -1,3 +1,6 @@
 body {
   @apply h-full bg-white;
 }
+.container {
+  margin: 0 auto;
+}

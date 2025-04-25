@@ -7,6 +7,16 @@ import Icon from '@/components/Icon.vue'
 import { i18n } from './i18n'
 import Notifications from '@kyvg/vue3-notification'
 
+
+
+
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
+
+
+
 const app = createApp(App)
 
 app.use(router).use(pinia).use(i18n).use(Notifications)

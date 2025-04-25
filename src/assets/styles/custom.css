@@ -1,3 +1,16 @@
 body {
   @apply h-full bg-white;
 }
+
+.swiper-button-prev::after {
+  display: none !important;
+}
+.swiper-button-next::after {
+  display: none !important;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  all: unset; /* ❗️прибирає ВСІ стилі Swiper */
+  display: inline-flex; /* потрібен для flex-розміщення */
+  position: static;
+}

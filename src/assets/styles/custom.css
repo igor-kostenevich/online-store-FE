@@ -1,7 +1,6 @@
 body {
-  @apply h-full bg-white;
+  @apply font-sans bg-white h-full;
 }
-
 .container {
   margin: 0 auto;
 }

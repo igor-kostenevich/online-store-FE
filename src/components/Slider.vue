@@ -18,15 +18,16 @@
         v-for="(item, index) in items"
         :key="index"
       >
-        <slot name="slide" :item="item" :index="index" />
+        <slot
+name="slide"
+:item="item"
+:index="index" />
       </swiper-slide>
     </swiper>
 
-    <slot name="navigation">
+    <slot name="navigation"/>
 
-    </slot>
-
-    <slot name="pagination"></slot>
+    <slot name="pagination"/>
   </div>
 </template>
 

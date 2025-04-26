@@ -8,11 +8,12 @@ import { i18n } from './i18n'
 import Notifications from '@kyvg/vue3-notification'
 
 
+import vue3StarRatings from "vue3-star-ratings";
 
 
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import BaseButton from '@/components/shared/BaseButton.vue'
+
+
 
 
 
@@ -21,5 +22,6 @@ const app = createApp(App)
 
 app.use(router).use(pinia).use(i18n).use(Notifications)
 app.component('Icon', Icon)
-
+app.component("vue3-star-ratings", vue3StarRatings);
+app.component("BaseButton", BaseButton)
 app.mount('#app')

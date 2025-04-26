@@ -1,3 +1,7 @@
+
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 body {
   @apply h-full bg-white;
 }
@@ -8,9 +12,12 @@ body {
 .swiper-button-next::after {
   display: none !important;
 }
+
+
+
 .swiper-button-prev,
 .swiper-button-next {
-  all: unset; /* ❗️прибирає ВСІ стилі Swiper */
-  display: inline-flex; /* потрібен для flex-розміщення */
+  all: unset;
+  display: inline-flex;
   position: static;
 }

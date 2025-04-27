@@ -1,6 +1,29 @@
+
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 body {
   @apply font-sans bg-white h-full;
 }
+
+
+
+.swiper-button-prev::after {
+  display: none !important;
+}
+.swiper-button-next::after {
+  display: none !important;
+}
+
+
+
+.swiper-button-prev,
+.swiper-button-next {
+  all: unset;
+  display: inline-flex;
+  position: static;
+
 .container {
   margin: 0 auto;
+ develop
 }

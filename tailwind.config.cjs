@@ -43,8 +43,8 @@ module.exports = {
         ...defaultTheme.screens,
       },
       fontFamily: {
+        sans: ['Poppins', ...defaultTheme.fontFamily.sans],
         inter: ['Inter', ...defaultTheme.fontFamily.sans],
-        poppins: ['Poppins', ...defaultTheme.fontFamily.sans],
       },
       fill: theme => theme('colors'),
     },

@@ -8,20 +8,20 @@ import { i18n } from './i18n'
 import Notifications from '@kyvg/vue3-notification'
 
 
+
 import vue3StarRatings from "vue3-star-ratings";
-
-
 import BaseButton from '@/components/shared/BaseButton.vue'
-
-
-
-
-
+import BaseInput from '@/components/shared/BaseInput.vue'
+import BaseTextArea from '@/components/shared/BaseTextArea.vue'
 
 const app = createApp(App)
 
 app.use(router).use(pinia).use(i18n).use(Notifications)
 app.component('Icon', Icon)
+
 app.component("vue3-star-ratings", vue3StarRatings);
 app.component("BaseButton", BaseButton)
+app.component('BaseInput', BaseInput)
+app.component('BaseTextArea', BaseTextArea)
+
 app.mount('#app')

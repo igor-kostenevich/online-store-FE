@@ -1,7 +1,6 @@
-import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
-export const useTimerStore = defineStore('timer', () => {
+export function useTimer() {
   const now = ref(Date.now())
 
   const days = ref(0)
@@ -39,7 +38,6 @@ export const useTimerStore = defineStore('timer', () => {
   }
 
   return {
-    now,
     days,
     hours,
     minutes,
@@ -51,4 +49,4 @@ export const useTimerStore = defineStore('timer', () => {
     setTime,
     tick
   }
-})
+}

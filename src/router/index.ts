@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home.vue'
-import Login from '@/views/LoginsPages/Login.vue'
-import ResetPassword from '@/views/LoginsPages/ResetPassword.vue'
-import SignUp from '@/views/LoginsPages/Signup.vue'
+import Login from '@/views/Auth/Login.vue'
+import ResetPassword from '@/views/Auth/ResetPassword.vue'
+import SignUp from '@/views/Auth/Signup.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',

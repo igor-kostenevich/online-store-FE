@@ -1,30 +1,8 @@
-
 <script setup lang="ts">
-import { useForm, useField } from 'vee-validate'
-import * as yup from 'yup'
+import { useValidation } from '@/composables/useValidation'
 
+const { onSubmit, fields, errors, metas } = useValidation()
 
-const schema = yup.object({
-  email: yup
-    .string()
-    .required('Email або телефон обовʼязковий')
-    .matches(/^(\+?\d{10,13}|[^@\s]+@[^@\s]+\.[^@\s]+)$/, 'Некоректний email або телефон'),
-  password: yup.string().min(6, 'Мінімум 6 символів').required('Пароль обовʼязковий'),
-  text: yup.string().required('імя обовʼязкове ')
-
-})
-
-const { handleSubmit } = useForm({
-  validationSchema: schema
-})
-
-const { value: email, errorMessage: emailError } = useField('email')
-const { value: password, errorMessage: passwordError } = useField('password')
-const { value: text, errorMessage: textError } = useField('text')
-
-const onSubmit = handleSubmit((values) => {
-  console.log('Form submitted:', values)
-})
 </script>
 
 <template>
@@ -50,20 +28,20 @@ class="  w-[500px ]md:w-[800px]"
           <div class=" flex flex-col gap-5 pt-10">
 
             <BaseInput
-              v-model="text"
-              :error="textError"
+              v-model="fields.text.value"
+              :error="metas.textMeta.touched ? errors.textError : ''"
               placeholder="Name"
             />
             <BaseInput
-              v-model="email"
-              :error="emailError"
+              v-model="fields.email.value"
+              :error="metas.emailMeta.touched ? errors.emailError : ''"
               placeholder="Email or Phone Number"
             />
             <BaseInput
-              v-model="password"
-              :error="passwordError"
+              v-model="fields.password.value"
+              :error="metas.passwordMeta.touched ? errors.passwordError : ''"
               type="password"
-              placeholder= " пароль"
+              placeholder= " password"
             />
           </div>
 

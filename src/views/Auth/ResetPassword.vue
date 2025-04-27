@@ -1,30 +1,9 @@
 <script setup lang="ts">
-import { useForm, useField } from 'vee-validate'
-import * as yup from 'yup'
-
-// yup-схема
-const schema = yup.object({
-  email: yup
-    .string()
-    .required('Email або телефон обовʼязковий')
-    .matches(/^(\+?\d{10,13}|[^@\s]+@[^@\s]+\.[^@\s]+)$/, 'Некоректний email або телефон'),
-
-  password: yup
-    .string()
-    .required('придумайте новий пароль')
-})
-
-const { handleSubmit } = useForm({
-  validationSchema: schema,
-})
-
-const { value: email, errorMessage: emailError } = useField('email')
-const { value: password, errorMessage: passwordError } = useField('password')
 
 
-const onSubmit = handleSubmit(values => {
-  console.log('Form submitted:', values)
-})
+import { useValidation } from '@/composables/useValidation'
+
+const { onSubmit, fields, errors, metas } = useValidation()
 </script>
 
 <template>
@@ -48,13 +27,13 @@ class="  w-[500px ]md:w-[800px]"
 
           <div class=" flex flex-col gap-5 pt-10">
             <BaseInput
-              v-model="email"
-              :error="emailError"
+              v-model="fields.email.value"
+              :error="metas.emailMeta.touched ? errors.emailError : ''"
               placeholder="Email or Phone Number"
             />
             <BaseInput
-              v-model="password"
-              :error="passwordError"
+              v-model="fields.password.value"
+              :error="metas.passwordMeta.touched ? errors.passwordError : ''"
               type="password"
               placeholder="create new password"
             />

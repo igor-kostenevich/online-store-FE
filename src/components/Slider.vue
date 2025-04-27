@@ -19,38 +19,36 @@
         :key="index"
       >
         <slot
-name="slide"
-:item="item"
-:index="index" />
+          name="slide"
+          :item="item"
+          :index="index"
+        />
       </swiper-slide>
     </swiper>
 
-    <slot name="navigation"/>
+    <slot name="navigation" />
 
-    <slot name="pagination"/>
+    <slot name="pagination" />
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
 
 import { Pagination, Navigation } from 'swiper/modules'
-import { ref } from 'vue'
+
 const modules = [Pagination, Navigation]
-const props = defineProps<{
+defineProps<{
   slidesView: number
   spaceBetween: number
   slideEffect: string
   slideStart: number
   loop: boolean
-  items: any[],
-  pagination?: boolean,
-  navigation?: boolean,
+  items: any[]
+  pagination?: boolean
+  navigation?: boolean
   breakpoints?: any[]
 }>()
-
-
 
 const onSwiper = (swiper: any) => {
   console.log(swiper)
@@ -60,8 +58,7 @@ const onSlideChange = () => {
 }
 </script>
 
-<style  scoped>
-
+<style scoped>
 .swiper-button-next::after,
 .swiper-button-prev::after {
   display: none !important;

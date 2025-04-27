@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       layout: 'main',
     },
-    component:Login ,
+    component: Login,
   },
   {
     path: '/sign-up',
@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       layout: 'main',
     },
-    component:SignUp ,
+    component: SignUp,
   },
   {
     path: '/reset-password',
@@ -35,7 +35,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       layout: 'main',
     },
-    component:ResetPassword ,
+    component: ResetPassword,
   },
 
   // {

@@ -19,7 +19,7 @@ export function useValidation() {
   const { value: password, errorMessage: passwordError, meta: passwordMeta } = useField('password')
   const { value: text, errorMessage: textError, meta: textMeta } = useField('text')
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit(values => {
     console.log('Form submitted:', values)
   })
 

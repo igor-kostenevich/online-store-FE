@@ -9,13 +9,7 @@ export function useTimer() {
   const seconds = ref(0)
 
   const targetDate = computed(() => {
-    return (
-      Date.now() +
-      (days.value * 24 * 60 * 60 +
-        hours.value * 60 * 60 +
-        minutes.value * 60 +
-        seconds.value) * 1000
-    )
+    return Date.now() + (days.value * 24 * 60 * 60 + hours.value * 60 * 60 + minutes.value * 60 + seconds.value) * 1000
   })
 
   const diff = computed(() => targetDate.value - now.value)
@@ -47,6 +41,6 @@ export function useTimer() {
     leftMinutes,
     leftSeconds,
     setTime,
-    tick
+    tick,
   }
 }

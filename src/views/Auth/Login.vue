@@ -4,7 +4,6 @@ import { useValidation } from '@/composables/useValidation'
 const { onSubmit, fields, errors, metas } = useValidation()
 </script>
 
-
 <template>
   <div>
     <div class="container">
@@ -36,7 +35,6 @@ const { onSubmit, fields, errors, metas } = useValidation()
               type="password"
               placeholder="Password"
             />
-
           </div>
 
           <div class="mt-7 flex items-center gap-4">

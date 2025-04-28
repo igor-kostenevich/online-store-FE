@@ -15,11 +15,10 @@ module.exports = {
       colors: {
         primary: {
           white: '#FFFFFF',
-          lightBlack: '#363738',
+          'light-black': '#363738',
         },
-
         secondary: {
-          mediumWhite: '#F5F5F5',
+          'medium-white': '#F5F5F5',
           light: '#FEFAF1',
           red: '#DB4444',
         },
@@ -39,6 +38,7 @@ module.exports = {
           },
         },
       },
+
       screen: {
         ...defaultTheme.screens,
       },

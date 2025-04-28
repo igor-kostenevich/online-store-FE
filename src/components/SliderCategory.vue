@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
-import { useCategorySlider } from '@/stores/categorySlider'
+import { useCategoriesStore } from '@/stores/categories'
 
 import Slider from '@/components/Slider.vue'
 
-const categorySlider = useCategorySlider()
+const categorySlider = useCategoriesStore()
 
-const breakpoints = ref({
+const breakpoints = {
   320: {
     slidesPerView: 1,
   },
@@ -20,12 +19,12 @@ const breakpoints = ref({
   1280: {
     slidesPerView: 4,
   },
-})
+}
 </script>
 
 <template>
   <Slider
-    :items="categorySlider.getCategory"
+    :items="categorySlider.category"
     :slides-view="4"
     :space-between="20"
     slide-effect="slide"

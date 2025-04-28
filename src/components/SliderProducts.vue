@@ -63,7 +63,7 @@ const breakpoints = {
 
     <template #slide="{ item }">
       <div class="p-4 cursor-pointer">
-        <div class="relative bg-secondary-mediumWhite p-10 mb-0.5 group">
+        <div class="relative bg-secondary-medium-white p-10 mb-0.5 group">
           <img
             :src="item.image"
             alt="image"

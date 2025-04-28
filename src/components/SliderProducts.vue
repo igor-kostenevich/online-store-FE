@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ArrowLeftIcon, ArrowRightIcon, HeartIcon, EyeIcon } from '@heroicons/vue/24/outline'
-import { useProductSlider } from '@/stores/productSlider'
+import { useProductsStore } from '@/stores/products'
 import Vue3StarRatings from 'vue3-star-ratings'
 import Slider from '@/components/Slider.vue'
-import BaseButton from '@/components/shared/BaseButton.vue'
-import BaseDate from '@/components/shared/BaseDate.vue'
-const productSlider = useProductSlider()
+const productSlider = useProductsStore()
 
-const breakpoints = ref({
+const breakpoints = {
   320: {
     slidesPerView: 1,
   },
@@ -21,7 +18,7 @@ const breakpoints = ref({
   1280: {
     slidesPerView: 4,
   },
-})
+}
 </script>
 
 <template>
@@ -36,7 +33,7 @@ const breakpoints = ref({
   </div>
 
   <Slider
-    :items="productSlider.getProducts"
+    :items="productSlider.products"
     :slides-view="4"
     :space-between="20"
     slide-effect="slide"

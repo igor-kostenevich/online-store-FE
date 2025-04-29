@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import aside from '@/assets/images/aside.png'
-export const usePromoBanner = defineStore('promoBanner', {
+export const useCategoriesStore = defineStore('categories', {
   state: () => ({
-    promoMenu: [
+    categoriesMenu: [
       {
         id: 1,
         label: "Woman's Fashion",
@@ -70,7 +70,7 @@ export const usePromoBanner = defineStore('promoBanner', {
         children: [],
       },
     ],
-    promoSlide: [
+    promoSlides: [
       {
         id: 1,
         image: 'https://www.apple.com/newsroom/images/2024/10/new-macbook-pro/article/Apple-MacBook-Pro-M4-Magic-Keyboard-close-up_big.jpg.large.jpg',

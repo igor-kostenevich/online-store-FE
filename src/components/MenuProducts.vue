@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { usePromoBanner } from '@/stores/promoBanner'
+import { useCategoriesStore } from '@/stores/categories'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Slider.vue'
 import { useRouter } from 'vue-router'
 
-const menuProducts = usePromoBanner()
+const store = useCategoriesStore()
 const openId = ref<number | null>(null)
 const router = useRouter()
 
@@ -23,7 +23,7 @@ const toggle = (id: number) => {
     <div class="container flex flex-col lg:flex-row gap-8 w-full items-start px-4">
       <ul class="flex flex-col self-start font-inter font-medium gap-2">
         <li
-          v-for="item in menuProducts.promoMenu"
+          v-for="item in store.categoriesMenu"
           :key="item.id"
           class="flex flex-col w-[250px]"
         >
@@ -73,7 +73,7 @@ const toggle = (id: number) => {
         :pagination="true"
         :navigation="true"
         :loop="true"
-        :items="menuProducts.promoSlide"
+        :items="store.promoSlides"
         class="h-[100%] flex justify-center items-center w-full"
       >
         <template #slide="{ item }">

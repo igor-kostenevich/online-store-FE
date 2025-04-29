@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { usePromoBanner } from '@/stores/promoBanner'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
-import Slider from '@/assets/images/components/Slider.vue'
+import Slider from '@/components/Slider.vue'
 import { useRouter } from 'vue-router'
 
 const menuProducts = usePromoBanner()

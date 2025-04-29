@@ -19,3 +19,7 @@ body {
 .container {
   margin: 0 auto;
 }
+
+.swiper-pagination-bullet {
+  background: #ffff !important;
+}

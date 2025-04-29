@@ -1,3 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MenuProducts from '@/components/MenuProducts.vue'
+</script>
 
-<template>hello</template>
+<template>
+  <MenuProducts />
+</template>

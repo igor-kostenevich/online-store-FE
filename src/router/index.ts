@@ -37,6 +37,14 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: ResetPassword,
   },
+  {
+    path: '/category/:slug',
+    name: 'сategory',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/Category.vue'),
+  },
 
   // {
   //   path: '/:notFound(.*)',

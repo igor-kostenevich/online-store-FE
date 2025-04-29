@@ -4,7 +4,7 @@ import { useCategoriesStore } from '@/stores/categories'
 
 import Slider from '@/components/Slider.vue'
 
-const categorySlider = useCategoriesStore()
+const categoryStore = useCategoriesStore()
 
 const breakpoints = {
   320: {
@@ -24,7 +24,7 @@ const breakpoints = {
 
 <template>
   <Slider
-    :items="categorySlider.category"
+    :items="categoryStore.bannerImages"
     :slides-view="4"
     :space-between="20"
     slide-effect="slide"

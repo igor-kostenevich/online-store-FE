@@ -9,7 +9,7 @@ import img6 from '@/assets/images/categorySlides/Category-SmartWatch.svg'
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
-    category: [
+    bannerImages: [
       {
         id: 1,
         title: 'Camera',

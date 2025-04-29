@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <swiper
-      class="w-full h-[300px]"
+      class="w-full"
       :modules="modules"
       :slides-per-view="slidesView"
       :space-between="spaceBetween"
@@ -11,6 +11,7 @@
       :pagination="pagination ? { el: '.swiper-pagination', clickable: true } : false"
       :navigation="navigation ? { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' } : false"
       :breakpoints="breakpoints"
+      :autoplay="{ delay: 3000 }"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
@@ -27,17 +28,16 @@
     </swiper>
 
     <slot name="navigation" />
-
     <slot name="pagination" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Pagination, Navigation, EffectFade, Autoplay } from 'swiper/modules'
 
-import { Pagination, Navigation } from 'swiper/modules'
+const modules = [Pagination, Navigation, EffectFade, Autoplay]
 
-const modules = [Pagination, Navigation]
 defineProps<{
   slidesView: number
   spaceBetween: number

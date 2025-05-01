@@ -2,7 +2,7 @@
 import Vue3StarRatings from 'vue3-star-ratings'
 import BaseButton from '@/components/shared/BaseButton.vue'
 import { HeartIcon, EyeIcon } from '@heroicons/vue/24/outline'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps<{
   product: Object
@@ -10,6 +10,12 @@ const props = defineProps<{
 
 const rating = ref(props.product.rating)
 const isFavorite = ref(props.product.isFavorite)
+
+const discountForCard = computed(() => {
+  const price = props.product.price
+  const oldPrice = props.product.oldPrice
+  return Math.round(((oldPrice - price) / oldPrice) * 100)
+})
 </script>
 
 <template>
@@ -21,7 +27,12 @@ const isFavorite = ref(props.product.isFavorite)
         class="h-32 object-contain mx-auto mb-2"
       />
 
-      <base-button class="absolute top-3 left-3 pt-1 pb-1 pl-3 pr-3"> -40%</base-button>
+      <div
+        v-if="product.discount"
+        class="absolute bg-button-secondary-default rounded-md text-primary-white top-3 left-3 pt-1 pb-1 pl-3 pr-3"
+      >
+        -{{ discountForCard }}%
+      </div>
 
       <HeartIcon
         class="w-8 bg-white rounded-xl p-1 absolute top-3 right-3"
@@ -39,7 +50,12 @@ const isFavorite = ref(props.product.isFavorite)
     <div class="font-semibold">{{ product.title }}</div>
     <div class="text-red-500 font-bold">
       {{ product.currency }}{{ product.price }}
-      <span class="line-through text-gray-400 text-sm ml-2"> {{ product.currency }}{{ product.oldPrice }} </span>
+      <span
+        v-if="product.oldPrice"
+        class="line-through text-gray-400 text-sm ml-2"
+      >
+        {{ product.currency }}{{ product.oldPrice }}
+      </span>
     </div>
 
     <Vue3StarRatings

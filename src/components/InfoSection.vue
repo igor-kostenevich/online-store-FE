@@ -1,0 +1,38 @@
+<script setup lang="ts">
+import img1 from '@/assets/images/info/01.svg'
+import img2 from '@/assets/images/info/01.svg'
+import img3 from '@/assets/images/info/03.svg'
+</script>
+
+<template>
+  <div class="container mt-20">
+    <div class="flex justify-between items-center gap-2 flex-wrap">
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <img
+          :src="img1"
+          alt="photo"
+        />
+        <div class="text-xl font-semibold">FREE AND FAST DELIVERY</div>
+        <div class="text-sm">Free delivery for all orders over $140</div>
+      </div>
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <img
+          :src="img2"
+          alt="photo"
+        />
+        <div class="text-xl font-semibold">24/7 CUSTOMER SERVICE</div>
+        <div class="text-sm">Friendly 24/7 customer support</div>
+      </div>
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <img
+          :src="img3"
+          alt="photo"
+        />
+        <div class="text-xl font-semibold">MONEY BACK GUARANTEE</div>
+        <div class="text-sm">We reurn money within 30 days</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped></style>

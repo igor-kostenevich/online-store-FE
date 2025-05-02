@@ -19,12 +19,12 @@ const discountForCard = computed(() => {
 </script>
 
 <template>
-  <div class="p-4 cursor-pointer">
-    <div class="relative bg-secondary-mediumWhite p-10 mb-0.5 group">
+  <div class="cursor-pointer">
+    <div class="relative bg-secondary-mediumWhite p-10 mb-0.5 group bg-secondary-medium-white">
       <img
         :src="product.image"
         alt="image"
-        class="h-32 object-contain mx-auto mb-2"
+        class="h-full object-contain mx-auto mb-2"
       />
 
       <div

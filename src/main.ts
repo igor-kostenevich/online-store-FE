@@ -11,6 +11,7 @@ import vue3StarRatings from 'vue3-star-ratings'
 import BaseButton from '@/components/shared/BaseButton.vue'
 import BaseInput from '@/components/shared/BaseInput.vue'
 import BaseTextArea from '@/components/shared/BaseTextArea.vue'
+import BaseProductCard from '@/components/shared/BaseProductCard.vue'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -25,5 +26,6 @@ app.component('vue3-star-ratings', vue3StarRatings)
 app.component('BaseButton', BaseButton)
 app.component('BaseInput', BaseInput)
 app.component('BaseTextArea', BaseTextArea)
+app.component('BaseProductCard', BaseProductCard)
 
 app.mount('#app')

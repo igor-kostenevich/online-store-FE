@@ -9,5 +9,5 @@ import SpecialOffer from '@/components/SpecialOffer.vue'
   <MenuProducts />
   <BestSelling />
   <InfoSection />
-  <SpecialOffer/>
+  <SpecialOffer />
 </template>

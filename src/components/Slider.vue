@@ -4,14 +4,17 @@
       class="w-full"
       :modules="modules"
       :slides-per-view="slidesView"
+      :slides-per-group="slidesPerGroup"
       :space-between="spaceBetween"
       :loop="loop"
+      :loop-fill-group-with-blank="loopFillGroupWithBlank"
       :effect="slideEffect"
       :initial-slide="slideStart"
+      :autoplay="{ delay: 3000 }"
       :pagination="pagination ? { el: '.swiper-pagination', clickable: true } : false"
       :navigation="navigation ? { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' } : false"
       :breakpoints="breakpoints"
-      :autoplay="{ delay: 3000 }"
+      :grid="grid"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
@@ -34,25 +37,29 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Pagination, Navigation, EffectFade, Autoplay } from 'swiper/modules'
+import { Pagination, Navigation, EffectFade, Autoplay, Grid } from 'swiper/modules'
 
-const modules = [Pagination, Navigation, EffectFade, Autoplay]
+const modules = [Pagination, Navigation, EffectFade, Autoplay, Grid]
 
 defineProps<{
   slidesView: number
   spaceBetween: number
   slideEffect: string
   slideStart: number
-  loop: boolean
+  loop?: boolean
   items: any[]
   pagination?: boolean
   navigation?: boolean
-  breakpoints?: any[]
+  breakpoints?: any
+  slidesPerGroup?: number
+  grid?: Object
+  loopFillGroupWithBlank?: boolean
 }>()
 
 const onSwiper = (swiper: any) => {
   console.log(swiper)
 }
+
 const onSlideChange = () => {
   console.log('slide change')
 }

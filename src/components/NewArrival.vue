@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useNewArrival } from '@/stores/newArrival'
+import { useProductsStore } from '@/stores/products'
 
-const store = useNewArrival()
+const store = useProductsStore()
 const products = store.newArrivalProducts
 </script>
 

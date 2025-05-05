@@ -5,6 +5,7 @@ import img2 from '@/assets/images/slides/02.png'
 import img3 from '@/assets/images/slides/03.png'
 import img4 from '@/assets/images/slides/04.png'
 import img5 from '@/assets/images/slides/05.png'
+import offerImg from '@/assets/images/offerImg.png'
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -73,6 +74,16 @@ export const useProductsStore = defineStore('products', {
         isFavorite: true,
         isViewed: false,
         currency: '$',
+      },
+    ],
+
+    productOffer: [
+      {
+        title: 'Enhance Your Music Experience',
+        productName: 'JBL Boombox 3',
+        imageUrl: offerImg,
+        slug: '/product/boombox-3',
+        expiresAt: '2025-05-10T23:59:59Z',
       },
     ],
   }),

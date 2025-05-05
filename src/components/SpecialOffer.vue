@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useTimer } from '@/composables/useTimer'
-import { useSpecialOffer } from '@/stores/specialOffer'
+import { useProductsStore } from '@/stores/products'
 import { onMounted } from 'vue'
 
 const timer = useTimer()
-const store = useSpecialOffer()
-const product = store.productName[0]
+const store = useProductsStore()
+const product = store.productOffer[0]
 
 onMounted(() => {
   const expiresAt = new Date(product.expiresAt).getTime()

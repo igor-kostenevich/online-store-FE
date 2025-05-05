@@ -16,6 +16,7 @@ import BaseProductCard from '@/components/shared/BaseProductCard.vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import 'swiper/css/grid'
 
 const app = createApp(App)
 

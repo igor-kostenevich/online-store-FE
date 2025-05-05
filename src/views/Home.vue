@@ -3,6 +3,7 @@ import MenuProducts from '@/components/MenuProducts.vue'
 import BestSelling from '@/components/BestSelling.vue'
 import InfoSection from '@/components/InfoSection.vue'
 import NewArrival from '@/components/NewArrival.vue'
+import ExploreProducts from '@/components/ExploreProducts.vue'
 </script>
 
 <template>
@@ -10,4 +11,5 @@ import NewArrival from '@/components/NewArrival.vue'
   <BestSelling />
   <InfoSection />
   <NewArrival />
+  <ExploreProducts />
 </template>

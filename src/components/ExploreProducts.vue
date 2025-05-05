@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useExploreProducts } from '@/stores/exploreProducts'
+import { useProductsStore } from '@/stores/products'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Slider.vue'
-const store = useExploreProducts()
+const store = useProductsStore()
 
 const breakpoints = {
   320: {

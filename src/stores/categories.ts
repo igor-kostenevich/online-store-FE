@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia'
 import aside from '@/assets/images/aside.png'
+import camera from '@/assets/images/categorySlides/Category-Camera.svg'
+import phone from '@/assets/images/categorySlides/Category-CellPhone.svg'
+import computer from '@/assets/images/categorySlides/Category-Computer.svg'
+import pad from '@/assets/images/categorySlides/Category-Gamepad.svg'
+import headphones from '@/assets/images/categorySlides/Category-Headphone.svg'
+import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
     categoriesMenu: [
@@ -83,6 +89,32 @@ export const useCategoriesStore = defineStore('categories', {
       {
         id: 3,
         image: 'https://s3-eu-central-1.amazonaws.com/proit.prod/2024/09/OLED-MacBook-Pro-launch-2026.jpg',
+      },
+    ],
+    categoriesBrowse: [
+      {
+        id: 1,
+        image: camera,
+      },
+      {
+        id: 2,
+        image: phone,
+      },
+      {
+        id: 3,
+        image: computer,
+      },
+      {
+        id: 4,
+        image: pad,
+      },
+      {
+        id: 5,
+        image: headphones,
+      },
+      {
+        id: 6,
+        image: watch,
       },
     ],
   }),

@@ -7,12 +7,12 @@ import { PaperAirplaneIcon } from '@heroicons/vue/24/outline'
     <div class="container">
       <div>
         <div class="flex flex-col md:items-center justify-center gap-20 md:flex-row">
-          <div class="">
+          <div class="self-start">
             <div class="footer__title text-2xl font-bold">Exclusive</div>
             <div class="footer__subtitle pt-2">SubScribe</div>
             <div class="footer__text pt-2 mb-3">Get 10% off your first order</div>
 
-            <div class="relative">
+            <div class="relative overflow-hidden">
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -22,7 +22,7 @@ import { PaperAirplaneIcon } from '@heroicons/vue/24/outline'
             </div>
           </div>
 
-          <div class="">
+          <div class="self-start">
             <div class="text-2xl font-bold">Support</div>
             <div class="pt-2">
               111 Bijoy sarani, Dhaka,<br />
@@ -34,14 +34,14 @@ import { PaperAirplaneIcon } from '@heroicons/vue/24/outline'
             </div>
           </div>
 
-          <div>
+          <div class="self-start">
             <div class="text-2xl font-bold">Account</div>
             <ul class="mt-3 flex flex-col gap-2">
-              <li>My Account</li>
-              <li>Login / Register</li>
-              <li>Cart</li>
-              <li>Wishlist</li>
-              <li>Shop</li>
+              <li><router-link to="/account">My Account</router-link></li>
+              <li><router-link to="/login">Login / Register</router-link></li>
+              <li><router-link to="/cart">Cart</router-link></li>
+              <li><router-link to="/wishlist">Wishlist</router-link></li>
+              <li><router-link to="/shop">Shop</router-link></li>
             </ul>
           </div>
         </div>

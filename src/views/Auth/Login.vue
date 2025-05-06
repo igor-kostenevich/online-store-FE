@@ -5,25 +5,25 @@ const { onSubmit, fields, errors, metas } = useValidation()
 </script>
 
 <template>
-  <div>
-    <div class="container">
-      <div class="flex flex-col md:flex-row gap-16">
-        <div>
-          <img
-            class="w-[500px] md:w-[800px]"
-            src="@/assets/images/loginImg.png"
-            alt="image"
-          />
-        </div>
+  <section class="pt-[140px] pb-[70px]">
+    <div class="flex flex-col md:flex-row gap-20">
+      <div class="flex-[0_1_50%]">
+        <img
+          class="ml-[-34px] w-full h-[781px]"
+          src="@/assets/images/loginImg.png"
+          alt="image"
+        />
+      </div>
 
+      <div class="container m-0 flex-[0_1_30%] self-center">
         <form
-          class="pt-20"
+          class=""
           @submit.prevent="onSubmit"
         >
           <div class="text-4xl">Log in to Exclusive</div>
           <div class="pt-2">Enter your details below</div>
 
-          <div class="flex flex-col gap-5 pt-10">
+          <div class="flex flex-col gap-10 pt-10">
             <BaseInput
               v-model="fields.email.value"
               :error="metas.emailMeta.touched ? errors.emailError : ''"
@@ -37,7 +37,7 @@ const { onSubmit, fields, errors, metas } = useValidation()
             />
           </div>
 
-          <div class="mt-7 flex items-center gap-4">
+          <div class="mt-11 flex items-center gap-4 justify-between">
             <BaseButton type="submit"> Log In </BaseButton>
             <router-link
               :to="{ name: 'reset-password' }"
@@ -49,7 +49,7 @@ const { onSubmit, fields, errors, metas } = useValidation()
         </form>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

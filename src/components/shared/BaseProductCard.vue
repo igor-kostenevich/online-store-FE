@@ -50,14 +50,14 @@ const discountForCard = computed(() => {
     <div class="p-2 flex flex-col gap-1">
       <div class="font-semibold text-base">{{ product.title }}</div>
 
-      <div class=" flex  items-center text-red-500 font-bold text-lg">
+      <div class="flex items-center text-red-500 font-bold text-lg">
         {{ product.currency }}{{ product.price }}
         <span
           v-if="product.oldPrice"
           class="line-through text-gray-400 text-sm ml-2 font-normal"
         >
-      {{ product.currency }}{{ product.oldPrice }}
-    </span>
+          {{ product.currency }}{{ product.oldPrice }}
+        </span>
       </div>
 
       <Vue3StarRatings

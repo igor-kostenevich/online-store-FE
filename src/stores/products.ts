@@ -88,7 +88,7 @@ export const useProductsStore = defineStore('products', {
         imageUrl: offerImg,
         slug: '/product/boombox-3',
         expiresAt: '2025-05-10T23:59:59Z',
-      }
+      },
     ],
     newArrivalProducts: [
       {
@@ -118,7 +118,7 @@ export const useProductsStore = defineStore('products', {
         description: 'GUCCI INTENSE OUD EDP',
         imageUrl: gucci,
         slug: '/products/perfume',
-      }
+      },
     ],
     exploreProducts: [
       {

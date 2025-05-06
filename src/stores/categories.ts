@@ -6,7 +6,7 @@ export const useCategoriesStore = defineStore('categories', {
       {
         id: 1,
         label: "Woman's Fashion",
-        slug: 'womens-fashion',
+
         children: [
           { label: 'Shirts', slug: 'shirts' },
           { label: 'Shoes', slug: 'shoes' },
@@ -15,7 +15,7 @@ export const useCategoriesStore = defineStore('categories', {
       {
         id: 2,
         label: "Men's Fashion",
-        slug: 'mens-fashion',
+
         children: [
           { label: 'Shirts', slug: 'shirts' },
           { label: 'Shoes', slug: 'shoes' },

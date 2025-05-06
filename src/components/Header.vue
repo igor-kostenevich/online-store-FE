@@ -1,8 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
-import { ChevronDownIcon, HeartIcon, ShoppingCartIcon, UserIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
-
+import {
+  ChevronDownIcon,
+  HeartIcon,
+  ShoppingCartIcon,
+  UserIcon,
+  MagnifyingGlassIcon
+} from '@heroicons/vue/24/outline'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 const isOpen = ref(false)
@@ -15,7 +20,10 @@ const selectedPerson = ref(language[0])
     <div class="container flex justify-between items-center">
       <div class="w-full text-center">
         <div class="header-top__text">
-          Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
+          <span class=" text-xs xs:text-sm">
+                     Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
+          </span>
+
           <a
             href="#"
             class="underline font-bold ml-1"
@@ -52,7 +60,7 @@ const selectedPerson = ref(language[0])
                   :value="person"
                   as="template"
                 >
-                  <li :class="[active ? 'bg-white text-amber-900' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-10 pr-4 cursor-pointer']">
+                  <li :class="[active ? 'bg-white text-amber-900' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-4 pr-4 cursor-pointer']">
                     <span :class="[selected ? 'font-medium' : 'font-normal', 'block truncate']">{{ person.name }}</span>
                     <span
                       v-if="selected"
@@ -74,7 +82,7 @@ const selectedPerson = ref(language[0])
         <img
           src="../assets/images/logo.svg"
           alt="logo"
-          class="h-6"
+          class=" h-5 xs:h-6"
         />
       </router-link>
 
@@ -134,37 +142,38 @@ const selectedPerson = ref(language[0])
       </div>
 
       <div class="hidden lg:flex items-center justify-between w-full">
-        <nav class="flex gap-6 mx-auto">
+        <nav class="flex gap-12 mx-auto">
           <router-link
             to="/home"
-            class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
-            >Home</router-link
+            class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+          >Home</router-link
           >
           <router-link
             to="/contact"
-            class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
-            >Contact</router-link
+            class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+          >Contact</router-link
           >
           <router-link
             to="/about"
-            class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
-            >About</router-link
+            class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+          >About</router-link
           >
           <router-link
             to="/signup"
-            class="text-sm font-medium hover:text-amber-900 duration-300 ease-in"
-            >Sign Up</router-link
+            class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+          >Sign Up</router-link
           >
         </nav>
+
 
         <div class="flex items-center gap-4">
           <div class="relative w-[243px]">
             <input
               type="text"
               placeholder="What are you looking for?"
-              class="bg-secondary-mediumWhite rounded-s pt-2 pb-2 pr-8 pl-3 text-sm w-full border border-transparent focus:border-gray-400 hover:border-gray-300 focus:outline-none transition"
+              class="bg-[#f5f5f5] rounded-s pt-2 pb-2 pr-8 pl-3 text-sm w-full border border-transparent focus:border-gray-400 hover:border-gray-300 focus:outline-none transition"
             />
-            <MagnifyingGlassIcon class="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <MagnifyingGlassIcon class="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 " />
           </div>
           <HeartIcon class="h-5 w-5 text-black cursor-pointer" />
           <ShoppingCartIcon class="h-5 w-5 text-black cursor-pointer" />
@@ -176,11 +185,11 @@ const selectedPerson = ref(language[0])
               <UserIcon class="h-5 w-5 text-black cursor-pointer mt-1" />
             </MenuButton>
 
-            <MenuItems class="absolute z-40 right-0 mt-2 w-48 bg-white shadow-lg rounded-md text-sm">
+            <MenuItems class="absolute z-40 right-0 mt-4 w-48 bg-white shadow-lg rounded-md text-sm py-2">
               <MenuItem v-slot="{ active }">
                 <router-link
                   :to="{ path: '/account' }"
-                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
+                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 mb-1']"
                 >
                   Manage My Account
                 </router-link>
@@ -188,7 +197,7 @@ const selectedPerson = ref(language[0])
               <MenuItem v-slot="{ active }">
                 <router-link
                   :to="{ path: '/orders' }"
-                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
+                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 mb-1']"
                 >
                   My Orders
                 </router-link>
@@ -196,7 +205,7 @@ const selectedPerson = ref(language[0])
               <MenuItem v-slot="{ active }">
                 <router-link
                   :to="{ path: '/reviews' }"
-                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
+                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 mb-1']"
                 >
                   My Reviews
                 </router-link>

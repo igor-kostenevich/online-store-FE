@@ -47,26 +47,29 @@ const discountForCard = computed(() => {
       </BaseButton>
     </div>
 
-    <div class="font-semibold">{{ product.title }}</div>
-    <div class="text-red-500 font-bold">
-      {{ product.currency }}{{ product.price }}
-      <span
-        v-if="product.oldPrice"
-        class="line-through text-gray-400 text-sm ml-2"
-      >
-        {{ product.currency }}{{ product.oldPrice }}
-      </span>
-    </div>
+    <div class="p-2 flex flex-col gap-1">
+      <div class="font-semibold text-base">{{ product.title }}</div>
 
-    <Vue3StarRatings
-      v-model="rating"
-      :star-size="17"
-      star-color="#ff9800"
-      inactive-color="#999"
-      :number-of-stars="5"
-      :disable-click="false"
-      class="block w-fit"
-    />
+      <div class=" flex  items-center text-red-500 font-bold text-lg">
+        {{ product.currency }}{{ product.price }}
+        <span
+          v-if="product.oldPrice"
+          class="line-through text-gray-400 text-sm ml-2 font-normal"
+        >
+      {{ product.currency }}{{ product.oldPrice }}
+    </span>
+      </div>
+
+      <Vue3StarRatings
+        v-model="rating"
+        :star-size="17"
+        star-color="#ff9800"
+        inactive-color="#999"
+        :number-of-stars="5"
+        :disable-click="false"
+        class="block w-fit"
+      />
+    </div>
   </div>
 </template>
 

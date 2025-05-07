@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useCategoriesStore } from '@/stores/categories'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Slider.vue'
-import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const store = useCategoriesStore()
@@ -17,19 +16,13 @@ const goToCategory = (slug: string) => {
 const toggle = (id: number) => {
   openId.value = openId.value === id ? null : id
 }
-
-onMounted(() => {
-  console.log('---slider')
-  console.log(store.promoSlides) // має бути масив з 3 об'єктами
-})
 </script>
 
 <template>
   <div>
     <section class="pt-[130px] pb-[70px]">
       <div class="container">
-        <div class="flex flex-col lg:flex-row gap-8 items-stretch px-4 min-h-[600px]">
-          <!-- Сайдбар меню -->
+        <div class="flex flex-col lg:flex-row gap-8 items-stretch px-4 min-h-[100%]">
           <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r border-gray-200">
             <li
               v-for="item in store.categoriesMenu"
@@ -74,7 +67,6 @@ onMounted(() => {
             </li>
           </ul>
 
-          <!-- Слайдер -->
           <Slider
             slides-view="1"
             space-between="0"
@@ -84,22 +76,29 @@ onMounted(() => {
             :navigation="true"
             :loop="true"
             :items="store.promoSlides"
-            class="flex-[0_1_80%] max-w-full overflow-hidden h-full"
+            class="flex-[0_1_80%] max-w-full overflow-hidden"
           >
             <template #slide="{ item }">
-              <div class="cursor-pointer h-full">
-                <div class="relative w-full h-full">
+              <div class="cursor-pointer w-full">
+                <div class="relative w-full aspect-[2/1]">
                   <img
                     :src="item.image"
                     alt="image"
                     class="w-full h-full object-cover"
                   />
+
+                  <div class="absolute inset-0 flex flex-col justify-center items-start px-4 md:px-12 text-white bg-black/30">
+                    <h2 class="text-lg md:text-4xl font-bold mb-1">{{ item.title }}</h2>
+                    <p class="text-sm md:text-lg mb-3">{{ item.text }}</p>
+                    <router-link
+                      to="#"
+                      class="underline"
+                    >
+                      Shop now
+                    </router-link>
+                  </div>
                 </div>
               </div>
-            </template>
-
-            <template #pagination>
-              <div class="swiper-pagination absolute !left-[-15%]" />
             </template>
           </Slider>
         </div>

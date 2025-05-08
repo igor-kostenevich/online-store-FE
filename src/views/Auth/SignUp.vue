@@ -1,7 +1,26 @@
 <script setup lang="ts">
 import { useValidation } from '@/composables/useValidation'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
 const { onSubmit, fields, errors, metas } = useValidation()
+const authStore = useAuthStore()
+const router = useRouter()
+
+const handleSubmit = onSubmit(async () => {
+  const userData = {
+    name: fields.text.value,
+    email: fields.email.value,
+    password: fields.password.value,
+  }
+
+  try {
+    await authStore.register(userData)
+    router.push('/login')
+  } catch (e) {
+    console.error('Registration failed:', e)
+  }
+})
 </script>
 
 <template>
@@ -16,8 +35,8 @@ const { onSubmit, fields, errors, metas } = useValidation()
       </div>
 
       <div class="container m-0 flex-[0_1_30%] self-center">
-        <form @submit.prevent="onSubmit">
-          <div class="text-4xl">Log in to Exclusive</div>
+        <form @submit.prevent="handleSubmit">
+          <div class="text-4xl">Create an account</div>
           <div class="pt-2">Enter your details below</div>
 
           <div class="flex flex-col gap-10 pt-10">

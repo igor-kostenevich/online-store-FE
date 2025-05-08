@@ -1,7 +1,21 @@
 <script setup lang="ts">
 import { useValidation } from '@/composables/useValidation'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
 const { onSubmit, fields, errors, metas } = useValidation()
+const authStore = useAuthStore()
+const router = useRouter()
+
+const handleSubmit = onSubmit(async () => {
+  const userData = {
+    email: fields.email.value,
+    password: fields.password.value,
+  }
+
+  await authStore.login(userData)
+  router.push('/home')
+})
 </script>
 
 <template>
@@ -18,7 +32,7 @@ const { onSubmit, fields, errors, metas } = useValidation()
       <div class="container m-0 flex-[0_1_30%] self-center">
         <form
           class=""
-          @submit.prevent="onSubmit"
+          @submit.prevent="handleSubmit"
         >
           <div class="text-4xl">Log in to Exclusive</div>
           <div class="pt-2">Enter your details below</div>
@@ -26,19 +40,19 @@ const { onSubmit, fields, errors, metas } = useValidation()
           <div class="flex flex-col gap-10 pt-10">
             <BaseInput
               v-model="fields.email.value"
-              :error="metas.emailMeta.touched ? errors.emailError : ''"
+              :error="metas.emailMeta.touched ? errors.emailError.value : ''"
               placeholder="Email or Phone Number"
             />
             <BaseInput
               v-model="fields.password.value"
-              :error="metas.passwordMeta.touched ? errors.passwordError : ''"
+              :error="metas.passwordMeta.touched ? errors.passwordError.value : ''"
               type="password"
               placeholder="Password"
             />
           </div>
 
           <div class="mt-11 flex items-center gap-4 justify-between">
-            <BaseButton type="submit"> Log In </BaseButton>
+            <BaseButton type="submit"> Log In</BaseButton>
             <router-link
               :to="{ name: 'reset-password' }"
               class="text-secondary-red cursor-pointer"

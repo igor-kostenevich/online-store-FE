@@ -1,12 +1,18 @@
 import { defineStore } from 'pinia'
 import aside from '@/assets/images/aside.png'
+import camera from '@/assets/images/categorySlides/Category-Camera.svg'
+import phone from '@/assets/images/categorySlides/Category-CellPhone.svg'
+import computer from '@/assets/images/categorySlides/Category-Computer.svg'
+import pad from '@/assets/images/categorySlides/Category-Gamepad.svg'
+import headphones from '@/assets/images/categorySlides/Category-Headphone.svg'
+import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
     categoriesMenu: [
       {
         id: 1,
         label: "Woman's Fashion",
-        slug: 'womens-fashion',
+
         children: [
           { label: 'Shirts', slug: 'shirts' },
           { label: 'Shoes', slug: 'shoes' },
@@ -15,7 +21,7 @@ export const useCategoriesStore = defineStore('categories', {
       {
         id: 2,
         label: "Men's Fashion",
-        slug: 'mens-fashion',
+
         children: [
           { label: 'Shirts', slug: 'shirts' },
           { label: 'Shoes', slug: 'shoes' },
@@ -73,16 +79,47 @@ export const useCategoriesStore = defineStore('categories', {
     promoSlides: [
       {
         id: 1,
+        title: 'MacBook Pro M4',
+        text: 'Unmatched performance for developers and creators.',
         image: 'https://www.apple.com/newsroom/images/2024/10/new-macbook-pro/article/Apple-MacBook-Pro-M4-Magic-Keyboard-close-up_big.jpg.large.jpg',
       },
       {
         id: 2,
+        title: 'Welcome to the Future',
+        text: 'A new design. A new era. All for you.',
         image: aside,
       },
-
       {
         id: 3,
+        title: 'OLED MacBook Pro',
+        text: 'Deeper colors. More detail. Stunning quality.',
         image: 'https://s3-eu-central-1.amazonaws.com/proit.prod/2024/09/OLED-MacBook-Pro-launch-2026.jpg',
+      },
+    ],
+    categoriesBrowse: [
+      {
+        id: 1,
+        image: camera,
+      },
+      {
+        id: 2,
+        image: phone,
+      },
+      {
+        id: 3,
+        image: computer,
+      },
+      {
+        id: 4,
+        image: pad,
+      },
+      {
+        id: 5,
+        image: headphones,
+      },
+      {
+        id: 6,
+        image: watch,
       },
     ],
   }),

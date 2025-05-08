@@ -29,59 +29,60 @@ const breakpoints = {
 </script>
 
 <template>
-  <div class="container mb-[140px]">
-    <div>
-      <div>
-        <div class="section-subtitle">This Month</div>
-        <div class="section-title">Explore Our Products</div>
-      </div>
-    </div>
+  <section class="pt-[70px] pb-[70px]">
+    <div class="container">
+      <div class="relative">
+        <div>
+          <div class="section-subtitle">This Month</div>
+          <div class="section-title">Explore Our Products</div>
+        </div>
 
-    <Slider
-      :items="store.exploreProducts"
-      :slides-view="4"
-      :slides-per-group="4"
-      :space-between="20"
-      slide-effect="slide"
-      :slide-start="0"
-      :pagination="true"
-      :loop="true"
-      :loop-fill-group-with-blank="true"
-      :navigation="true"
-      :breakpoints="breakpoints"
-      :grid="{ rows: 2, fill: 'row' }"
-      class="mt-20"
-    >
-      <template #navigation>
-        <div class="absolute -top-14 right-[10%] md:right-[4%] z-10 flex gap-2">
+        <div class="absolute md:bottom-[27%] right-[10%] md:right-[4%] z-10 flex gap-2">
           <button
-            class="flex items-center justify-center bg-white rounded-full w-8 h-8 p-2 shadow-md cursor-pointer swiper-button-prev"
+            class="flex items-center justify-center bg-[#f5f5f5] w-[46px] h-[46px] p-1 transition rounded-full cursor-pointer swiper-button-next rotate-180"
             type="button"
           >
-            <ArrowRightIcon class="w-5 h-5 text-black" />
+            <ArrowRightIcon class="!w-[19px] !h-[16px] text-black" />
           </button>
+
           <button
-            class="flex items-center justify-center bg-white rounded-full w-8 h-8 p-2 shadow-md cursor-pointer swiper-button-next"
+            class="flex items-center justify-center bg-[#f5f5f5] w-[46px] h-[46px] p-1 transition rounded-full cursor-pointer swiper-button-prev rotate-180"
             type="button"
           >
-            <ArrowLeftIcon class="w-5 h-5 text-black" />
+            <ArrowLeftIcon class="!w-[19px] !h-[16px] text-black" />
           </button>
         </div>
-      </template>
+      </div>
 
-      <template #slide="{ item }">
-        <BaseProductCard
-          :key="item.id"
-          :product="item"
-          class="h-full"
-        />
-      </template>
-    </Slider>
+      <Slider
+        :items="store.exploreProducts"
+        :slides-view="4"
+        :slides-per-group="4"
+        :space-between="20"
+        slide-effect="slide"
+        :slide-start="0"
+        :pagination="true"
+        :loop="true"
+        :loop-fill-group-with-blank="true"
+        :navigation="true"
+        :breakpoints="breakpoints"
+        :grid="{ rows: 2, fill: 'row' }"
+        class="mt-20"
+      >
+        <template #slide="{ item }">
+          <BaseProductCard
+            :key="item.id"
+            :product="item"
+            class="h-full"
+          />
+        </template>
+      </Slider>
 
-    <router-link to="#">
-      <BaseButton class="flex justify-center items-center mt-20 mx-auto"> View All Products </BaseButton>
-    </router-link>
-  </div>
+      <router-link to="#">
+        <BaseButton class="flex justify-center items-center mt-20 mx-auto">View All Products</BaseButton>
+      </router-link>
+    </div>
+  </section>
 </template>
 
 <style scoped></style>

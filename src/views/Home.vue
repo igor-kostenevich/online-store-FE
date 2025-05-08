@@ -5,13 +5,19 @@ import InfoSection from '@/components/InfoSection.vue'
 import SpecialOffer from '@/components/SpecialOffer.vue'
 import NewArrival from '@/components/NewArrival.vue'
 import ExploreProducts from '@/components/ExploreProducts.vue'
+import SliderCategory from '@/components/SliderCategory.vue'
+import SliderProducts from '@/components/SliderProducts.vue'
 </script>
 
 <template>
   <MenuProducts />
+  <SliderProducts />
+  <SliderCategory />
+
   <BestSelling />
-  <InfoSection />
   <SpecialOffer />
-  <NewArrival />
+
   <ExploreProducts />
+  <NewArrival />
+  <InfoSection />
 </template>

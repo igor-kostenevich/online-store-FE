@@ -22,7 +22,13 @@ body {
 }
 
 .swiper-pagination-bullet {
-  background: #ffff !important;
+  background: #fff !important;
+  width: 12px !important;
+  height: 12px !important;
+  outline: 3px solid white;
+}
+.swiper-pagination-bullet-active {
+  background: #db4444 !important;
 }
 
 .section-subtitle {

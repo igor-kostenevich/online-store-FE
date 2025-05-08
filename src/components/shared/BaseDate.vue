@@ -29,23 +29,23 @@ onUnmounted(() => {
 <template>
   <div class="flex items-center gap-4">
     <div class="text-center">
-      <div class="text-4xl font-bold">{{ timer.leftDays.value.toString().padStart(2, '0') }}</div>
       <div class="text-sm">Days</div>
+      <div class="text-4xl font-bold">{{ timer.leftDays.value.toString().padStart(2, '0') }}</div>
     </div>
-    <div class="text-pink-400 text-3xl">:</div>
+    <div class="text-pink-400 text-3xl mt-4">:</div>
     <div class="text-center">
-      <div class="text-4xl font-bold">{{ timer.leftHours.value.toString().padStart(2, '0') }}</div>
       <div class="text-sm">Hours</div>
+      <div class="text-4xl font-bold">{{ timer.leftHours.value.toString().padStart(2, '0') }}</div>
     </div>
-    <div class="text-pink-400 text-3xl">:</div>
+    <div class="text-pink-400 text-3xl mt-4">:</div>
     <div class="text-center">
-      <div class="text-4xl font-bold">{{ timer.leftMinutes.value.toString().padStart(2, '0') }}</div>
       <div class="text-sm">Minutes</div>
+      <div class="text-4xl font-bold">{{ timer.leftMinutes.value.toString().padStart(2, '0') }}</div>
     </div>
-    <div class="text-pink-400 text-3xl">:</div>
+    <div class="text-pink-400 text-3xl mt-4">:</div>
     <div class="text-center">
-      <div class="text-4xl font-bold">{{ timer.leftSeconds.value.toString().padStart(2, '0') }}</div>
       <div class="text-sm">Seconds</div>
+      <div class="text-4xl font-bold">{{ timer.leftSeconds.value.toString().padStart(2, '0') }}</div>
     </div>
   </div>
 </template>

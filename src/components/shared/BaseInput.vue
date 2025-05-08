@@ -17,10 +17,11 @@ const emit = defineEmits<{
 
 const inputClass = computed(() => {
   return [
-    'outline-none border-0 w-full transition duration-200 ease-in bg-transparent border-b border-black',
-    'focus:border-buttons-green hover:border-gray-400',
-    props.disabled ? 'cursor-not-allowed bg-gray-300' : '',
-    props.error ? 'border-red-500' : '',
+    'outline-none w-full transition duration-200 ease-in bg-transparent border-b',
+    'border-gray-400 focus:border-black',
+    'pb-1',
+    props.disabled ? 'cursor-not-allowed bg-black-300' : '',
+    props.error ? 'border-red-500 focus:border-red-500' : '',
   ].join(' ')
 })
 </script>

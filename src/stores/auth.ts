@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', {
     const { api } = useApi()
     return {
       api,
+      user: null as any,
     }
   },
 
@@ -20,6 +21,9 @@ export const useAuthStore = defineStore('auth', {
       const { accessToken } = response
 
       localStorage.setItem('accessToken', accessToken)
+    },
+    async getProfile() {
+      this.user = await this.api.get('/auth/profile')
     },
   },
 })

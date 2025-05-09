@@ -37,6 +37,15 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: ResetPassword,
   },
+
+  {
+    path: '/profile',
+    name: 'profile',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/Auth/Profile.vue'),
+  },
   {
     path: '/category/:slug',
     name: 'сategory',

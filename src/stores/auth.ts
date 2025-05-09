@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { RegisterValues, LoginValues } from '@/types/Interfaces/auth'
+import { RegisterValues, LoginValues, UpdatedValues } from '@/types/Interfaces/auth'
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
@@ -24,6 +24,11 @@ export const useAuthStore = defineStore('auth', {
     },
     async getProfile() {
       this.user = await this.api.get('/auth/profile')
+    },
+
+    async updateProfile(data: UpdatedValues) {
+      const updatedUser = await this.api.patch('/auth/profile', data)
+      this.user = updatedUser
     },
   },
 })

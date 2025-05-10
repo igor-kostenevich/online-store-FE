@@ -33,29 +33,29 @@ onMounted(() => {
         :style="`background-image: url(${product.imageUrl})`"
       >
         <div class="text-primary-white p-8 md:p-12">
-          <div class="text-5xl max-w-[443px]">{{ product.title }}</div>
+          <div class="text-5xl max-w-[443px] leading-[1.3]">{{ product.title }}</div>
 
           <div class="mt-5 text-xl font-semibold">{{ product.productName }}</div>
 
           <div class="flex items-center gap-4 mt-9 text-primary-light-black flex-wrap">
             <div class="text-center bg-primary-white p-2 rounded-full w-[62px] h-[62px] flex flex-col items-center justify-center">
               <div class="font-bold">{{ timer.leftDays.value.toString().padStart(2, '0') }}</div>
-              <div class="text-[10px] leading-tight break-words text-center">Days</div>
+              <div class="text-[10px] leading-[1.1] break-words text-center">Days</div>
             </div>
 
             <div class="text-center bg-primary-white p-2 rounded-full w-[62px] h-[62px] flex flex-col items-center justify-center">
               <div class="font-bold">{{ timer.leftHours.value.toString().padStart(2, '0') }}</div>
-              <div class="text-[10px] leading-tight break-words text-center">Hours</div>
+              <div class="text-[10px] leading-[1.1] break-words text-center">Hours</div>
             </div>
 
             <div class="text-center bg-primary-white p-2 rounded-full w-[62px] h-[62px] flex flex-col items-center justify-center">
               <div class="font-bold">{{ timer.leftMinutes.value.toString().padStart(2, '0') }}</div>
-              <div class="text-[10px] leading-tight break-words text-center">Minutes</div>
+              <div class="text-[10px] leading-[1.1] break-words text-center">Minutes</div>
             </div>
 
             <div class="text-center bg-primary-white p-2 rounded-full w-[62px] h-[62px] flex flex-col items-center justify-center">
               <div class="font-bold">{{ timer.leftSeconds.value.toString().padStart(2, '0') }}</div>
-              <div class="text-[10px] leading-tight break-words text-center">Seconds</div>
+              <div class="text-[10px] leading-[1.1] break-words text-center">Seconds</div>
             </div>
           </div>
 

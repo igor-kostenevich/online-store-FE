@@ -138,22 +138,22 @@ const selectedPerson = ref(language[0])
           <nav class="flex gap-12 mx-auto">
             <router-link
               to="/home"
-              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-secondary-red after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-[#000] after:transition-all after:duration-300 hover:after:w-full"
               >Home</router-link
             >
             <router-link
               to="/contact"
-              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-secondary-red after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-[#000] after:transition-all after:duration-300 hover:after:w-full"
               >Contact</router-link
             >
             <router-link
               to="/about"
-              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-secondary-red after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-[#000] after:transition-all after:duration-300 hover:after:w-full"
               >About</router-link
             >
             <router-link
               to="/signup"
-              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-amber-900 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+              class="relative text-sm font-medium text-black duration-300 ease-in hover:text-secondary-red after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-[#000] after:transition-all after:duration-300 hover:after:w-full"
               >Sign Up</router-link
             >
           </nav>

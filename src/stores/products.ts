@@ -87,7 +87,7 @@ export const useProductsStore = defineStore('products', {
         productName: 'JBL Boombox 3',
         imageUrl: offerImg,
         slug: '/product/boombox-3',
-        expiresAt: '2025-05-10T23:59:59Z',
+        expiresAt: '2025-06-10T23:59:59Z',
       },
     ],
     newArrivalProducts: [

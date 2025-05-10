@@ -29,7 +29,7 @@ const discountForCard = computed(() => {
 
       <div
         v-if="product.discount"
-        class="absolute bg-button-secondary-default rounded-md text-primary-white top-3 left-3 pt-1 pb-1 pl-3 pr-3"
+        class="absolute bg-button-secondary-default rounded-md text-primary-white pointer-events-none top-3 left-3 pt-1 pb-1 pl-3 pr-3"
       >
         -{{ discountForCard }}%
       </div>
@@ -64,9 +64,10 @@ const discountForCard = computed(() => {
         v-model="rating"
         :star-size="17"
         star-color="#ff9800"
+        :read-only="true"
         inactive-color="#999"
         :number-of-stars="5"
-        :disable-click="false"
+        :disable-click="true"
         class="block w-fit"
       />
     </div>

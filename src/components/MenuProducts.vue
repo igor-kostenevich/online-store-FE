@@ -23,7 +23,7 @@ const toggle = (id: number) => {
     <section class="pt-[130px] pb-[70px]">
       <div class="container">
         <div class="flex flex-col lg:flex-row gap-8 items-stretch px-4 min-h-[100%]">
-          <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r border-gray-200">
+          <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r-0 lg:border-r lg:border-gray-200">
             <li
               v-for="item in store.categoriesMenu"
               :key="item.id"

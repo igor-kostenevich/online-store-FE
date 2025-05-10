@@ -27,8 +27,7 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async updateProfile(data: UpdatedValues) {
-      const updatedUser = await this.api.patch('/auth/profile', data)
-      this.user = updatedUser
+      this.user = await this.api.patch('/auth/profile', data)
     },
   },
 })

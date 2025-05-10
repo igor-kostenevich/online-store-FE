@@ -39,14 +39,6 @@ const routes: Array<RouteRecordRaw> = [
   },
 
   {
-    path: '/profile',
-    name: 'profile',
-    meta: {
-      layout: 'main',
-    },
-    component: () => import('../views/Auth/Profile.vue'),
-  },
-  {
     path: '/category/:slug',
     name: 'сategory',
     meta: {

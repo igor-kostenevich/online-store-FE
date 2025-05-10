@@ -37,6 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: ResetPassword,
   },
+
   {
     path: '/category/:slug',
     name: 'сategory',

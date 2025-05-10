@@ -5,11 +5,11 @@ import type { IApiComposition } from '@/types/Interfaces'
 import { notify } from '@kyvg/vue3-notification'
 
 export const api: AxiosInstance = axios.create({
-  baseURL: 'https://brk.accenti.pl/',
+  baseURL: 'https://api.family-love-haven.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 90000,
+  timeout: 8000,
   xsrfCookieName: 'XSRF-TOKEN',
   xsrfHeaderName: 'X-XSRF-TOKEN',
 })
@@ -31,7 +31,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   response => response,
   async error => {
-    if (error.response && error.response.status === 401 && error.response.data.expired && !error.config.url.endsWith('/auth/refresh')) {
+    if (error && error.statusCode === 401) {
       const refreshToken = localStorage.getItem('refreshToken')
       try {
         const tokenResponse = await api.post('/auth/refresh', { refreshToken })
@@ -65,7 +65,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: Array.isArray(error.response.data.detail) ? error.response.data.detail[0].msg : error.response.data.detail,
+        text: error.message,
         type: 'error',
       })
       throw error
@@ -82,7 +82,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: Array.isArray(error.response?.data?.detail) ? error.response.data.detail[0].msg : error,
+        text: error.message,
         type: 'error',
       })
       throw error
@@ -99,7 +99,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: Array.isArray(error.response.data.detail) ? error.response.data.detail[0].msg : error.response.data.detail,
+        text: error.message,
         type: 'error',
       })
       throw error
@@ -116,7 +116,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: Array.isArray(error.response.data.detail) ? error.response.data.detail[0].msg : error.response.data.detail,
+        text: error.message,
         type: 'error',
       })
       throw error
@@ -133,7 +133,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: Array.isArray(error.response.data.detail) ? error.response.data.detail[0].msg : error.response.data.detail,
+        text: error.message,
         type: 'error',
       })
       throw error

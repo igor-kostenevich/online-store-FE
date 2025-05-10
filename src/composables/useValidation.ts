@@ -1,14 +1,14 @@
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 
-export function useValidation() {
+export function useValidation(requireName = false) {
   const schema = yup.object({
     email: yup
       .string()
-      .required('  Email  or phone is required')
+      .required('Email or phone is required')
       .matches(/^(\+?\d{10,13}|[^@\s]+@[^@\s]+\.[^@\s]+)$/, 'Incorrect email or phone number'),
-    password: yup.string().min(6, 'Мінімум 6 символів').required('Password is required'),
-    text: yup.string().required('Name is required'),
+    password: yup.string().min(6, 'Minimum 6 symbols').required('Password is required'),
+    text: requireName ? yup.string().required('Name is required') : yup.string(), // ← не обов'язкове, якщо не потрібно
   })
 
   const { handleSubmit } = useForm({
@@ -19,9 +19,7 @@ export function useValidation() {
   const { value: password, errorMessage: passwordError, meta: passwordMeta } = useField('password')
   const { value: text, errorMessage: textError, meta: textMeta } = useField('text')
 
-  const onSubmit = handleSubmit(values => {
-    console.log('Form submitted:', values)
-  })
+  const onSubmit = handleSubmit
 
   const fields = { email, password, text }
   const errors = { emailError, passwordError, textError }

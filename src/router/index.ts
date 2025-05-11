@@ -3,6 +3,8 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Auth/Login.vue'
 import ResetPassword from '@/views/Auth/ResetPassword.vue'
 import SignUp from '@/views/Auth/SignUp.vue'
+import AccountPage from '@/views/AccountPage.vue'
+import Profile from '@/views/Account/Profile.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -45,6 +47,22 @@ const routes: Array<RouteRecordRaw> = [
       layout: 'main',
     },
     component: () => import('../views/Category.vue'),
+  },
+
+  {
+    path: '/account',
+    component: AccountPage,
+    meta: {
+      layout: 'main',
+    },
+
+    children: [
+      {
+        path: 'profile',
+        name: 'profile',
+        component: Profile,
+      },
+    ],
   },
 
   // {

@@ -8,7 +8,10 @@ export function useValidation(requireName = false) {
       .required('Email or phone is required')
       .matches(/^(\+?\d{10,13}|[^@\s]+@[^@\s]+\.[^@\s]+)$/, 'Incorrect email or phone number'),
     password: yup.string().min(6, 'Minimum 6 symbols').required('Password is required'),
-    text: requireName ? yup.string().required('Name is required') : yup.string(), // ← не обов'язкове, якщо не потрібно
+    text: requireName ? yup.string().required('Name is required') : yup.string(), // ←not necessary if you dont need it
+
+    // firstName: requireName ?  yup.string().required('First name is required') : yup.string(),
+    // lastName: requireName ?  yup.string().required('Last name is required') : yup.string(),
   })
 
   const { handleSubmit } = useForm({
@@ -18,6 +21,7 @@ export function useValidation(requireName = false) {
   const { value: email, errorMessage: emailError, meta: emailMeta } = useField('email')
   const { value: password, errorMessage: passwordError, meta: passwordMeta } = useField('password')
   const { value: text, errorMessage: textError, meta: textMeta } = useField('text')
+  // const { value: firstName, errorMessage: firstNameError, meta: firstNameMeta } = useField('text')
 
   const onSubmit = handleSubmit
 

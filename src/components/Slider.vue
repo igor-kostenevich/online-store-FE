@@ -11,9 +11,9 @@
       :effect="slideEffect"
       :fade-effect="{ crossFade: true }"
       :initial-slide="slideStart"
-      :pagination="pagination"
-      :navigation="navigation ? { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' } : false"
+      :navigation="navigation ? { nextEl: nextBtnId, prevEl: prevBtnId } : false"
       :breakpoints="breakpoints"
+      :pagination="pagination"
       :grid="grid"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
@@ -54,6 +54,8 @@ defineProps<{
   slidesPerGroup?: number
   grid?: Object
   loopFillGroupWithBlank?: boolean
+  nextBtnId?: string
+  prevBtnId?: string
 }>()
 
 const onSwiper = (swiper: any) => {

@@ -23,7 +23,7 @@ const toggle = (id: number) => {
     <section class="pt-[130px] pb-[70px]">
       <div class="container">
         <div class="flex flex-col lg:flex-row gap-8 items-stretch px-4 min-h-[100%]">
-          <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r border-gray-200">
+          <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r-0 lg:border-r lg:border-gray-200">
             <li
               v-for="item in store.categoriesMenu"
               :key="item.id"
@@ -56,9 +56,9 @@ const toggle = (id: number) => {
                 class="flex flex-col pl-4 gap-1 mt-1"
               >
                 <li
-                  v-for="child in item.children"
-                  :key="child.id"
-                  class="px-2 py-1 cursor-pointer"
+                  v-for="(child, index) in item.children"
+                  :key="index"
+                  class="py-1 cursor-pointer text-sm hover:text-secondary-red transition"
                   @click="goToCategory(child.slug)"
                 >
                   {{ child.label }}
@@ -68,11 +68,11 @@ const toggle = (id: number) => {
           </ul>
 
           <Slider
-            slides-view="1"
-            space-between="0"
+            :slides-view="1"
+            :space-between="0"
             slide-effect="fade"
-            slide-start="1"
-            :pagination="true"
+            :slide-start="1"
+            :pagination="{ clickable: true }"
             :navigation="true"
             :loop="true"
             :items="store.promoSlides"

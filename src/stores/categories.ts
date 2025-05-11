@@ -6,13 +6,14 @@ import computer from '@/assets/images/categorySlides/Category-Computer.svg'
 import pad from '@/assets/images/categorySlides/Category-Gamepad.svg'
 import headphones from '@/assets/images/categorySlides/Category-Headphone.svg'
 import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
+
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
     categoriesMenu: [
       {
         id: 1,
         label: "Woman's Fashion",
-
+        slug: 'womans-fashion',
         children: [
           { label: 'Shirts', slug: 'shirts' },
           { label: 'Shoes', slug: 'shoes' },
@@ -21,7 +22,7 @@ export const useCategoriesStore = defineStore('categories', {
       {
         id: 2,
         label: "Men's Fashion",
-
+        slug: 'mens-fashion',
         children: [
           { label: 'Shirts', slug: 'shirts' },
           { label: 'Shoes', slug: 'shoes' },
@@ -100,26 +101,42 @@ export const useCategoriesStore = defineStore('categories', {
       {
         id: 1,
         image: camera,
+        title: 'Camera',
       },
       {
         id: 2,
         image: phone,
+        title: 'Phone',
       },
       {
         id: 3,
         image: computer,
+        title: 'Computer',
       },
       {
         id: 4,
         image: pad,
+        title: 'Pad',
       },
       {
         id: 5,
         image: headphones,
+        title: 'Headphones',
       },
       {
         id: 6,
         image: watch,
+        title: 'Watch',
+      },
+      {
+        id: 7,
+        image: headphones,
+        title: 'Headphones',
+      },
+      {
+        id: 8,
+        image: headphones,
+        title: 'Headphones',
       },
     ],
   }),

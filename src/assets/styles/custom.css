@@ -30,7 +30,12 @@ body {
 .swiper-pagination-bullet-active {
   background: #db4444 !important;
 }
-
+.swiper-pagination {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 7px;
+  gap: 7px;
+}
 .section-subtitle {
   font-weight: 600;
   color: #db4444;

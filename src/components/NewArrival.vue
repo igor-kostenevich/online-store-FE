@@ -9,7 +9,7 @@ const products = store.newArrivalProducts
   <section class="pt-[70px] pb-[70px]">
     <div class="container">
       <div>
-        <div class="section-subtitle">This Month</div>
+        <div class="section-subtitle">Featured</div>
         <div class="section-title">New Arrival</div>
       </div>
 

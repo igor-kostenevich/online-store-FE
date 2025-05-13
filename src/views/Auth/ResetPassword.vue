@@ -23,12 +23,12 @@ const { onSubmit, fields, errors, metas } = useValidation()
           <div class="flex flex-col gap-10 pt-10">
             <BaseInput
               v-model="fields.email.value"
-              :error="metas.emailMeta.touched ? errors.emailError : ''"
+              :error="metas.emailMeta.touched ? errors.emailError.value : ''"
               placeholder="Email or Phone Number"
             />
             <BaseInput
               v-model="fields.password.value"
-              :error="metas.passwordMeta.touched ? errors.passwordError : ''"
+              :error="metas.passwordMeta.touched ? errors.passwordError.value : ''"
               type="password"
               placeholder="Create new password"
             />

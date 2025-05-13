@@ -1,20 +1,31 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
 
-const { onSubmit, fields, errors, metas } = useValidation()
+const { onSubmit, fields, errors, metas } = useValidation(false)
 const authStore = useAuthStore()
-const router = useRouter()
+
+onMounted(async () => {
+  await authStore.getProfile()
+  console.log(authStore.user.password)
+  fields.firstName.value = authStore.user?.firstName
+  fields.lastName.value = authStore.user?.lastName
+  fields.address.value = authStore.user?.address
+  fields.email.value = authStore.user?.email
+})
 
 const handleSubmit = onSubmit(async () => {
-  const userData = {
-    email: fields.email.value,
-    password: fields.password.value,
-  }
-
-  await authStore.login(userData)
-  router.push('/home')
+  await authStore.updateProfile({
+    firstName: fields.firstName.value,
+    lastName: fields.lastName.value,
+    phone: ' 12123',
+    address: fields.address.value,
+    oldPassword: fields.password.value,
+    newPassword: fields.newPassword.value,
+    repeatPassword: fields.confirmPassword.value,
+  })
+  fields.password.value = ''
 })
 </script>
 
@@ -29,7 +40,7 @@ const handleSubmit = onSubmit(async () => {
             <label>First Name</label>
             <input
               v-model="fields.firstName.value"
-              :error="metas.firstNameMeta.touched ? errors.firstNameError : ''"
+              :error="metas.firstNameMeta.touched ? errors.firstNameError.value : ''"
               placeholder="Md"
               class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
             />
@@ -39,7 +50,7 @@ const handleSubmit = onSubmit(async () => {
             <label>Last Name</label>
             <input
               v-model="fields.lastName.value"
-              :error="metas.lastNameMeta.touched ? errors.lastNameError : ''"
+              :error="metas.lastNameMeta.touched ? errors.lastNameError.value : ''"
               placeholder="Rimel"
               class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
             />
@@ -51,7 +62,7 @@ const handleSubmit = onSubmit(async () => {
             <label>Email</label>
             <input
               v-model="fields.email.value"
-              :error="metas.emailMeta.touched ? errors.emailError : ''"
+              :error="metas.emailMeta.touched ? errors.emailError.value : ''"
               placeholder="rimel1111@gmail.com"
               class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
             />
@@ -61,7 +72,7 @@ const handleSubmit = onSubmit(async () => {
             <label>Address</label>
             <input
               v-model="fields.address.value"
-              :error="metas.addressMeta.touched ? errors.addressError : ''"
+              :error="metas.addressMeta.touched ? errors.addressError.value : ''"
               placeholder="Kingston, 5236, United State"
               class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
             />
@@ -73,7 +84,7 @@ const handleSubmit = onSubmit(async () => {
 
           <input
             v-model="fields.password.value"
-            :error="metas.passwordMeta.touched ? errors.passwordError : ''"
+            :error="metas.passwordMeta.touched ? errors.passwordError.value : ''"
             type="password"
             placeholder="Current Password"
             class="block bg-secondary-medium-white text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
@@ -81,7 +92,7 @@ const handleSubmit = onSubmit(async () => {
 
           <input
             v-model="fields.newPassword.value"
-            :error="metas.newPasswordMeta.touched ? errors.newPasswordError : ''"
+            :error="metas.newPasswordMeta.touched ? errors.newPasswordError.value : ''"
             type="password"
             placeholder="New Password"
             class="block bg-secondary-medium-white text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
@@ -89,7 +100,7 @@ const handleSubmit = onSubmit(async () => {
 
           <input
             v-model="fields.confirmPassword.value"
-            :error="metas.confirmPasswordMeta.touched ? errors.confirmPasswordError : ''"
+            :error="metas.confirmPasswordMeta.touched ? errors.confirmPasswordError.value : ''"
             type="password"
             placeholder="Confirm New Password"
             class="block bg-secondary-medium-white text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"

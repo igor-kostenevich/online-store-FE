@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted,ref } from 'vue'
+
 import { useCategoriesStore } from '@/stores/categories'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Slider.vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const store = useCategoriesStore()
 const openId = ref<number | null>(null)
 const router = useRouter()
+
+
+
 
 const goToCategory = (slug: string) => {
   router.push(`/category/${slug}`)
@@ -16,6 +21,17 @@ const goToCategory = (slug: string) => {
 const toggle = (id: number) => {
   openId.value = openId.value === id ? null : id
 }
+
+const menuProducts = ref([])
+
+onMounted(async () => {
+  try {
+    const res = await axios.get('https://api.family-love-haven.com/api/category')
+    menuProducts.value = res.data
+  } catch (e) {
+    console.log(e)
+  }
+})
 </script>
 
 <template>
@@ -25,7 +41,7 @@ const toggle = (id: number) => {
         <div class="flex flex-col lg:flex-row gap-8 items-stretch px-4 min-h-[100%]">
           <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r-0 lg:border-r lg:border-gray-200">
             <li
-              v-for="item in store.categoriesMenu"
+              v-for="item in menuProducts"
               :key="item.id"
               class="flex flex-col"
             >
@@ -35,7 +51,7 @@ const toggle = (id: number) => {
                   class="text-left flex-1 hover:text-secondary-red transition"
                   @click="item.children.length ? toggle(item.id) : goToCategory(item.slug)"
                 >
-                  {{ item.label }}
+                  {{ item.name }}
                 </button>
 
                 <button
@@ -61,7 +77,7 @@ const toggle = (id: number) => {
                   class="py-1 cursor-pointer text-sm hover:text-secondary-red transition"
                   @click="goToCategory(child.slug)"
                 >
-                  {{ child.label }}
+                  {{ child.name }}
                 </li>
               </ul>
             </li>

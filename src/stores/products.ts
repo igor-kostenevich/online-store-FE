@@ -1,16 +1,12 @@
 import { defineStore } from 'pinia'
-
 import img1 from '@/assets/images/slides/01.png'
 import img2 from '@/assets/images/slides/02.png'
 import img3 from '@/assets/images/slides/03.png'
 import img4 from '@/assets/images/slides/04.png'
 import img5 from '@/assets/images/slides/05.png'
 import offerImg from '@/assets/images/offerImg.png'
-import ps from '@/assets/images/newArrival/ps.png'
-import women from '@/assets/images/newArrival/women.png'
-import columns from '@/assets/images/newArrival/columns.png'
-import gucci from '@/assets/images/newArrival/gucci.png'
 import best from '@/assets/images/best.png'
+import axios from 'axios'
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -90,36 +86,7 @@ export const useProductsStore = defineStore('products', {
         expiresAt: '2025-06-10T23:59:59Z',
       },
     ],
-    newArrivalProducts: [
-      {
-        id: 1,
-        title: 'PlayStation 5',
-        description: 'Black and White version of the PS5 coming out on sale.',
-        imageUrl: ps,
-        slug: '/products/playstation-5',
-      },
-      {
-        id: 2,
-        title: 'Women’s Collections',
-        description: 'Featured woman collections that give you another vibe.',
-        imageUrl: women,
-        slug: '/products/women-collections',
-      },
-      {
-        id: 3,
-        title: 'Speakers',
-        description: 'Amazon wireless speakers',
-        imageUrl: columns,
-        slug: '/products/speakers',
-      },
-      {
-        id: 4,
-        title: 'Perfume',
-        description: 'GUCCI INTENSE OUD EDP',
-        imageUrl: gucci,
-        slug: '/products/perfume',
-      },
-    ],
+    newArrivalProducts: [],
     exploreProducts: [
       {
         id: 1,
@@ -331,4 +298,11 @@ export const useProductsStore = defineStore('products', {
       },
     ],
   }),
+
+  actions: {
+    async getNewArrivalProducts() {
+      const res = await axios.get('https://api.family-love-haven.com/api/product/new-arrivals')
+      this.newArrivalProducts = res.data
+    },
+  },
 })

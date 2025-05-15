@@ -1,18 +1,13 @@
 <script setup lang="ts">
-import { onMounted,ref } from 'vue'
-
+import { onMounted, ref } from 'vue'
 import { useCategoriesStore } from '@/stores/categories'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Slider.vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
 const store = useCategoriesStore()
 const openId = ref<number | null>(null)
 const router = useRouter()
-
-
-
 
 const goToCategory = (slug: string) => {
   router.push(`/category/${slug}`)
@@ -22,15 +17,8 @@ const toggle = (id: number) => {
   openId.value = openId.value === id ? null : id
 }
 
-const menuProducts = ref([])
-
-onMounted(async () => {
-  try {
-    const res = await axios.get('https://api.family-love-haven.com/api/category')
-    menuProducts.value = res.data
-  } catch (e) {
-    console.log(e)
-  }
+onMounted(() => {
+  store.getCategoriesMenu()
 })
 </script>
 
@@ -41,7 +29,7 @@ onMounted(async () => {
         <div class="flex flex-col lg:flex-row gap-8 items-stretch px-4 min-h-[100%]">
           <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r-0 lg:border-r lg:border-gray-200">
             <li
-              v-for="item in menuProducts"
+              v-for="item in store.categoriesMenu"
               :key="item.id"
               class="flex flex-col"
             >

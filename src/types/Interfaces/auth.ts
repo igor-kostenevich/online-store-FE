@@ -9,7 +9,11 @@ export interface LoginValues {
 }
 
 export interface UpdatedValues {
-  name: string
+  firstName: string
+  lastName?: string
   email: string
+  address?: string
   password: string
+  newPassword?: string
+  confirmPassword?: string
 }

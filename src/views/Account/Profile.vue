@@ -2,24 +2,35 @@
 import { onMounted } from 'vue'
 import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
+import BaseInput from '@/components/shared/BaseInput.vue'
 
-const { onSubmit, fields, errors, metas } = useValidation(false)
+const { onSubmit, fields, errors, metas } = useValidation({
+  requireFirstName: true,
+  requireLastName: true,
+  requireAddress: true,
+  requireEmail: true,
+  requirePassword: true,
+  requireConfirmPassword: true,
+  requireNewPassword: true,
+  requirePhone: true,
+})
 const authStore = useAuthStore()
 
 onMounted(async () => {
   await authStore.getProfile()
-  console.log(authStore.user.password)
+
   fields.firstName.value = authStore.user?.firstName
   fields.lastName.value = authStore.user?.lastName
   fields.address.value = authStore.user?.address
   fields.email.value = authStore.user?.email
+  fields.phone.value = authStore.user?.phone
 })
 
 const handleSubmit = onSubmit(async () => {
   await authStore.updateProfile({
     firstName: fields.firstName.value,
     lastName: fields.lastName.value,
-    phone: ' 12123',
+    phone: fields.phone.value,
     address: fields.address.value,
     oldPassword: fields.password.value,
     newPassword: fields.newPassword.value,
@@ -38,21 +49,23 @@ const handleSubmit = onSubmit(async () => {
         <div class="flex flex-col xs:flex-row gap-x-12 gap-y-2">
           <div class="w-full">
             <label>First Name</label>
-            <input
+
+            <BaseInput
               v-model="fields.firstName.value"
               :error="metas.firstNameMeta.touched ? errors.firstNameError.value : ''"
               placeholder="Md"
-              class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
+              view="secondary"
             />
           </div>
 
           <div class="w-full">
             <label>Last Name</label>
-            <input
+
+            <BaseInput
               v-model="fields.lastName.value"
               :error="metas.lastNameMeta.touched ? errors.lastNameError.value : ''"
               placeholder="Rimel"
-              class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
+              view="secondary"
             />
           </div>
         </div>
@@ -60,50 +73,59 @@ const handleSubmit = onSubmit(async () => {
         <div class="flex flex-col xs:flex-row gap-x-12 gap-y-2">
           <div class="w-full">
             <label>Email</label>
-            <input
+
+            <BaseInput
               v-model="fields.email.value"
               :error="metas.emailMeta.touched ? errors.emailError.value : ''"
               placeholder="rimel1111@gmail.com"
-              class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
+              view="secondary"
             />
           </div>
 
           <div class="w-full">
             <label>Address</label>
-            <input
+
+            <BaseInput
               v-model="fields.address.value"
               :error="metas.addressMeta.touched ? errors.addressError.value : ''"
               placeholder="Kingston, 5236, United State"
-              class="block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
+              view="secondary"
             />
           </div>
         </div>
 
         <div class="flex flex-col gap-4">
+          <h4 class="font-medium">Phone Number</h4>
+
+          <BaseInput
+            v-model="fields.phone.value"
+            :error="metas.phoneMeta.touched ? errors.phoneError.value : ''"
+            placeholder="phone number"
+            view="secondary"
+          />
+        </div>
+        <div class="flex flex-col gap-4">
           <h4 class="font-medium">Password Changes</h4>
 
-          <input
+          <BaseInput
             v-model="fields.password.value"
             :error="metas.passwordMeta.touched ? errors.passwordError.value : ''"
-            type="password"
             placeholder="Current Password"
-            class="block bg-secondary-medium-white text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
+            view="secondary"
           />
 
-          <input
+          <BaseInput
             v-model="fields.newPassword.value"
             :error="metas.newPasswordMeta.touched ? errors.newPasswordError.value : ''"
-            type="password"
             placeholder="New Password"
-            class="block bg-secondary-medium-white text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
+            view="secondary"
           />
 
-          <input
+          <BaseInput
             v-model="fields.confirmPassword.value"
             :error="metas.confirmPasswordMeta.touched ? errors.confirmPasswordError.value : ''"
-            type="password"
             placeholder="Confirm New Password"
-            class="block bg-secondary-medium-white text-text-gray rounded-[5px] pt-3 pb-3 pl-4 w-full"
+            view="secondary"
           />
         </div>
       </div>

@@ -3,7 +3,10 @@ import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
-const { onSubmit, fields, errors, metas } = useValidation()
+const { onSubmit, fields, errors, metas } = useValidation({
+  requireEmail: true,
+  requirePassword: true,
+})
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -14,7 +17,7 @@ const handleSubmit = onSubmit(async () => {
   }
 
   await authStore.login(userData)
-  router.push('/home')
+  router.push('/account/profile')
 })
 </script>
 

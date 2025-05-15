@@ -13,15 +13,12 @@ export const useAuthStore = defineStore('auth', {
 
   actions: {
     async register(userData: RegisterValues) {
-      console.log('Sending register request:', userData)
       await this.api.post('/auth/register', userData)
-      console.log('Register success')
     },
 
     async login(userData: LoginValues) {
       const response = await this.api.post('/auth/login', userData)
       const { accessToken } = response
-
       localStorage.setItem('accessToken', accessToken)
     },
     async getProfile() {

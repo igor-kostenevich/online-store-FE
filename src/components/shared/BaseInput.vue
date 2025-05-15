@@ -8,6 +8,7 @@ const props = defineProps<{
   disabled?: boolean
   placeholder?: string
   type?: string
+  view: 'secondary'
 }>()
 
 const emit = defineEmits<{
@@ -16,6 +17,14 @@ const emit = defineEmits<{
 }>()
 
 const inputClass = computed(() => {
+  if (props.view === 'secondary') {
+    return [
+      'block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px]',
+      'pt-3 pb-3 pl-4 w-full',
+      props.disabled ? 'cursor-not-allowed bg-black-300' : '',
+      props.error ? 'border border-red-500' : 'border border-transparent',
+    ].join(' ')
+  }
   return [
     'outline-none w-full transition duration-200 ease-in bg-transparent border-b',
     'border-gray-400 focus:border-black',

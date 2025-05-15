@@ -3,13 +3,17 @@ import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
-const { onSubmit, fields, errors, metas } = useValidation(false)
+const { onSubmit, fields, errors, metas } = useValidation({
+  requireEmail: true,
+  requirePassword: true,
+  requireFirstName: true,
+})
 const authStore = useAuthStore()
 const router = useRouter()
 
 const handleSubmit = onSubmit(async () => {
   const userData = {
-    firstName: fields.text.value,
+    firstName: fields.firstName.value,
     email: fields.email.value,
     password: fields.password.value,
   }
@@ -39,8 +43,8 @@ const handleSubmit = onSubmit(async () => {
 
           <div class="flex flex-col gap-10 pt-10">
             <BaseInput
-              v-model="fields.text.value"
-              :error="metas.textMeta.touched ? errors.textError.value : ''"
+              v-model="fields.firstName.value"
+              :error="metas.firstNameMeta.touched ? errors.firstNameError.value : ''"
               placeholder="Name"
             />
             <BaseInput

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useValidation } from '@/composables/useValidation'
 
-const { onSubmit, fields, errors, metas } = useValidation()
+const { onSubmit, fields, errors, metas } = useValidation({
+  requireEmail: true,
+  requirePassword: true,
+})
 </script>
 
 <template>

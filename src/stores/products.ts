@@ -6,7 +6,8 @@ import img4 from '@/assets/images/slides/04.png'
 import img5 from '@/assets/images/slides/05.png'
 import offerImg from '@/assets/images/offerImg.png'
 import best from '@/assets/images/best.png'
-import axios from 'axios'
+import { NewArrivalProducts } from '@/types/Interfaces/products'
+import { useApi } from '@/composables/useApi'
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -86,7 +87,7 @@ export const useProductsStore = defineStore('products', {
         expiresAt: '2025-06-10T23:59:59Z',
       },
     ],
-    newArrivalProducts: [],
+    newArrivalProducts: [] as NewArrivalProducts[],
     exploreProducts: [
       {
         id: 1,
@@ -301,8 +302,8 @@ export const useProductsStore = defineStore('products', {
 
   actions: {
     async getNewArrivalProducts() {
-      const res = await axios.get('https://api.family-love-haven.com/api/product/new-arrivals')
-      this.newArrivalProducts = res.data
+      const { api } = useApi()
+      this.newArrivalProducts = await api.get('/product/new-arrivals')
     },
   },
 })

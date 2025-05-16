@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
 import { computed, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
 
 const store = useProductsStore()
-
+const products = computed(() => store.newArrivalProducts)
 onMounted(() => {
-  console.log(store.getNewArrivalProducts())
   store.getNewArrivalProducts()
 })
-
-const products = computed(() => store.newArrivalProducts)
 </script>
 
 <template>
@@ -21,57 +17,21 @@ const products = computed(() => store.newArrivalProducts)
         <div class="section-title">New Arrival</div>
       </div>
 
-      <div
-        v-if="products.length >= 4"
-        class="grid gap-4 text-white grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-rows-none lg:grid-rows-2"
-      >
+      <div class="grid gap-4 text-white grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-rows-none lg:grid-rows-2">
         <div
-          class="lg:col-span-2 lg:row-span-2 bg-cover bg-center relative md:p-6 p-4 min-h-[400px] sm:min-h-[500px] lg:min-h-[550px]"
-          :style="{ backgroundImage: `url(${products[0].images[0]?.url})` }"
+          v-for="(product, index) in products.slice(0, 4)"
+          :key="product.id"
+          :class="[
+            'bg-cover bg-center relative md:p-6 p-4',
+            index === 0 ? 'lg:col-span-2 lg:row-span-2 min-h-[400px] sm:min-h-[500px] lg:min-h-[550px]' : 'min-h-[300px] sm:min-h-[350px]',
+            index === 1 ? 'lg:col-span-2' : '',
+          ]"
+          :style="{ backgroundImage: `url(${product.images[0]?.url})` }"
         >
           <div class="absolute bottom-4 left-4 right-4">
-            <h2 class="text-lg font-bold">{{ products[0].title }}</h2>
-            <p class="pt-1 pb-1">{{ products[0].description }}</p>
-            <RouterLink :to="products[0].slug">
-              <span class="mt-3 underline">Shop Now</span>
-            </RouterLink>
-          </div>
-        </div>
-
-        <div
-          class="lg:col-span-2 bg-cover bg-center relative md:p-6 p-4 min-h-[300px] sm:min-h-[350px]"
-          :style="{ backgroundImage: `url(${products[1].images[0]?.url})` }"
-        >
-          <div class="absolute bottom-4 left-4 right-4">
-            <h2 class="text-lg font-bold">{{ products[1].title }}</h2>
-            <p class="pt-1 pb-1">{{ products[1].description }}</p>
-            <RouterLink :to="products[1].slug">
-              <span class="mt-3 underline">Shop Now</span>
-            </RouterLink>
-          </div>
-        </div>
-
-        <div
-          class="bg-cover bg-center relative md:p-6 p-4 min-h-[300px] sm:min-h-[350px]"
-          :style="{ backgroundImage: `url(${products[2].images[0]?.url})` }"
-        >
-          <div class="absolute bottom-4 left-4 right-4">
-            <h2 class="text-lg font-bold">{{ products[2].title }}</h2>
-            <p class="pt-1 pb-1">{{ products[2].description }}</p>
-            <RouterLink :to="products[2].slug">
-              <span class="mt-3 underline">Shop Now</span>
-            </RouterLink>
-          </div>
-        </div>
-
-        <div
-          class="bg-cover bg-center relative md:p-6 p-4 min-h-[300px] sm:min-h-[350px]"
-          :style="{ backgroundImage: `url(${products[3].images[0]?.url})` }"
-        >
-          <div class="absolute bottom-4 left-4 right-4">
-            <h2 class="text-lg font-bold">{{ products[3].title }}</h2>
-            <p class="pt-1 pb-1">{{ products[3].description }}</p>
-            <RouterLink :to="products[3].slug">
+            <h2 class="text-lg font-bold">{{ product.name }}</h2>
+            <p class="pt-1 pb-1">{{ product.description }}</p>
+            <RouterLink :to="product.slug">
               <span class="mt-3 underline">Shop Now</span>
             </RouterLink>
           </div>

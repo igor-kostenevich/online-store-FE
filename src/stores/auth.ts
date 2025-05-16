@@ -19,7 +19,6 @@ export const useAuthStore = defineStore('auth', {
     async login(userData: LoginValues) {
       const response = await this.api.post('/auth/login', userData)
       const { accessToken } = response
-
       localStorage.setItem('accessToken', accessToken)
     },
     async getProfile() {

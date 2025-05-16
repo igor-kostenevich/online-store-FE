@@ -3,19 +3,25 @@ import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
-const { onSubmit, fields, errors, metas } = useValidation(true)
+const { onSubmit, fields, errors, metas } = useValidation({
+  requireEmail: true,
+  requirePassword: true,
+  requireFirstName: true,
+})
 const authStore = useAuthStore()
 const router = useRouter()
 
 const handleSubmit = onSubmit(async () => {
   const userData = {
-    name: fields.text.value,
+    firstName: fields.firstName.value,
     email: fields.email.value,
     password: fields.password.value,
   }
 
+  console.log('Form submitted with:', userData)
+
   await authStore.register(userData)
-  router.push('/home')
+  router.push('login')
 })
 </script>
 
@@ -37,18 +43,18 @@ const handleSubmit = onSubmit(async () => {
 
           <div class="flex flex-col gap-10 pt-10">
             <BaseInput
-              v-model="fields.text.value"
-              :error="metas.textMeta.touched ? errors.textError : ''"
+              v-model="fields.firstName.value"
+              :error="metas.firstNameMeta.touched ? errors.firstNameError.value : ''"
               placeholder="Name"
             />
             <BaseInput
               v-model="fields.email.value"
-              :error="metas.emailMeta.touched ? errors.emailError : ''"
+              :error="metas.emailMeta.touched ? errors.emailError.value : ''"
               placeholder="Email or Phone Number"
             />
             <BaseInput
               v-model="fields.password.value"
-              :error="metas.passwordMeta.touched ? errors.passwordError : ''"
+              :error="metas.passwordMeta.touched ? errors.passwordError.value : ''"
               type="password"
               placeholder="Password"
             />

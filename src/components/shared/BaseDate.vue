@@ -3,21 +3,21 @@ import { onMounted, onUnmounted } from 'vue'
 import { useTimer } from '@/composables/useTimer'
 
 const props = defineProps<{
-  days: number
-  hours: number
-  minutes: number
-  seconds: number
+  expiresAt: string
 }>()
 
 const timer = useTimer()
-
 let intervalId: number
 
 onMounted(() => {
-  timer.setTime(props.days, props.hours, props.minutes, props.seconds)
+  timer.setTargetDate(props.expiresAt)
 
   intervalId = setInterval(() => {
     timer.tick()
+
+    if (timer.isFinished.value) {
+      clearInterval(intervalId)
+    }
   }, 1000)
 })
 

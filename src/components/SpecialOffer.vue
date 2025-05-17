@@ -1,27 +1,28 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 import { useTimer } from '@/composables/useTimer'
 import { useProductsStore } from '@/stores/products'
-import { onMounted } from 'vue'
 
 const timer = useTimer()
 const store = useProductsStore()
 const product = store.productOffer[0]
 
-onMounted(() => {
-  const expiresAt = new Date(product.expiresAt).getTime()
-  const now = Date.now()
-  let diff = expiresAt - now
-  if (diff < 0) diff = 0
-  const totalSeconds = Math.floor(diff / 1000)
-  const days = Math.floor(totalSeconds / (24 * 3600))
-  const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600)
-  const minutes = Math.floor((totalSeconds % 3600) / 60)
-  const seconds = totalSeconds % 60
+let intervalId: number
 
-  timer.setTime(days, hours, minutes, seconds)
-  setInterval(() => {
+onMounted(() => {
+  timer.setTargetDate(product.expiresAt)
+
+  intervalId = setInterval(() => {
     timer.tick()
+
+    if (timer.isFinished.value) {
+      clearInterval(intervalId)
+    }
   }, 1000)
+})
+
+onUnmounted(() => {
+  clearInterval(intervalId)
 })
 </script>
 

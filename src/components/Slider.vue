@@ -57,14 +57,6 @@ defineProps<{
   nextBtnId?: string
   prevBtnId?: string
 }>()
-
-const onSwiper = (swiper: any) => {
-  console.log(swiper)
-}
-
-const onSlideChange = () => {
-  console.log('slide change')
-}
 </script>
 
 <style scoped>

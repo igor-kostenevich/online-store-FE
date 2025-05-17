@@ -3,6 +3,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 import { useProductsStore } from '@/stores/products'
 import Slider from '@/components/Slider.vue'
 import BaseDate from '@/components/shared/BaseDate.vue'
+import { onMounted } from 'vue'
 
 const productSlider = useProductsStore()
 
@@ -20,6 +21,10 @@ const breakpoints = {
     slidesPerView: 4,
   },
 }
+
+onMounted(async () => {
+  await productSlider.getProducts(20, 1)
+})
 </script>
 
 <template>
@@ -31,15 +36,14 @@ const breakpoints = {
             <div class="section-subtitle">Today’s</div>
             <div class="section-title mb-[20px] md:mb-[40px]">Flash Sales</div>
           </div>
+
           <BaseDate
-            :days="3"
-            :hours="23"
-            :minutes="19"
-            :seconds="56"
+            v-if="productSlider.products?.expiresAt"
+            :expires-at="productSlider.products.expiresAt"
           />
         </div>
 
-        <div class="absolute bottom-[75%] md:bottom-[30%] right-[5%] md:right-[0%] z-10 flex gap-2">
+        <div class="absolute bottom-[75%] md:bottom-[33%] right-[5%] md:right-[0%] z-10 flex gap-2">
           <button
             class="flex items-center justify-center bg-[#f5f5f5] !w-[46px] !h-[46px] p-1 transition rounded-full cursor-pointer products-slider-next rotate-180"
             type="button"
@@ -57,7 +61,7 @@ const breakpoints = {
       </div>
 
       <Slider
-        :items="productSlider.products"
+        :items="productSlider.products.items"
         :slides-view="4"
         :space-between="20"
         slide-effect="slide"
@@ -78,7 +82,7 @@ const breakpoints = {
         </template>
       </Slider>
 
-      <router-link to="#">
+      <router-link :to="{ name: 'discountProducts' }">
         <BaseButton class="mt-10 mx-auto flex">View All Products</BaseButton>
       </router-link>
     </div>

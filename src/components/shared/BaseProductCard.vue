@@ -8,8 +8,8 @@ const props = defineProps<{
   product: Object
 }>()
 
-const rating = ref(props.product.rating)
-const isFavorite = ref(props.product.isFavorite)
+const rating = ref(props.product.averageRating)
+const isFavorite = ref(props.product.isNew)
 
 const discountForCard = computed(() => {
   const price = props.product.price
@@ -22,7 +22,7 @@ const discountForCard = computed(() => {
   <div class="cursor-pointer">
     <div class="relative bg-secondary-mediumWhite p-10 mb-0.5 group bg-secondary-medium-white">
       <img
-        :src="product.image"
+        :src="product.images?.[0]?.url"
         alt="image"
         class="h-full object-contain mx-auto mb-2"
       />
@@ -48,7 +48,7 @@ const discountForCard = computed(() => {
     </div>
 
     <div class="p-2 flex flex-col gap-1">
-      <div class="font-semibold text-base">{{ product.title }}</div>
+      <div class="font-semibold text-base">{{ product.name }}</div>
 
       <div class="flex items-center text-red-500 font-bold text-lg">
         {{ product.currency }}{{ product.price }}

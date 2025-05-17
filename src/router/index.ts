@@ -64,7 +64,14 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-
+  {
+    path: '/products/discount',
+    name: 'discountProducts',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/ProductsDiscount.vue'),
+  },
   // {
   //   path: '/:notFound(.*)',
   //   name: 'error',

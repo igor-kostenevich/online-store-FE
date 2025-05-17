@@ -1,0 +1,54 @@
+<script setup lang="ts">
+import { onMounted, watch, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useProductsStore } from '@/stores/products'
+import BaseProductCard from '@/components/shared/BaseProductCard.vue'
+import Pagination from '@/components/ProductsPagination.vue'
+
+const store = useProductsStore()
+const route = useRoute()
+const router = useRouter()
+const currentPage = computed(() => Number(route.query.page))
+
+onMounted(() => {
+  store.getProducts(20, currentPage.value)
+})
+
+watch(currentPage, newPage => {
+  store.getProducts(20, newPage)
+})
+
+function onChangePage(newPage: number) {
+  router.push({
+    path: `/products/discount/`,
+    query: {
+      page: newPage,
+    },
+  })
+}
+</script>
+
+<template>
+  <section class="pt-[140px] pb-[70px]">
+    <div class="container">
+      <div class="section-title mb-10">Discounted Products</div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <BaseProductCard
+          v-for="item in store.products.items"
+          :key="item.id"
+          :product="item"
+        />
+      </div>
+
+      <Pagination
+        :current-page="currentPage"
+        :total-pages="store.products.meta?.totalPages"
+        class="mt-10"
+        @change-page="onChangePage"
+      />
+    </div>
+  </section>
+</template>
+
+<style scoped></style>

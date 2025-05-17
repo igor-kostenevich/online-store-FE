@@ -6,7 +6,7 @@ import computer from '@/assets/images/categorySlides/Category-Computer.svg'
 import pad from '@/assets/images/categorySlides/Category-Gamepad.svg'
 import headphones from '@/assets/images/categorySlides/Category-Headphone.svg'
 import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
-import axios from 'axios'
+import { useApi } from '@/composables/useApi'
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -77,12 +77,8 @@ export const useCategoriesStore = defineStore('categories', {
 
   actions: {
     async getCategoriesMenu() {
-      try {
-        const res = await axios.get('https://api.family-love-haven.com/api/category')
-        this.categoriesMenu = res.data
-      } catch (e) {
-        console.log(e)
-      }
+      const { api } = useApi()
+      this.categoriesMenu = await api.get('/category')
     },
   },
 })

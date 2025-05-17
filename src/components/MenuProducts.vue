@@ -17,8 +17,8 @@ const toggle = (id: number) => {
   openId.value = openId.value === id ? null : id
 }
 
-onMounted(() => {
-  store.getCategoriesMenu()
+onMounted(async () => {
+  await store.getCategoriesMenu()
 })
 </script>
 

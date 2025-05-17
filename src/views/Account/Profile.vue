@@ -2,7 +2,6 @@
 import { onMounted } from 'vue'
 import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
-import BaseInput from '@/components/shared/BaseInput.vue'
 
 const { onSubmit, fields, errors, metas } = useValidation({
   requireFirstName: true,
@@ -131,7 +130,7 @@ const handleSubmit = onSubmit(async () => {
       </div>
 
       <div class="mt-11 flex items-center gap-4 justify-end">
-        <div class="cursor-pointer">Cancel</div>
+        <BaseButton class="bg-transparent text-[#000]">Cancel</BaseButton>
         <BaseButton type="submit">Save Changes</BaseButton>
       </div>
     </form>

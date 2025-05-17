@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useCategoriesStore } from '@/stores/categories'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Slider.vue'
@@ -16,6 +16,10 @@ const goToCategory = (slug: string) => {
 const toggle = (id: number) => {
   openId.value = openId.value === id ? null : id
 }
+
+onMounted(async () => {
+  await store.getCategoriesMenu()
+})
 </script>
 
 <template>
@@ -35,7 +39,7 @@ const toggle = (id: number) => {
                   class="text-left flex-1 hover:text-secondary-red transition"
                   @click="item.children.length ? toggle(item.id) : goToCategory(item.slug)"
                 >
-                  {{ item.label }}
+                  {{ item.name }}
                 </button>
 
                 <button
@@ -61,7 +65,7 @@ const toggle = (id: number) => {
                   class="py-1 cursor-pointer text-sm hover:text-secondary-red transition"
                   @click="goToCategory(child.slug)"
                 >
-                  {{ child.label }}
+                  {{ child.name }}
                 </li>
               </ul>
             </li>

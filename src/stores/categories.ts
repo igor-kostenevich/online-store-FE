@@ -6,77 +6,10 @@ import computer from '@/assets/images/categorySlides/Category-Computer.svg'
 import pad from '@/assets/images/categorySlides/Category-Gamepad.svg'
 import headphones from '@/assets/images/categorySlides/Category-Headphone.svg'
 import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
+import { useApi } from '@/composables/useApi'
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
-    categoriesMenu: [
-      {
-        id: 1,
-        label: "Woman's Fashion",
-        slug: 'womans-fashion',
-        children: [
-          { label: 'Shirts', slug: 'shirts' },
-          { label: 'Shoes', slug: 'shoes' },
-        ],
-      },
-      {
-        id: 2,
-        label: "Men's Fashion",
-        slug: 'mens-fashion',
-        children: [
-          { label: 'Shirts', slug: 'shirts' },
-          { label: 'Shoes', slug: 'shoes' },
-        ],
-      },
-      {
-        id: 3,
-        label: 'Electronics',
-        slug: 'electronics',
-        children: [],
-      },
-      {
-        id: 4,
-        label: 'Home & Lifestyle',
-        slug: 'home-lifestyle',
-        children: [],
-      },
-      {
-        id: 5,
-        label: 'Medicine',
-        slug: 'medicine',
-        children: [],
-      },
-      {
-        id: 6,
-        label: 'Sports & Outdoor',
-        slug: 'sports-outdoor',
-        children: [],
-      },
-      {
-        id: 7,
-        label: 'Baby’s & Toys',
-        slug: 'babys-toys',
-        children: [],
-      },
-      {
-        id: 8,
-        label: 'Baby’s & Toys',
-        slug: 'babys-toys',
-        children: [],
-      },
-      {
-        id: 9,
-        label: 'Groceries & Pets',
-        slug: 'groceries-pets',
-        children: [],
-      },
-      {
-        id: 10,
-        label: 'Health & Beauty',
-        slug: 'health-beauty',
-        children: [],
-      },
-    ],
     promoSlides: [
       {
         id: 1,
@@ -139,5 +72,13 @@ export const useCategoriesStore = defineStore('categories', {
         title: 'Headphones',
       },
     ],
+    categoriesMenu: [],
   }),
+
+  actions: {
+    async getCategoriesMenu() {
+      const { api } = useApi()
+      this.categoriesMenu = await api.get('/category')
+    },
+  },
 })

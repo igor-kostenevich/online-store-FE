@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import SideBarAccount from '@/components/shared/SideBarAccount.vue'
+import SideBarAccount from '@/components/common/SideBarAccount.vue'
 
 const route = useRoute()
 

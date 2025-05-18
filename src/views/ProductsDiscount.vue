@@ -2,7 +2,7 @@
 import { onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProductsStore } from '@/stores/products'
-import BaseProductCard from '@/components/shared/BaseProductCard.vue'
+import BaseProductCard from '@/components/common/BaseProductCard.vue'
 import Pagination from '@/components/ProductsPagination.vue'
 
 const store = useProductsStore()

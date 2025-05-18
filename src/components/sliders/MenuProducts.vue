@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useCategoriesStore } from '@/stores/categories'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
-import Slider from '@/components/Slider.vue'
+import Slider from '@/components/common/Slider.vue'
 import { useRouter } from 'vue-router'
 
 const store = useCategoriesStore()

@@ -5,8 +5,6 @@ import MainLayout from '@/layouts/MainLayout.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue'
 import type { ILayouts } from '@/types/Interfaces'
 
-// import { ChevronDownIcon } from '@heroicons/vue/24/outline'
-
 const layouts: ILayouts = {
   main: MainLayout,
   auth: AuthLayout,

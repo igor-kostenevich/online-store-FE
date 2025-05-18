@@ -12,8 +12,8 @@ const router = useRouter()
 
 const handleSubmit = onSubmit(async () => {
   const userData = {
-    email: fields.email.value,
-    password: fields.password.value,
+    email: fields.email.value as string,
+    password: fields.password.value as string,
   }
 
   await authStore.login(userData)

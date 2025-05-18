@@ -8,7 +8,7 @@ const props = defineProps<{
   disabled?: boolean
   placeholder?: string
   type?: string
-  view: 'secondary'
+  view?: 'secondary'
 }>()
 
 const emit = defineEmits<{

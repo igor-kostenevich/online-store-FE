@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useBestSelling } from '@/stores/bestSelling'
+import { useProductsStore } from '@/stores/products'
 
-const store = useBestSelling()
+const store = useProductsStore()
 </script>
 <template>
   <section class="pt-[70px] pb-[70px]">

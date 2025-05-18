@@ -15,8 +15,6 @@
       :breakpoints="breakpoints"
       :pagination="pagination"
       :grid="grid"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
     >
       <swiper-slide
         v-for="(item, index) in items"
@@ -48,7 +46,7 @@ defineProps<{
   slideStart: number
   loop?: boolean
   items: any[]
-  pagination?: boolean
+  pagination?: boolean | { clickable: boolean }
   navigation?: boolean
   breakpoints?: any
   slidesPerGroup?: number

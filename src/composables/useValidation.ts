@@ -3,16 +3,7 @@ import * as yup from 'yup'
 import type { Ref } from 'vue'
 import type { FieldMeta } from 'vee-validate'
 
-type FieldKey =
-  | 'email'
-  | 'password'
-  | 'text'
-  | 'firstName'
-  | 'lastName'
-  | 'newPassword'
-  | 'confirmPassword'
-  | 'address'
-  | 'phone'
+type FieldKey = 'email' | 'password' | 'text' | 'firstName' | 'lastName' | 'newPassword' | 'confirmPassword' | 'address' | 'phone'
 
 type ValidationOptions = Partial<Record<FieldKey, boolean>>
 
@@ -32,14 +23,9 @@ export function useValidation(options: ValidationOptions = {}) {
       ? yup
           .string()
           .required('Email or phone is required')
-          .matches(
-            /^(\+?\d{10,13}|[^@\s]+@[^@\s]+\.[^@\s]+)$/,
-            'Incorrect email or phone number',
-          )
+          .matches(/^(\+?\d{10,13}|[^@\s]+@[^@\s]+\.[^@\s]+)$/, 'Incorrect email or phone number')
       : yup.string(),
-    password: options.password
-      ? yup.string().min(6, 'Minimum 6 symbols').required('Password is required')
-      : yup.string(),
+    password: options.password ? yup.string().min(6, 'Minimum 6 symbols').required('Password is required') : yup.string(),
     text: options.text ? yup.string().required('Name is required') : yup.string(),
     firstName: options.firstName ? yup.string().required('First name is required') : yup.string(),
     lastName: options.lastName ? yup.string().required('Last name is required') : yup.string(),
@@ -52,12 +38,7 @@ export function useValidation(options: ValidationOptions = {}) {
       : yup.string(),
 
     address: options.address ? yup.string().required('Address is required') : yup.string(),
-    phone: options.phone
-      ? yup
-          .number()
-          .typeError('Phone number must be a number')
-          .required('Phone number is required')
-      : yup.string(),
+    phone: options.phone ? yup.number().typeError('Phone number must be a number').required('Phone number is required') : yup.string(),
   }
 
   const schema = yup.object(schemaShape)

@@ -6,6 +6,8 @@ const props = defineProps<{
   disabled?: boolean
   height?: number
 }>()
+
+defineEmits(['update:modelValue'])
 </script>
 
 <template>
@@ -21,7 +23,12 @@ const props = defineProps<{
         props.error ? 'border-secondary-red focus:border-secondary-red' : 'border-transparent focus:border-buttons-green hover:border-buttons-hoverRed',
         props.disabled ? 'cursor-not-allowed bg-gray-200' : '',
       ]"
-      @input="(event: InputEvent) => emit('update:modelValue', (event.target as HTMLTextAreaElement).value)"
+      @input="(event) => {
+        const target = (event as InputEvent).target as HTMLTextAreaElement | null;
+        if (target) {
+          $emit('update:modelValue', target.value);
+        }
+      }"
     />
     <p
       v-if="props.error"

@@ -9,6 +9,8 @@ import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
 import { useApi } from '@/composables/useApi'
 import { CategoryMenu } from '@/types/Interfaces/categories'
 
+const { api } = useApi()
+
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
     promoSlides: [
@@ -78,7 +80,6 @@ export const useCategoriesStore = defineStore('categories', {
 
   actions: {
     async getCategoriesMenu() {
-      const { api } = useApi()
       this.categoriesMenu = await api.get('/category')
     },
   },

@@ -1,7 +1,7 @@
 export interface RegisterValues {
   email: string
   password: string
-  name: string
+  firstName: string
 }
 export interface LoginValues {
   email: string
@@ -14,6 +14,20 @@ export interface UpdatedValues {
   email: string
   address?: string
   password: string
+  phone?: string
   newPassword?: string
   confirmPassword?: string
+}
+
+export interface User {
+  id: string
+  firstName: string
+  lastName: string
+  fullName: string
+  email: string
+  phone: string
+  address: string
+  role: 'USER' | 'ADMIN'
+  createdAt: string
+  updatedAt: string
 }

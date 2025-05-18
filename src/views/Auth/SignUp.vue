@@ -4,9 +4,9 @@ import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
 const { onSubmit, fields, errors, metas } = useValidation({
-  requireEmail: true,
-  requirePassword: true,
-  requireFirstName: true,
+  firstName: true,
+  email: true,
+  password: true,
 })
 const authStore = useAuthStore()
 const router = useRouter()

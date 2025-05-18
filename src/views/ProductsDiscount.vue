@@ -2,21 +2,20 @@
 import { onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProductsStore } from '@/stores/products'
-import BaseProductCard from '@/components/common/BaseProductCard.vue'
-import Pagination from '@/components/ProductsPagination.vue'
+import BaseProductCard from '@/components/Products/ProductCard.vue'
+import Pagination from '@/components/Pagination.vue'
 
 const store = useProductsStore()
 const route = useRoute()
 const router = useRouter()
 const currentPage = computed(() => Number(route.query.page))
 
-onMounted(() => {
-  store.getProducts(20, currentPage.value)
-})
-
-watch(currentPage, newPage => {
-  store.getProducts(20, newPage)
-})
+watch(currentPage, 
+  newPage => {
+    store.getDiscountProducts(20, newPage)
+  },
+  { immediate: true }
+)
 
 function onChangePage(newPage: number) {
   router.push({
@@ -50,5 +49,3 @@ function onChangePage(newPage: number) {
     </div>
   </section>
 </template>
-
-<style scoped></style>

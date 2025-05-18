@@ -2,8 +2,8 @@
 import { useValidation } from '@/composables/useValidation'
 
 const { onSubmit, fields, errors, metas } = useValidation({
-  requireEmail: true,
-  requirePassword: true,
+  email: true,
+  password: true,
 })
 
 const handleSubmit = onSubmit(async () => {

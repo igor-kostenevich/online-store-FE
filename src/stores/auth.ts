@@ -1,32 +1,31 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { RegisterValues, LoginValues, UpdatedValues } from '@/types/Interfaces/auth'
+import type { RegisterValues, LoginValues, UpdatedValues, User } from '@/types/Interfaces/auth'
+
+const { api } = useApi()
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
-    const { api } = useApi()
     return {
-      api,
-      user: null as any,
+      user: {} as User,
     }
   },
 
   actions: {
     async register(userData: RegisterValues) {
-      await this.api.post('/auth/register', userData)
+      await api.post('/auth/register', userData)
     },
 
     async login(userData: LoginValues) {
-      const response = await this.api.post('/auth/login', userData)
-      const { accessToken } = response
+      const { accessToken } = await api.post('/auth/login', userData)
       localStorage.setItem('accessToken', accessToken)
     },
     async getProfile() {
-      this.user = await this.api.get('/auth/profile')
+      this.user = await api.get('/auth/profile')
     },
 
     async updateProfile(data: UpdatedValues) {
-      this.user = await this.api.patch('/auth/profile', data)
+      this.user = await api.patch('/auth/profile', data)
     },
   },
 })

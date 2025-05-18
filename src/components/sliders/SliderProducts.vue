@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 import { useProductsStore } from '@/stores/products'
-import Slider from '@/components/common/Slider.vue'
-import BaseDate from '@/components/shared/BaseDate.vue'
+import Slider from '@/components/Common/Slider.vue'
+import BaseDate from '@/components/Shared/BaseDate.vue'
 import { onMounted } from 'vue'
 
 const productSlider = useProductsStore()
@@ -23,7 +23,7 @@ const breakpoints = {
 }
 
 onMounted(async () => {
-  await productSlider.getProducts(20, 1)
+  await productSlider.getDiscountProducts(20, 1)
 })
 </script>
 

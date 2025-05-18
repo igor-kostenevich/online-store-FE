@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
-import Slider from '@/components/common/Slider.vue'
+import Slider from '@/components/Common/Slider.vue'
 const store = useProductsStore()
 
 const breakpoints = {

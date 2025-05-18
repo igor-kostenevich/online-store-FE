@@ -4,6 +4,8 @@ import best from '@/assets/images/best.png'
 import { useApi } from '@/composables/useApi'
 import { NewArrivalProducts, ProductsResponse } from '@/types/Interfaces/products'
 
+const { api } = useApi()
+
 export const useProductsStore = defineStore('products', {
   state: () => ({
     products: {} as ProductsResponse,
@@ -284,18 +286,14 @@ export const useProductsStore = defineStore('products', {
   }),
 
   actions: {
-    async getProducts(limit: number, page: number) {
-      const { api } = useApi()
-      const res = await api.get('/product/discounts', {
+    async getDiscountProducts(limit: number, page: number) {
+      this.products = await api.get('/product/discounts', {
         limit,
         page,
       })
-
-      this.products = res
     },
 
     async getNewArrivalProducts() {
-      const { api } = useApi()
       this.newArrivalProducts = await api.get('/product/new-arrivals')
     },
   },

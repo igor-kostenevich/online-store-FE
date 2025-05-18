@@ -4,14 +4,14 @@ import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
 
 const { onSubmit, fields, errors, metas } = useValidation({
-  requireFirstName: true,
-  requireLastName: true,
-  requireAddress: true,
-  requireEmail: true,
-  requirePassword: true,
-  requireConfirmPassword: true,
-  requireNewPassword: true,
-  requirePhone: true,
+  firstName: true,
+  lastName: true,
+  address: true,
+  email: true,
+  password: true,
+  confirmPassword: true,
+  newPassword: true,
+  phone: true,
 })
 const authStore = useAuthStore()
 
@@ -27,13 +27,14 @@ onMounted(async () => {
 
 const handleSubmit = onSubmit(async () => {
   await authStore.updateProfile({
+    email: fields.email.value,
     firstName: fields.firstName.value,
     lastName: fields.lastName.value,
     phone: fields.phone.value,
     address: fields.address.value,
-    oldPassword: fields.password.value,
+    password: fields.password.value,
     newPassword: fields.newPassword.value,
-    repeatPassword: fields.confirmPassword.value,
+    confirmPassword: fields.confirmPassword.value,
   })
   fields.password.value = ''
 })

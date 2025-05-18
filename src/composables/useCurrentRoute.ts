@@ -11,5 +11,5 @@ export function useCurrentRoute() {
     return currentRoute.path.startsWith('/' + path)
   }
 
-  return { isCurrentRouteName }
+  return { isCurrentRouteName, isCurrentRoutePath }
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 import { useProductsStore } from '@/stores/products'
-import Slider from '@/components/Slider.vue'
+import Slider from '@/components/common/Slider.vue'
 import BaseDate from '@/components/shared/BaseDate.vue'
 import { onMounted } from 'vue'
 

@@ -7,7 +7,7 @@ const timer = useTimer()
 const store = useProductsStore()
 const product = store.productOffer[0]
 
-let intervalId: number
+let intervalId: any
 
 onMounted(() => {
   timer.setTargetDate(product.expiresAt)

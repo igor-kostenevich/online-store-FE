@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Vue3StarRatings from 'vue3-star-ratings'
-import BaseButton from '@/components/shared/BaseButton.vue'
+import { BaseProductCard } from '@/types/Interfaces/products'
 import { HeartIcon, EyeIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{
-  product: Object
+  product: BaseProductCard
 }>()
 
 const rating = ref(props.product.averageRating)

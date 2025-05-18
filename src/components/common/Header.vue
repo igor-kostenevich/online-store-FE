@@ -71,7 +71,7 @@ const toggleMenu = () => {
       <div class="container mx-auto px-4 py-4 flex items-center justify-between lg:justify-normal lg:gap-10">
         <router-link :to="{ path: '/home' }">
           <img
-            src="../assets/images/logo.svg"
+            src="../../assets/images/logo.svg"
             alt="logo"
             class="h-5 xs:h-6"
           />

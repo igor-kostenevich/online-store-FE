@@ -2,8 +2,7 @@ import { defineStore } from 'pinia'
 import offerImg from '@/assets/images/offerImg.png'
 import best from '@/assets/images/best.png'
 import { useApi } from '@/composables/useApi'
-import { ProductsResponse } from '@/types/Interfaces/product'
-import { NewArrivalProducts } from '@/types/Interfaces/products'
+import { NewArrivalProducts, ProductsResponse } from '@/types/Interfaces/products'
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -216,6 +215,60 @@ export const useProductsStore = defineStore('products', {
       },
       {
         id: 16,
+        title: 'Small BookSelf',
+        image: best,
+        price: 360,
+        oldPrice: null,
+        discount: 0,
+        rating: 5,
+        reviewsCount: 65,
+        isFavorite: false,
+        isViewed: false,
+        currency: '$',
+      },
+    ],
+    bestSellingProducts: [
+      {
+        id: 1,
+        title: 'The nаorth coat',
+        image: best,
+        price: 260,
+        oldPrice: 360,
+        discount: 28,
+        rating: 5,
+        reviewsCount: 65,
+        isFavorite: false,
+        isViewed: false,
+        currency: '$',
+      },
+      {
+        id: 2,
+        title: 'Gucci duffle bag',
+        image: best,
+        price: 960,
+        oldPrice: 1160,
+        discount: 17,
+        rating: 4.5,
+        reviewsCount: 65,
+        isFavorite: false,
+        isViewed: false,
+        currency: '$',
+      },
+      {
+        id: 3,
+        title: 'RGB liquid CPU Cooler',
+        image: best,
+        price: 160,
+        oldPrice: 170,
+        discount: 6,
+        rating: 4.5,
+        reviewsCount: 65,
+        isFavorite: false,
+        isViewed: false,
+        currency: '$',
+      },
+      {
+        id: 4,
         title: 'Small BookSelf',
         image: best,
         price: 360,

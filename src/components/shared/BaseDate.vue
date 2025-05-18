@@ -7,7 +7,7 @@ const props = defineProps<{
 }>()
 
 const timer = useTimer()
-let intervalId: number
+let intervalId: any
 
 onMounted(() => {
   timer.setTargetDate(props.expiresAt)

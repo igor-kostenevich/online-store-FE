@@ -7,6 +7,7 @@ import pad from '@/assets/images/categorySlides/Category-Gamepad.svg'
 import headphones from '@/assets/images/categorySlides/Category-Headphone.svg'
 import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
 import { useApi } from '@/composables/useApi'
+import { CategoryMenu } from '@/types/Interfaces/categories'
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -72,7 +73,7 @@ export const useCategoriesStore = defineStore('categories', {
         title: 'Headphones',
       },
     ],
-    categoriesMenu: [],
+    categoriesMenu: [] as CategoryMenu[],
   }),
 
   actions: {

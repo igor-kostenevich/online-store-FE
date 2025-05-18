@@ -13,12 +13,10 @@ const router = useRouter()
 
 const handleSubmit = onSubmit(async () => {
   const userData = {
-    firstName: fields.firstName.value,
-    email: fields.email.value,
-    password: fields.password.value,
+    firstName: fields.firstName.value as string,
+    email: fields.email.value as string,
+    password: fields.password.value as string,
   }
-
-  console.log('Form submitted with:', userData)
 
   await authStore.register(userData)
   router.push('login')

@@ -5,6 +5,13 @@ const { onSubmit, fields, errors, metas } = useValidation({
   requireEmail: true,
   requirePassword: true,
 })
+
+const handleSubmit = onSubmit(async () => {
+  const _userData = {
+    firstName: fields.firstName.value as string,
+    password: fields.password.value as string,
+  }
+})
 </script>
 
 <template>
@@ -19,7 +26,7 @@ const { onSubmit, fields, errors, metas } = useValidation({
       </div>
 
       <div class="container m-0 flex-[0_1_30%] self-center">
-        <form @submit.prevent="onSubmit">
+        <form @submit.prevent="handleSubmit">
           <div class="text-4xl">Log in to Exclusive</div>
           <div class="pt-2">Enter your details below</div>
 

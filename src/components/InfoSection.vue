@@ -1,8 +1,4 @@
-<script setup lang="ts">
-import img1 from '@/assets/images/info/01.svg'
-import img2 from '@/assets/images/info/01.svg'
-import img3 from '@/assets/images/info/03.svg'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <section class="pt-[70px] pb-[70px]">
@@ -10,7 +6,7 @@ import img3 from '@/assets/images/info/03.svg'
       <div class="flex justify-center sm:justify-between items-center gap-10 flex-wrap">
         <div class="flex flex-col gap-2 justify-center items-center">
           <img
-            :src="img1"
+            src="@/assets/images/info/01.svg"
             alt="photo"
           />
           <div class="text-xl font-semibold">FREE AND FAST DELIVERY</div>
@@ -18,7 +14,7 @@ import img3 from '@/assets/images/info/03.svg'
         </div>
         <div class="flex flex-col gap-2 justify-center items-center">
           <img
-            :src="img2"
+            src="@/assets/images/info/01.svg"
             alt="photo"
           />
           <div class="text-xl font-semibold">24/7 CUSTOMER SERVICE</div>
@@ -26,7 +22,7 @@ import img3 from '@/assets/images/info/03.svg'
         </div>
         <div class="flex flex-col gap-2 justify-center items-center">
           <img
-            :src="img3"
+            src="@/assets/images/info/03.svg"
             alt="photo"
           />
           <div class="text-xl font-semibold">MONEY BACK GUARANTEE</div>

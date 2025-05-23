@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch, computed } from 'vue'
+import { watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProductsStore } from '@/stores/products'
 import BaseProductCard from '@/components/Products/ProductCard.vue'
@@ -10,11 +10,12 @@ const route = useRoute()
 const router = useRouter()
 const currentPage = computed(() => Number(route.query.page))
 
-watch(currentPage, 
+watch(
+  currentPage,
   newPage => {
     store.getDiscountProducts(20, newPage)
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 function onChangePage(newPage: number) {

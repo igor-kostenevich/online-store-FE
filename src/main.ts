@@ -12,7 +12,7 @@ import BaseButton from '@/components/Shared/BaseButton.vue'
 import BaseInput from '@/components/Shared/BaseInput.vue'
 import BaseTextArea from '@/components/Shared/BaseTextArea.vue'
 import BaseProductCard from '@/components/Products/ProductCard.vue'
-import BaseQuantity from '@/components/shared/BaseQuantity.vue'
+import BaseQuantity from '@/components/Shared/BaseQuantity.vue'
 
 import 'swiper/css'
 import 'swiper/css/navigation'

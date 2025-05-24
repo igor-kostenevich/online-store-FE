@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useBreadcrumbs } from '@/composables/breadcrumbs'
-import Slider from '@/components/common/Slider.vue'
+import Slider from '@/components/Common/Slider.vue'
 import { ref } from 'vue'
 import { useProductsStore } from '@/stores/products'
 import Vue3StarRatings from 'vue3-star-ratings'

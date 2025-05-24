@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 import offerImg from '@/assets/images/offerImg.png'
 import best from '@/assets/images/best.png'
+import padMini from '@/assets/images/gamepad-mini.png'
+import padMini2 from '@/assets/images/padMini-2.png'
+import padBig from '@/assets/images/gamepad-big.png'
 import { useApi } from '@/composables/useApi'
 import { NewArrivalProducts, ProductsResponse } from '@/types/Interfaces/products'
 
@@ -281,6 +284,28 @@ export const useProductsStore = defineStore('products', {
         isFavorite: false,
         isViewed: false,
         currency: '$',
+      },
+    ],
+    cardProduct: [
+      {
+        id: 1,
+        image: padBig,
+        thumb: padMini,
+      },
+      {
+        id: 2,
+        image: padBig,
+        thumb: padMini,
+      },
+      {
+        id: 3,
+        image: padBig,
+        thumb: padMini2,
+      },
+      {
+        id: 4,
+        image: best,
+        thumb: best,
       },
     ],
   }),

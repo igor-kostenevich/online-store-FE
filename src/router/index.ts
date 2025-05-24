@@ -5,6 +5,7 @@ import ResetPassword from '@/views/Auth/ResetPassword.vue'
 import SignUp from '@/views/Auth/SignUp.vue'
 import AccountPage from '@/views/AccountPage.vue'
 import Profile from '@/views/Account/Profile.vue'
+import ProductDetails from '@/views/ProductDetails.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -64,6 +65,15 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+
+  {
+    path: '/gaming',
+    component: ProductDetails,
+    meta: {
+      layout: 'main',
+    },
+  },
+
   {
     path: '/products/discount',
     name: 'discountProducts',
@@ -72,6 +82,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/ProductsDiscount.vue'),
   },
+
   // {
   //   path: '/:notFound(.*)',
   //   name: 'error',

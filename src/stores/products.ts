@@ -5,7 +5,7 @@ import padMini from '@/assets/images/gamepad-mini.png'
 import padMini2 from '@/assets/images/padMini-2.png'
 import padBig from '@/assets/images/gamepad-big.png'
 import { useApi } from '@/composables/useApi'
-import { NewArrivalProducts, ProductsResponse } from '@/types/Interfaces/products'
+import { NewArrivalProducts, ProductsResponse, ProductDetails } from '@/types/Interfaces/products'
 
 const { api } = useApi()
 
@@ -308,6 +308,7 @@ export const useProductsStore = defineStore('products', {
         thumb: best,
       },
     ],
+    cardProductDetails: {} as ProductDetails,
   }),
 
   actions: {
@@ -320,6 +321,9 @@ export const useProductsStore = defineStore('products', {
 
     async getNewArrivalProducts() {
       this.newArrivalProducts = await api.get('/product/new-arrivals')
+    },
+    async getProductDetails(slug: string) {
+      this.cardProductDetails = await api.get(`/product/${slug}`)
     },
   },
 })

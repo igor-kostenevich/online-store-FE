@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { useBreadcrumbs } from '@/composables/breadcrumbs'
 import Slider from '@/components/Common/Slider.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useProductsStore } from '@/stores/products'
 import Vue3StarRatings from 'vue3-star-ratings'
 import { HeartIcon } from '@heroicons/vue/24/outline'
+import { useRoute } from 'vue-router'
 
 const { breadcrumbs } = useBreadcrumbs()
 const store = useProductsStore()
-const rating = ref(4)
-
-const selectedColor = ref('#C6D8F5')
-const selectedSize = ref('M')
-
-const colors = ['#C6D8F5', '#E87C7C']
-const sizes = ['XS', 'S', 'M', 'L', 'XL']
 const quantity = ref(1)
-const isFavorite = ref(false)
+const route = useRoute()
+const selectedColor = ref<string>('')
+const selectedSize = ref<string>('')
+
+onMounted(async () => {
+  const slug = route.params.slug as string
+  await store.getProductDetails(slug)
+})
 </script>
 
 <template>
@@ -32,10 +33,10 @@ const isFavorite = ref(false)
         </template>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-7 items-start">
         <div>
           <Slider
-            :items="store.cardProduct"
+            :items="store.cardProductDetails.images"
             :slides-view="1"
             :space-between="0"
             slide-effect="fade"
@@ -44,18 +45,18 @@ const isFavorite = ref(false)
             :use-thumbs="true"
           >
             <template #slide="{ item }">
-              <div class="bg-secondary-medium-white px-5 h-[320px] sm:h-[400px] md:h-[480px] lg:h-[585px] flex items-center justify-center">
+              <div class="bg-secondary-medium-white px-5 h-[100%] flex items-center justify-center">
                 <img
-                  :src="item.image"
+                  :src="item.url"
                   class="main-img w-full h-full object-contain"
                 />
               </div>
             </template>
 
             <template #thumb="{ item }">
-              <div class="bg-secondary-medium-white px-3 w-[100px] sm:w-[140px] py-2 flex items-center justify-center overflow-hidden">
+              <div class="bg-secondary-medium-white px-3 w-[100px] sm:w-[140px] h-[120px] py-2 flex items-center justify-center overflow-hidden mr-4">
                 <img
-                  :src="item.thumb"
+                  :src="item.url"
                   class="thumb-img w-full h-full object-contain"
                 />
               </div>
@@ -64,11 +65,13 @@ const isFavorite = ref(false)
         </div>
 
         <div class="flex flex-col">
-          <h2 class="font-semibold text-xl sm:text-2xl mb-3">Havic HV G-92 Gamepad</h2>
+          <h2 class="font-semibold text-xl sm:text-2xl mb-3">
+            {{ store.cardProductDetails.name }}
+          </h2>
 
           <div class="flex flex-wrap gap-2 items-center mb-4">
             <Vue3StarRatings
-              v-model="rating"
+              v-model="store.cardProductDetails.averageRating"
               :star-size="17"
               star-color="#ff9800"
               :read-only="true"
@@ -77,14 +80,14 @@ const isFavorite = ref(false)
               :disable-click="true"
               class="block w-fit"
             />
-            <div class="text-sm text-text-gray">(150 Reviews)</div>
+            <div class="text-sm text-text-gray">({{ store.cardProductDetails.reviewCount }} Reviews)</div>
             <div class="text-secondary-red">In Stock</div>
           </div>
 
-          <div class="text-xl sm:text-2xl mb-6">$192.00</div>
+          <div class="text-xl sm:text-2xl mb-6">${{ store.cardProductDetails.price }}</div>
 
           <p class="ml-2 text-sm border-b-black border-b pb-6">
-            PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.
+            {{ store.cardProductDetails.description }}
           </p>
 
           <div class="mt-6">
@@ -92,7 +95,7 @@ const isFavorite = ref(false)
               <p class="font-medium text-xl">Colours:</p>
               <div class="flex gap-3 ml-4 mt-2 sm:mt-0">
                 <div
-                  v-for="color in colors"
+                  v-for="color in store.cardProductDetails.colors"
                   :key="color"
                   :class="[
                     'w-4 h-4 rounded-full cursor-pointer transition-all duration-300 ring-2',
@@ -108,7 +111,7 @@ const isFavorite = ref(false)
               <p class="font-medium text-xl">Size:</p>
               <div class="flex gap-3 ml-4 mt-2 sm:mt-0">
                 <button
-                  v-for="size in sizes"
+                  v-for="size in store.cardProductDetails.sizes"
                   :key="size"
                   :class="[
                     'w-8 h-8 border rounded text-sm font-medium',
@@ -131,8 +134,8 @@ const isFavorite = ref(false)
             <BaseButton class="!py-2 !px-12">Buy Now</BaseButton>
             <HeartIcon
               class="w-10 border border-black rounded-[4px] p-2.5 cursor-pointer"
-              :class="{ 'text-secondary-red': isFavorite }"
-              @click="isFavorite = !isFavorite"
+              :class="{ 'text-secondary-red': store.cardProductDetails.isNew }"
+              @click="store.cardProductDetails.isNew = !store.cardProductDetails.isNew"
             />
           </div>
 

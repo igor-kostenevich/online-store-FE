@@ -73,7 +73,15 @@ const routes: Array<RouteRecordRaw> = [
       layout: 'main',
     },
   },
-
+  {
+    path: '/details/:slug',
+    name: 'productDetails',
+    props: true,
+    component: ProductDetails,
+    meta: {
+      layout: 'main',
+    },
+  },
   {
     path: '/products/discount',
     name: 'discountProducts',

@@ -3,28 +3,28 @@ import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 import { useProductsStore } from '@/stores/products'
 import Slider from '@/components/Common/Slider.vue'
 import BaseDate from '@/components/Shared/BaseDate.vue'
+import { ProductDetails } from '@/types/Interfaces/products'
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const productSlider = useProductsStore()
 
 const breakpoints = {
-  320: {
-    slidesPerView: 1,
-  },
-  640: {
-    slidesPerView: 2,
-  },
-  1024: {
-    slidesPerView: 3,
-  },
-  1280: {
-    slidesPerView: 4,
-  },
+  320: { slidesPerView: 1 },
+  640: { slidesPerView: 2 },
+  1024: { slidesPerView: 3 },
+  1280: { slidesPerView: 4 },
 }
 
 onMounted(async () => {
   await productSlider.getDiscountProducts(20, 1)
 })
+
+function toDetails(item: ProductDetails) {
+  productSlider.setProductDetails(item)
+  router.push({ name: 'productDetails', params: { slug: item.slug } })
+}
 </script>
 
 <template>
@@ -78,6 +78,7 @@ onMounted(async () => {
             :key="item.id"
             :product="item"
             class="h-full"
+            @click="toDetails(item)"
           />
         </template>
       </Slider>

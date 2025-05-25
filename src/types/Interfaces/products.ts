@@ -108,3 +108,18 @@ export interface ProductsResponse {
   meta: ProductMeta
   expiresAt: string
 }
+
+export interface ProductDetails {
+  id: number
+  name: string
+  price: number
+  description: string
+  averageRating: number
+  reviewCount: number
+  inStock: boolean
+  isNew: boolean
+  slug: string
+  images: ProductImage[]
+  colors: string[]
+  sizes: string[]
+}

@@ -118,7 +118,8 @@ export interface ProductDetails {
   reviewCount: number
   inStock: boolean
   isNew: boolean
-  images: { url: string }[]
+  slug: string
+  images: ProductImage[]
   colors: string[]
   sizes: string[]
 }

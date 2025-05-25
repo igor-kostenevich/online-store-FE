@@ -74,7 +74,7 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/details/:id',
+    path: '/details/:slug',
     name: 'productDetails',
     props: true,
     component: ProductDetails,

@@ -322,8 +322,15 @@ export const useProductsStore = defineStore('products', {
     async getNewArrivalProducts() {
       this.newArrivalProducts = await api.get('/product/new-arrivals')
     },
+
+    setProductDetails(details: ProductDetails) {
+      this.cardProductDetails = details
+    },
+
     async getProductDetails(slug: string) {
-      this.cardProductDetails = await api.get(`/product/${slug}`)
+      if (!this.cardProductDetails.id) {
+        this.cardProductDetails = await api.get(`/product/${slug}`)
+      }
     },
   },
 })

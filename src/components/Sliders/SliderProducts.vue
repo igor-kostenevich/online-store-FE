@@ -3,6 +3,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 import { useProductsStore } from '@/stores/products'
 import Slider from '@/components/Common/Slider.vue'
 import BaseDate from '@/components/Shared/BaseDate.vue'
+import { ProductDetails } from '@/types/Interfaces/products'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -20,11 +21,9 @@ onMounted(async () => {
   await productSlider.getDiscountProducts(20, 1)
 })
 
-const toDetails = (slug: string) => {
-  router.push({
-    name: 'productDetails',
-    params: { id: slug },
-  })
+function toDetails(item: ProductDetails) {
+  productSlider.setProductDetails(item)
+  router.push({ name: 'productDetails', params: { slug: item.slug } })
 }
 </script>
 
@@ -79,7 +78,7 @@ const toDetails = (slug: string) => {
             :key="item.id"
             :product="item"
             class="h-full"
-            @click="toDetails(item.slug)"
+            @click="toDetails(item)"
           />
         </template>
       </Slider>

@@ -15,7 +15,7 @@ const selectedColor = ref<string>('')
 const selectedSize = ref<string>('')
 
 onMounted(async () => {
-  const slug = route.params.id as string
+  const slug = route.params.slug as string
   await store.getProductDetails(slug)
 })
 </script>

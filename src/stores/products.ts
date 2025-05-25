@@ -328,7 +328,7 @@ export const useProductsStore = defineStore('products', {
     },
 
     async getProductDetails(slug: string) {
-      if (!this.cardProductDetails.id) {
+      if (Object.keys(this.cardProductDetails).length === 0) {
         this.cardProductDetails = await api.get(`/product/${slug}`)
       }
     },

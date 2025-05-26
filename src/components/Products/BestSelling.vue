@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
+import { onMounted } from 'vue'
 
 const store = useProductsStore()
+
+onMounted(() => {
+  store.getBestSellingProducts(4, 1)
+})
 </script>
 <template>
   <section class="pt-[70px] pb-[70px]">
@@ -12,12 +17,15 @@ const store = useProductsStore()
           <div class="section-subtitle">This Month</div>
           <div class="section-title">Best Selling Products</div>
         </div>
-        <BaseButton class="self-center mb-4 md:mb-0">View All</BaseButton>
+
+        <router-link :to="{ name: 'best-selling' }">
+          <BaseButton class="self-center mb-4 md:mb-0">View All</BaseButton>
+        </router-link>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         <BaseProductCard
-          v-for="product in store.bestSellingProducts"
+          v-for="product in store.bestSellingProducts.data"
           :key="product.id"
           :product="product"
         />

@@ -1,14 +1,33 @@
 <script setup lang="ts">
-defineProps({
-  name: {
-    type: String,
-    default: '',
-  },
-})
+import Cameras from '@/assets/images/categorySlides/Category-Camera.svg'
+import Phones from '@/assets/images/categorySlides/Category-CellPhone.svg'
+import Laptops from '@/assets/images/categorySlides/Category-Computer.svg'
+import Tablets from '@/assets/images/categorySlides/Category-Gamepad.svg'
+import Wearables from '@/assets/images/categorySlides/Category-Headphone.svg'
+import Gaming from '@/assets/images/categorySlides/Category-Headphone.svg'
+
+const icons: Record<string, string> = {
+  'electronics-cameras': Cameras,
+  'electronics-phones': Phones,
+  'electronics-laptops': Laptops,
+  'electronics-tablets': Tablets,
+  'electronics-wearables': Wearables,
+  'electronics-gaming': Gaming,
+}
+
+defineProps<{
+  name: string
+}>()
 </script>
 
 <template>
-  <!-- Icons -->
+  <img
+    v-if="icons[name]"
+    :src="icons[name]"
+    alt="icon"
+    class="w-10 h-10 object-contain mx-auto mb-2 transition group-hover:invert"
+  />
+
   <svg
     v-if="name === 'arrow-right'"
     width="41"

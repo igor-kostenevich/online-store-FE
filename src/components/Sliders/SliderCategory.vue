@@ -3,6 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import { useCategoriesStore } from '@/stores/categories'
 
 import Slider from '@/components/Common/Slider.vue'
+import { onMounted } from 'vue'
 
 const categoryStore = useCategoriesStore()
 
@@ -20,6 +21,10 @@ const breakpoints = {
     slidesPerView: 6,
   },
 }
+
+onMounted(() => {
+  categoryStore.getCategoriesBrowse()
+})
 </script>
 
 <template>
@@ -63,14 +68,10 @@ const breakpoints = {
         <template #slide="{ item }">
           <div class="hover:bg-button-secondary-default transition duration-150 ease-in-out border-2 border-solid p-4 cursor-pointer">
             <div class="relative mb-0.5 group">
-              <img
-                :src="item.image"
-                alt="image"
-                class="h-20 object-contain mx-auto mb-2 transition group-hover:invert"
-              />
+              <Icon :name="item.slug" />
             </div>
 
-            <div class="font-semibold text-center">{{ item.title }}</div>
+            <div class="font-semibold text-center">{{ item.name }}</div>
           </div>
         </template>
       </Slider>

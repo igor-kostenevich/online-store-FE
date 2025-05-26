@@ -2,6 +2,7 @@
 import { useProductsStore } from '@/stores/products'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Common/Slider.vue'
+import { onMounted } from 'vue'
 const store = useProductsStore()
 
 const breakpoints = {
@@ -26,6 +27,10 @@ const breakpoints = {
     grid: { rows: 2, fill: 'row' },
   },
 }
+
+onMounted(() => {
+  store.getExploreProducts(16, 1)
+})
 </script>
 
 <template>
@@ -55,7 +60,8 @@ const breakpoints = {
       </div>
 
       <Slider
-        :items="store.exploreProducts"
+        v-if="store.exploreProducts.data"
+        :items="store.exploreProducts.data"
         :slides-view="4"
         :slides-per-group="4"
         :space-between="20"
@@ -79,7 +85,7 @@ const breakpoints = {
         </template>
       </Slider>
 
-      <router-link to="#">
+      <router-link :to="{ name: 'explore' }">
         <BaseButton class="flex justify-center items-center mt-20 mx-auto">View All Products</BaseButton>
       </router-link>
     </div>

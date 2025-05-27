@@ -24,7 +24,7 @@ onMounted(() => {
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-        <BaseProductCard
+        <ProductCard
           v-for="product in store.bestSellingProducts.data"
           :key="product.id"
           :product="product"

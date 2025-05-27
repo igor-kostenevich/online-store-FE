@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Vue3StarRatings from 'vue3-star-ratings'
-import { BaseProductCard } from '@/types/Interfaces/products'
+import { ProductCard } from '@/types/Interfaces/products'
 import { HeartIcon, EyeIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{
-  product: BaseProductCard
+  product: ProductCard
 }>()
 
 const rating = ref(props.product.averageRating)
@@ -53,12 +53,12 @@ const discountForCard = computed(() => {
       </div>
 
       <div class="flex items-center text-red-500 font-bold text-lg">
-        {{ product.currency }}${{ product.price }}
+        ${{ product.price }}
         <span
           v-if="product.oldPrice"
           class="line-through text-gray-400 text-sm ml-2 font-normal"
         >
-          {{ product.currency }}${{ product.oldPrice }}
+          ${{ product.oldPrice }}
         </span>
       </div>
 

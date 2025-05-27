@@ -7,12 +7,12 @@ const { api } = useApi()
 
 export const usePromoStore = defineStore('promo', {
   state: () => ({
-    promoBanner: [] as ProductDetails,
+    promoProducts: [] as ProductDetails,
   }),
 
   actions: {
-    async getPromoBanner() {
-      this.promoBanner = await api.get('/promo/banner')
+    async getPromoProducts() {
+      this.promoProducts = await api.get('/promo/banner')
     },
   },
 })

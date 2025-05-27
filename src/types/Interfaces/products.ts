@@ -33,7 +33,7 @@ export interface NewArrivalProducts {
   updatedAt: string
 }
 
-export interface BaseProductCard {
+export interface ProductCard {
   id: string
   averageRating: number
   price: number

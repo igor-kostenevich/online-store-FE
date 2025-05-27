@@ -77,7 +77,7 @@ onMounted(() => {
         class="mt-10"
       >
         <template #slide="{ item }">
-          <BaseProductCard
+          <ProductCard
             :key="item.id"
             :product="item"
             class="h-full"

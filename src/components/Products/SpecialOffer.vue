@@ -9,9 +9,9 @@ const store = usePromoStore()
 let intervalId: any
 
 onMounted(async () => {
-  await store.getPromoBanner()
+  await store.getPromoProducts()
 
-  timer.setTargetDate(store.promoBanner.expiresAt)
+  timer.setTargetDate(store.promoProducts.expiresAt)
 
   intervalId = setInterval(() => {
     timer.tick()
@@ -30,16 +30,16 @@ onUnmounted(() => {
   <section class="pt-[100px] pb-[70px]">
     <div class="container">
       <div
-        v-if="store.promoBanner.product"
+        v-if="store.promoProducts.product"
         class="bg-cover bg-center bg-no-repeat"
-        :style="`background-image: url('${store.promoBanner.product.images[0].url}')`"
+        :style="`background-image: url('${store.promoProducts.product.images[0].url}')`"
       >
         <div class="text-primary-white p-8 md:p-12">
           <div class="text-3xl max-w-[443px] leading-[1.3]">
-            {{ store.promoBanner.product.description }}
+            {{ store.promoProducts.product.description }}
           </div>
 
-          <div class="mt-5 text-xl font-semibold">{{ store.promoBanner.product.category.name }}</div>
+          <div class="mt-5 text-xl font-semibold">{{ store.promoProducts.product.category.name }}</div>
 
           <div class="flex items-center gap-4 mt-9 text-primary-light-black flex-wrap">
             <div class="text-center bg-primary-white p-2 rounded-full w-[62px] h-[62px] flex flex-col items-center justify-center">

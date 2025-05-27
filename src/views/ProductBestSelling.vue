@@ -2,7 +2,7 @@
 import { watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProductsStore } from '@/stores/products'
-import BaseProductCard from '@/components/Products/ProductCard.vue'
+import ProductCard from '@/components/Products/ProductCard.vue'
 import Pagination from '@/components/Pagination.vue'
 
 const store = useProductsStore()
@@ -34,7 +34,7 @@ function onChangePage(newPage: number) {
       <div class="section-title mb-10">Best-Selling Products</div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <BaseProductCard
+        <ProductCard
           v-for="item in store.bestSellingProducts.data"
           :key="item.id"
           :product="item"

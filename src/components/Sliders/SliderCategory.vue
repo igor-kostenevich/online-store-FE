@@ -66,12 +66,17 @@ onMounted(() => {
         class="mt-10"
       >
         <template #slide="{ item }">
-          <div class="hover:bg-button-secondary-default transition duration-150 ease-in-out border-2 border-solid p-4 cursor-pointer">
-            <div class="relative mb-0.5 group">
-              <Icon :name="item.slug" />
+          <div class="group transition duration-150 ease-in-out border-2 border-solid cursor-pointer py-5 hover:bg-red-500">
+            <div class="relative mb-0.5 flex justify-center">
+              <Icon
+                :name="item.slug"
+                class="text-black transition group-hover:text-white"
+              />
             </div>
 
-            <div class="font-semibold text-center">{{ item.name }}</div>
+            <div class="font-semibold text-center text-black transition group-hover:text-white">
+              {{ item.name }}
+            </div>
           </div>
         </template>
       </Slider>

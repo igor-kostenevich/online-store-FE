@@ -45,19 +45,19 @@ onMounted(async () => {
             :use-thumbs="true"
           >
             <template #slide="{ item }">
-              <div class="bg-secondary-medium-white px-5 h-[100%] flex items-center justify-center">
+              <div class="bg-secondary-medium-white h-[100%] flex items-center justify-center">
                 <img
                   :src="item.url"
-                  class="main-img w-full h-full object-contain"
+                  class="main-img w-full h-full object-cover"
                 />
               </div>
             </template>
 
             <template #thumb="{ item }">
-              <div class="bg-secondary-medium-white px-3 w-[100px] sm:w-[140px] h-[120px] py-2 flex items-center justify-center overflow-hidden mr-4">
+              <div class="w-[110px] h-[130px] rounded-md overflow-hidden border border-gray-300 flex items-center justify-center transition">
                 <img
                   :src="item.url"
-                  class="thumb-img w-full h-full object-contain"
+                  class="w-full h-full object-cover"
                 />
               </div>
             </template>
@@ -173,7 +173,7 @@ onMounted(async () => {
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-        <BaseProductCard
+        <ProductCard
           v-for="product in store.bestSellingProducts"
           :key="product.id"
           :product="product"

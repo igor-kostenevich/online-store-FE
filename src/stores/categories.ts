@@ -1,11 +1,5 @@
 import { defineStore } from 'pinia'
 import aside from '@/assets/images/aside.png'
-import camera from '@/assets/images/categorySlides/Category-Camera.svg'
-import phone from '@/assets/images/categorySlides/Category-CellPhone.svg'
-import computer from '@/assets/images/categorySlides/Category-Computer.svg'
-import pad from '@/assets/images/categorySlides/Category-Gamepad.svg'
-import headphones from '@/assets/images/categorySlides/Category-Headphone.svg'
-import watch from '@/assets/images/categorySlides/Category-SmartWatch.svg'
 import { useApi } from '@/composables/useApi'
 import { CategoryMenu } from '@/types/Interfaces/categories'
 
@@ -33,54 +27,16 @@ export const useCategoriesStore = defineStore('categories', {
         image: 'https://s3-eu-central-1.amazonaws.com/proit.prod/2024/09/OLED-MacBook-Pro-launch-2026.jpg',
       },
     ],
-    categoriesBrowse: [
-      {
-        id: 1,
-        image: camera,
-        title: 'Camera',
-      },
-      {
-        id: 2,
-        image: phone,
-        title: 'Phone',
-      },
-      {
-        id: 3,
-        image: computer,
-        title: 'Computer',
-      },
-      {
-        id: 4,
-        image: pad,
-        title: 'Pad',
-      },
-      {
-        id: 5,
-        image: headphones,
-        title: 'Headphones',
-      },
-      {
-        id: 6,
-        image: watch,
-        title: 'Watch',
-      },
-      {
-        id: 7,
-        image: headphones,
-        title: 'Headphones',
-      },
-      {
-        id: 8,
-        image: headphones,
-        title: 'Headphones',
-      },
-    ],
+    categoriesBrowse: [],
     categoriesMenu: [] as CategoryMenu[],
   }),
 
   actions: {
     async getCategoriesMenu() {
       this.categoriesMenu = await api.get('/category')
+    },
+    async getCategoriesBrowse() {
+      this.categoriesBrowse = await api.get('/category/electronics/children')
     },
   },
 })

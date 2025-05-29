@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Vue3StarRatings from 'vue3-star-ratings'
-import { BaseProductCard } from '@/types/Interfaces/products'
+import { ProductCard } from '@/types/Interfaces/products'
 import { HeartIcon, EyeIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{
-  product: BaseProductCard
+  product: ProductCard
 }>()
 
 const rating = ref(props.product.averageRating)
@@ -19,12 +19,12 @@ const discountForCard = computed(() => {
 </script>
 
 <template>
-  <div class="cursor-pointer">
-    <div class="relative bg-secondary-mediumWhite p-10 mb-0.5 group bg-secondary-medium-white">
+  <div class="cursor-pointer flex flex-col h-full">
+    <div class="relative bg-secondary-mediumWhite p-10 mb-0.5 group bg-secondary-medium-white flex items-center justify-center h-[300px]">
       <img
         :src="product.images?.[0]?.url"
         alt="image"
-        class="h-full object-contain mx-auto mb-2"
+        class="h-full object-fill mx-auto"
       />
 
       <div
@@ -38,25 +38,27 @@ const discountForCard = computed(() => {
         class="w-8 bg-white rounded-xl p-1 absolute top-3 right-3"
         :class="{ 'text-secondary-red': isFavorite }"
         @click="isFavorite = !isFavorite"
-      ></HeartIcon>
+      />
 
-      <EyeIcon class="w-8 bg-white rounded-xl p-1 absolute top-[25%] right-3"></EyeIcon>
+      <EyeIcon class="w-8 bg-white rounded-xl p-1 absolute top-[25%] right-3" />
 
-      <BaseButton class="absolute w-[100%] bg-text-black bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <BaseButton class="absolute w-full bg-text-black bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         Add To Cart
       </BaseButton>
     </div>
 
-    <div class="p-2 flex flex-col gap-1">
-      <div class="font-semibold text-base">{{ product.name }}</div>
+    <div class="p-2 flex flex-col justify-between flex-1 gap-1">
+      <div class="font-semibold text-base">
+        {{ product.name }}
+      </div>
 
       <div class="flex items-center text-red-500 font-bold text-lg">
-        {{ product.currency }}{{ product.price }}
+        ${{ product.price }}
         <span
           v-if="product.oldPrice"
           class="line-through text-gray-400 text-sm ml-2 font-normal"
         >
-          {{ product.currency }}{{ product.oldPrice }}
+          ${{ product.oldPrice }}
         </span>
       </div>
 

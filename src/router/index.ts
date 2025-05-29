@@ -6,6 +6,7 @@ import SignUp from '@/views/Auth/SignUp.vue'
 import AccountPage from '@/views/AccountPage.vue'
 import Profile from '@/views/Account/Profile.vue'
 import ProductDetails from '@/views/ProductDetails.vue'
+import NotFoundComponent from '@/components/NotFoundComponent.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -90,7 +91,6 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/ProductsDiscount.vue'),
   },
-
   {
     path: '/products/best-selling',
     name: 'best-selling',
@@ -99,7 +99,6 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/ProductBestSelling.vue'),
   },
-
   {
     path: '/products/explore',
     name: 'explore',
@@ -108,13 +107,13 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/ProductsExplore.vue'),
   },
+  {
+    path: '/:notFound(.*)',
+    name: 'error',
+    meta: { layout: 'main' },
 
-  // {
-  //   path: '/:notFound(.*)',
-  //   name: 'error',
-  //   meta: { layout: 'error' },
-  //   component: NotFoundComponent,
-  // },
+    component: NotFoundComponent,
+  },
 ]
 
 export const router = createRouter({

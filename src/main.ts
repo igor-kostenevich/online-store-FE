@@ -11,7 +11,7 @@ import vue3StarRatings from 'vue3-star-ratings'
 import BaseButton from '@/components/Shared/BaseButton.vue'
 import BaseInput from '@/components/Shared/BaseInput.vue'
 import BaseTextArea from '@/components/Shared/BaseTextArea.vue'
-import BaseProductCard from '@/components/Products/ProductCard.vue'
+import ProductCard from '@/components/Products/ProductCard.vue'
 import BaseQuantity from '@/components/Shared/BaseQuantity.vue'
 
 import 'swiper/css'
@@ -30,7 +30,7 @@ app.component('vue3-star-ratings', vue3StarRatings)
 app.component('BaseButton', BaseButton)
 app.component('BaseInput', BaseInput)
 app.component('BaseTextArea', BaseTextArea)
-app.component('BaseProductCard', BaseProductCard)
+app.component('ProductCard', ProductCard)
 app.component('BaseQuantity', BaseQuantity)
 
 app.mount('#app')

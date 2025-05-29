@@ -91,6 +91,24 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/ProductsDiscount.vue'),
   },
 
+  {
+    path: '/products/best-selling',
+    name: 'best-selling',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/ProductBestSelling.vue'),
+  },
+
+  {
+    path: '/products/explore',
+    name: 'explore',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/ProductsExplore.vue'),
+  },
+
   // {
   //   path: '/:notFound(.*)',
   //   name: 'error',

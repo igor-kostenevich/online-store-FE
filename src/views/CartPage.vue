@@ -1,0 +1,134 @@
+<script setup lang="ts">
+import { useCartStore } from '@/stores/cart'
+import { useBreadcrumbs } from '@/composables/breadcrumbs'
+import { onMounted, watch } from 'vue'
+import BaseButton from '@/components/Shared/BaseButton.vue'
+import BaseInput from '@/components/Shared/BaseInput.vue'
+
+const store = useCartStore()
+
+const { breadcrumbs } = useBreadcrumbs()
+
+onMounted(() => {
+  store.loadFromLocalStorage()
+})
+
+watch(
+  () => store.cartProducts,
+  () => {
+    store.saveToLocalStorage()
+  },
+  { deep: true },
+)
+</script>
+
+<template>
+  <section class="pt-[140px]">
+    <div class="container px-4">
+      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2">
+        <template
+          v-for="(crumb, index) in breadcrumbs"
+          :key="index"
+        >
+          <router-link :to="crumb.to">{{ crumb.name }}</router-link>
+          <span v-if="index < breadcrumbs.length - 1">/</span>
+        </template>
+      </div>
+
+      <div class="w-full">
+        <div class="hidden lg:grid [grid-template-columns:2fr_1fr_1fr_1fr] gap-4 py-6 border-b font-bold shadow-[0_1px_13px_0_rgba(0,0,0,0.05)] px-10">
+          <div>Product</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Subtotal</div>
+        </div>
+
+        <div
+          v-for="product in store.cartProducts"
+          :key="product.id"
+          class="flex flex-col lg:items-center gap-4 py-6 border-b bg-primary-white px-4 shadow-[0_1px_13px_0_rgba(0,0,0,0.05)] mt-6 lg:grid [grid-template-columns:2fr_1fr_1fr_1fr] lg:px-10 lg:mt-10 lg:py-10 lg:gap-4 lg:border-b lg:bg-primary-white lg:shadow-[0_1px_13px_0_rgba(0,0,0,0.05)]"
+        >
+          <div class="flex items-center gap-4">
+            <img
+              :src="product.images?.[0]?.url"
+              alt="Product"
+              class="w-20 h-20 object-contain"
+            />
+            <span class="font-medium">{{ product.name }}</span>
+          </div>
+
+          <div class="lg:hidden flex justify-between">
+            <span class="font-medium">Price:</span>
+            <span>${{ product.price }}</span>
+          </div>
+          <div class="lg:hidden flex justify-between">
+            <span class="font-medium">Quantity:</span>
+            <input
+              v-model.number="product.quantity"
+              type="number"
+              min="1"
+              class="border rounded text-center w-[72px] h-[44px]"
+            />
+          </div>
+          <div class="lg:hidden flex justify-between">
+            <span class="font-medium">Subtotal:</span>
+            <span>${{ (product.price * product.quantity).toFixed(2) }}</span>
+          </div>
+
+          <div class="hidden lg:block">${{ product.price }}</div>
+
+          <div class="hidden lg:block">
+            <input
+              v-model.number="product.quantity"
+              type="number"
+              min="1"
+              class="border rounded text-center w-[72px] h-[44px]"
+            />
+          </div>
+
+          <div class="hidden lg:block font-semibold">${{ (product.price * product.quantity).toFixed(2) }}</div>
+        </div>
+
+        <div class="mt-6 flex justify-end">
+          <BaseButton view="secondary">Update Cart</BaseButton>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-6 mt-20 lg:flex-row lg:justify-between">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-start">
+          <BaseInput
+            model-value=""
+            placeholder="Coupon Code"
+            view="secondary"
+            class="w-full lg:min-w-[300px]"
+          />
+          <BaseButton class="whitespace-nowrap lg:ml-4">Apply Coupon</BaseButton>
+        </div>
+
+        <div class="border border-black py-8 px-6 rounded-m w-full lg:flex-[0_1_30%]">
+          <div class="pb-6 font-medium text-xl">Cart Total</div>
+
+          <div class="flex justify-between border-b border-gray pb-4">
+            <span>Subtotal:</span>
+            <div>{{ store.sumOfProducts.toFixed(2) }}</div>
+          </div>
+
+          <div class="flex justify-between border-b border-gray pt-4 pb-4">
+            <span>Shipping:</span>
+            <div>Free</div>
+          </div>
+          <div class="flex justify-between pt-4">
+            <span>Total:</span>
+            <div>{{ store.sumOfProducts.toFixed(2) }}</div>
+          </div>
+
+          <div class="flex justify-center items-center mt-4">
+            <BaseButton>Process to checkout</BaseButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<style scoped></style>

@@ -3,6 +3,10 @@ import Vue3StarRatings from 'vue3-star-ratings'
 import { ProductCard } from '@/types/Interfaces/products'
 import { HeartIcon, EyeIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+
+import { useCartStore } from '@/stores/cart'
 
 const props = defineProps<{
   product: ProductCard
@@ -10,11 +14,25 @@ const props = defineProps<{
 
 const rating = ref(props.product.averageRating)
 const isFavorite = ref(props.product.isNew)
+const router = useRouter()
+const store = useCartStore()
 
 const discountForCard = computed(() => {
   const price = props.product.price
   const oldPrice = props.product.oldPrice
   return Math.round(((oldPrice - price) / oldPrice) * 100)
+})
+
+function addToCart(e: MouseEvent) {
+  e.stopPropagation()
+  store.addToCart(props.product)
+  router.push({ name: 'cart' })
+}
+
+onMounted(() => {
+  store.loadFromLocalStorage()
+
+  console.log(store.cartProducts)
 })
 </script>
 
@@ -42,7 +60,10 @@ const discountForCard = computed(() => {
 
       <EyeIcon class="w-8 bg-white rounded-xl p-1 absolute top-[25%] right-3" />
 
-      <BaseButton class="absolute w-full bg-text-black bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <BaseButton
+        class="absolute w-full bg-text-black bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        @click="addToCart"
+      >
         Add To Cart
       </BaseButton>
     </div>

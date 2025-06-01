@@ -107,6 +107,15 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/ProductsExplore.vue'),
   },
+
+  {
+    path: '/cart',
+    name: 'cart',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/CartPage.vue'),
+  },
   {
     path: '/:notFound(.*)',
     name: 'error',

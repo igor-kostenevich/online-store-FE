@@ -7,7 +7,7 @@ const { api } = useApi()
 
 export const usePromoStore = defineStore('promo', {
   state: () => ({
-    promoProducts: [] as ProductDetails,
+    promoProducts: {} as ProductDetails,
   }),
 
   actions: {

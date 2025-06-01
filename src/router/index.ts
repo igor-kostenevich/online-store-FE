@@ -107,6 +107,15 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/ProductsExplore.vue'),
   },
+
+  {
+    path: '/contact',
+    name: 'contact',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/ContactPage.vue'),
+  },
   {
     path: '/about',
     name: 'about',

@@ -19,7 +19,7 @@ defineEmits(['update:modelValue'])
       :rows="props.height || 4"
       :class="[
         'w-full p-3 font-poppins resize-none rounded-md transition-colors duration-200 ease-in-out outline-none',
-        'bg-secondary-mediumWhite border',
+        'bg-[#f5f5f5] border ',
         props.error ? 'border-secondary-red focus:border-secondary-red' : 'border-transparent focus:border-buttons-green hover:border-buttons-hoverRed',
         props.disabled ? 'cursor-not-allowed bg-gray-200' : '',
       ]"

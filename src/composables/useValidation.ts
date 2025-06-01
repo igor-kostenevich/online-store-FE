@@ -3,7 +3,7 @@ import * as yup from 'yup'
 import type { Ref } from 'vue'
 import type { FieldMeta } from 'vee-validate'
 
-type FieldKey = 'email' | 'password' | 'text' | 'firstName' | 'lastName' | 'newPassword' | 'confirmPassword' | 'address' | 'phone'
+type FieldKey = 'email' | 'password' | 'text' | 'firstName' | 'lastName' | 'newPassword' | 'confirmPassword' | 'address' | 'phone' | 'name' | 'message'
 
 type ValidationOptions = Partial<Record<FieldKey, boolean>>
 
@@ -39,6 +39,8 @@ export function useValidation(options: ValidationOptions = {}) {
 
     address: options.address ? yup.string().required('Address is required') : yup.string(),
     phone: options.phone ? yup.number().typeError('Phone number must be a number').required('Phone number is required') : yup.string(),
+    name: options.phone ? yup.string().required('Name is required') : yup.string(),
+    message: options.phone ? yup.string().required('message is required') : yup.string(),
   }
 
   const schema = yup.object(schemaShape)

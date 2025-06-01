@@ -38,9 +38,15 @@ export function useValidation(options: ValidationOptions = {}) {
       : yup.string(),
 
     address: options.address ? yup.string().required('Address is required') : yup.string(),
-    phone: options.phone ? yup.number().typeError('Phone number must be a number').required('Phone number is required') : yup.string(),
-    name: options.phone ? yup.string().required('Name is required') : yup.string(),
-    message: options.phone ? yup.string().required('message is required') : yup.string(),
+    phone: options.phone
+      ? yup
+          .string()
+          .matches(/^\+380\d{9}$/, 'Phone number must be in format +380')
+          .required('Phone number is required')
+      : yup.string(),
+
+    name: options.phone ? yup.string().max(100, 'Maximum 100 symbols').required('Name is required') : yup.string(),
+    message: options.phone ? yup.string().max(2000, 'Maximum 2000 symbols').min(10, 'Minimum 10 symbols').required('message is required') : yup.string(),
   }
 
   const schema = yup.object(schemaShape)

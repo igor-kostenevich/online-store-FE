@@ -107,15 +107,29 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/ProductsExplore.vue'),
   },
-
   {
     path: '/cart',
-    name: 'cart',
-    meta: {
-      layout: 'main',
-    },
-    component: () => import('../views/CartPage.vue'),
+    component: () => import('@/views/cart/BaseCart.vue'),
+    meta: { layout: 'main' },
+    children: [
+      {
+        path: '',
+        name: 'cartOverview',
+        component: () => import('@/views/cart/CartPage.vue'),
+      },
+      {
+        path: 'billing',
+        name: 'billing',
+        component: () => import('@/views/cart/Billing.vue'),
+      },
+      {
+        path: 'billing/completed',
+        name: 'billingCompleted',
+        component: () => import('@/views/cart/Completed.vue'),
+      },
+    ],
   },
+
   {
     path: '/:notFound(.*)',
     name: 'error',

@@ -3,7 +3,9 @@ import { ref } from 'vue'
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
 import { ChevronDownIcon, HeartIcon, ShoppingCartIcon, UserIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { useCartStore } from '@/stores/cart'
 
+const cartStore = useCartStore()
 const isOpen = ref(false)
 const language = [{ name: 'English' }, { name: 'Українська' }, { name: 'Deutsch' }]
 const selectedPerson = ref(language[0])
@@ -79,7 +81,15 @@ const toggleMenu = () => {
 
         <div class="flex items-center gap-4 lg:hidden">
           <HeartIcon class="h-5 w-5 text-black cursor-pointer" />
-          <ShoppingCartIcon class="h-5 w-5 text-black cursor-pointer" />
+          <div class="relative">
+            <ShoppingCartIcon class="h-5 w-5 text-black cursor-pointer" />
+            <span
+              v-if="cartStore.quantityOfProducts > 0"
+              class="absolute -top-1 -right-1 bg-secondary-red text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center"
+            >
+              {{ cartStore.quantityOfProducts }}
+            </span>
+          </div>
 
           <Menu
             as="div"
@@ -166,7 +176,15 @@ const toggleMenu = () => {
               <MagnifyingGlassIcon class="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5" />
             </div>
             <HeartIcon class="h-5 w-5 text-black cursor-pointer" />
-            <ShoppingCartIcon class="h-5 w-5 text-black cursor-pointer" />
+            <div class="relative">
+              <ShoppingCartIcon class="h-5 w-5 text-black cursor-pointer" />
+              <span
+                v-if="cartStore.quantityOfProducts > 0"
+                class="absolute -top-1 -right-1 bg-secondary-red text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center"
+              >
+                {{ cartStore.quantityOfProducts }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -191,23 +209,23 @@ const toggleMenu = () => {
                 <router-link
                   to="/home"
                   class="text-xl"
-                  >Home</router-link
-                >
+                  >Home
+                </router-link>
                 <router-link
                   to="/contact"
                   class="text-xl"
-                  >Contact</router-link
-                >
+                  >Contact
+                </router-link>
                 <router-link
                   to="/about"
                   class="text-xl"
-                  >About</router-link
-                >
+                  >About
+                </router-link>
                 <router-link
                   to="/signup "
                   class="text-xl"
-                  >Sign Up</router-link
-                >
+                  >Sign Up
+                </router-link>
               </nav>
             </div>
           </div>

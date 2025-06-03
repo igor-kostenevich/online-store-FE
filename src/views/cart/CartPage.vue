@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
-import { useBreadcrumbs } from '@/composables/breadcrumbs'
 import { onMounted, watch } from 'vue'
-import BaseButton from '@/components/Shared/BaseButton.vue'
-import BaseInput from '@/components/Shared/BaseInput.vue'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
 
 const store = useCartStore()
-
-const { breadcrumbs } = useBreadcrumbs()
 
 onMounted(() => {
   store.loadFromLocalStorage()
@@ -23,17 +19,9 @@ watch(
 </script>
 
 <template>
-  <section class="pt-[140px]">
+  <section>
     <div class="container px-4">
-      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2">
-        <template
-          v-for="(crumb, index) in breadcrumbs"
-          :key="index"
-        >
-          <router-link :to="crumb.to">{{ crumb.name }}</router-link>
-          <span v-if="index < breadcrumbs.length - 1">/</span>
-        </template>
-      </div>
+      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2" />
 
       <div class="w-full">
         <div class="hidden lg:grid [grid-template-columns:2fr_1fr_1fr_1fr] gap-4 py-6 border-b font-bold shadow-[0_1px_13px_0_rgba(0,0,0,0.05)] px-10">
@@ -46,7 +34,7 @@ watch(
         <div
           v-for="product in store.cartProducts"
           :key="product.id"
-          class="flex flex-col lg:items-center gap-4 py-6 border-b bg-primary-white px-4 shadow-[0_1px_13px_0_rgba(0,0,0,0.05)] mt-6 lg:grid [grid-template-columns:2fr_1fr_1fr_1fr] lg:px-10 lg:mt-10 lg:py-10 lg:gap-4 lg:border-b lg:bg-primary-white lg:shadow-[0_1px_13px_0_rgba(0,0,0,0.05)]"
+          class="flex flex-col lg:items-center gap-4 py-6 border-b bg-primary-white px-4 shadow-[0_1px_13px_0_rgba(0,0,0,0.05)] mt-6 lg:grid [grid-template-columns:2fr_1fr_1fr_1fr] lg:px-10 lg:mt-10 lg:py-10 lg:gap-4"
         >
           <div class="flex items-center gap-4">
             <img
@@ -57,10 +45,13 @@ watch(
             <span class="font-medium">{{ product.name }}</span>
           </div>
 
-          <div class="lg:hidden flex justify-between">
+          <div class="lg:hidden flex justify-between items-center">
             <span class="font-medium">Price:</span>
-            <span>${{ product.price }}</span>
+            <div class="flex items-center gap-2">
+              <span>${{ product.price }}</span>
+            </div>
           </div>
+
           <div class="lg:hidden flex justify-between">
             <span class="font-medium">Quantity:</span>
             <input
@@ -70,12 +61,22 @@ watch(
               class="border rounded text-center w-[72px] h-[44px]"
             />
           </div>
-          <div class="lg:hidden flex justify-between">
+
+          <div class="lg:hidden flex justify-between items-center">
             <span class="font-medium">Subtotal:</span>
             <span>${{ (product.price * product.quantity).toFixed(2) }}</span>
+
+            <button
+              class="ml-2"
+              @click="store.removeFromCart(product.id)"
+            >
+              <XMarkIcon class="w-5 h-5 text-gray-500 hover:text-red-500 transition" />
+            </button>
           </div>
 
-          <div class="hidden lg:block">${{ product.price }}</div>
+          <div class="hidden lg:flex justify-between items-center">
+            <span>${{ product.price }}</span>
+          </div>
 
           <div class="hidden lg:block">
             <input
@@ -86,7 +87,16 @@ watch(
             />
           </div>
 
-          <div class="hidden lg:block font-semibold">${{ (product.price * product.quantity).toFixed(2) }}</div>
+          <div class="hidden lg:flex font-semibold items-center">
+            ${{ (product.price * product.quantity).toFixed(2) }}
+
+            <button
+              class="ml-2"
+              @click="store.removeFromCart(product.id)"
+            >
+              <XMarkIcon class="w-5 h-5 text-gray-500 hover:text-red-500 transition" />
+            </button>
+          </div>
         </div>
 
         <div class="mt-6 flex justify-end">
@@ -123,7 +133,9 @@ watch(
           </div>
 
           <div class="flex justify-center items-center mt-4">
-            <BaseButton>Process to checkout</BaseButton>
+            <router-link :to="{ name: 'billing' }">
+              <BaseButton>Process to checkout</BaseButton>
+            </router-link>
           </div>
         </div>
       </div>

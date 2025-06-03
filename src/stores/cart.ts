@@ -12,6 +12,10 @@ export const useCartStore = defineStore('cart', {
         return sum + product.price * product.quantity
       }, 0)
     },
+
+    quantityOfProducts(state) {
+      return state.cartProducts.reduce((sum, product) => sum + product.quantity, 0)
+    },
   },
   actions: {
     addToCart(product: any) {
@@ -42,6 +46,11 @@ export const useCartStore = defineStore('cart', {
     clearCart() {
       this.cartProducts = []
       localStorage.removeItem('cart')
+    },
+
+    removeFromCart(id: number) {
+      this.cartProducts = this.cartProducts.filter(p => p.id !== id)
+      this.saveToLocalStorage()
     },
   },
 })

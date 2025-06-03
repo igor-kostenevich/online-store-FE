@@ -26,7 +26,7 @@ const discountForCard = computed(() => {
 function addToCart(e: MouseEvent) {
   e.stopPropagation()
   store.addToCart(props.product)
-  router.push({ name: 'cart' })
+  router.push({ name: 'cartOverview' })
 }
 
 onMounted(() => {

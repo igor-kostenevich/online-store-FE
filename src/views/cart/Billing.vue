@@ -2,8 +2,9 @@
 import { useCartStore } from '@/stores/cart'
 import { onMounted, ref } from 'vue'
 import { useValidation } from '@/composables/useValidation'
-import paymentIcon from '@/assets/images/payment.svg'
+import paymentIcon from '@/assets/icons/paymentpng.png'
 import { useRouter } from 'vue-router'
+import { billingMethod } from '@/types/types/billing'
 
 const router = useRouter()
 const store = useCartStore()
@@ -18,6 +19,8 @@ const { onSubmit, fields, errors, metas } = useValidation({
   email: true,
 })
 
+const coupon = ref('')
+
 const submitOrder = onSubmit(() => {
   router.push({ name: 'billingCompleted' })
   store.clearCart()
@@ -27,7 +30,7 @@ onMounted(() => {
   store.loadFromLocalStorage()
 })
 
-const paymentMethod = ref<'bank' | 'cod'>('cod')
+const paymentMethod = ref<billingMethod>('card')
 </script>
 
 <template>
@@ -43,9 +46,9 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
           >
             <div class="flex flex-col gap-y-6">
               <div>
-                <label class="text-gray-400">First Name</label>
                 <BaseInput
                   v-model="fields.firstName.value"
+                  label="First Name"
                   :error="metas.firstNameMeta.touched ? errors.firstNameError.value : ''"
                   placeholder="Md"
                   view="secondary"
@@ -54,9 +57,9 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
               </div>
 
               <div>
-                <label class="text-gray-400">Company Name</label>
                 <BaseInput
                   v-model="fields.companyName.value"
+                  label="Company Name"
                   :error="metas.companyNameMeta.touched ? errors.companyNameError.value : ''"
                   placeholder="Company Name"
                   view="secondary"
@@ -65,9 +68,9 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
               </div>
 
               <div>
-                <label class="text-gray-400">Street Address*</label>
                 <BaseInput
                   v-model="fields.address.value"
+                  label="Street Address*"
                   :error="metas.addressMeta.touched ? errors.addressError.value : ''"
                   placeholder="Street Address"
                   view="secondary"
@@ -76,9 +79,9 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
               </div>
 
               <div>
-                <label class="text-gray-400">Apartment, floor, etc. (optional)</label>
                 <BaseInput
                   v-model="fields.apartment.value"
+                  label="Apartment, floor, etc. (optional)"
                   :error="metas.apartmentMeta.touched ? errors.apartmentError.value : ''"
                   placeholder="Apartment"
                   view="secondary"
@@ -87,9 +90,9 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
               </div>
 
               <div>
-                <label class="text-gray-400">Town/City*</label>
                 <BaseInput
                   v-model="fields.town.value"
+                  label="Town/City*"
                   :error="metas.townMeta.touched ? errors.townError.value : ''"
                   placeholder="Town/City"
                   view="secondary"
@@ -98,9 +101,9 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
               </div>
 
               <div>
-                <label class="text-gray-400">Phone Number*</label>
                 <BaseInput
                   v-model="fields.phone.value"
+                  label="Phone Number*"
                   :error="metas.phoneMeta.touched ? errors.phoneError.value : ''"
                   placeholder="Phone number"
                   view="secondary"
@@ -109,9 +112,9 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
               </div>
 
               <div>
-                <label class="text-gray-400">Email</label>
                 <BaseInput
                   v-model="fields.email.value"
+                  label="Email"
                   :error="metas.emailMeta.touched ? errors.emailError.value : ''"
                   placeholder="rimel1111@gmail.com"
                   view="secondary"
@@ -199,7 +202,7 @@ const paymentMethod = ref<'bank' | 'cod'>('cod')
           <div class="flex flex-col gap-6 mt-8 lg:flex-row lg:justify-between">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-start w-full">
               <BaseInput
-                model-value=""
+                :model-value="coupon"
                 placeholder="Coupon Code"
                 view="secondary"
                 class="w-full lg:min-w-[300px]"

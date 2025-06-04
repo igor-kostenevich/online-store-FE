@@ -1,17 +1,6 @@
 <script setup lang="ts">
 import { useBreadcrumbs } from '@/composables/breadcrumbs'
-import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
-import { useCartStore } from '@/stores/cart'
 const { breadcrumbs } = useBreadcrumbs()
-const store = useCartStore()
-
-const router = useRouter()
-onMounted(() => {
-  if (store.cartProducts.length === 0) {
-    router.push({ name: 'home' })
-  }
-})
 </script>
 
 <template>

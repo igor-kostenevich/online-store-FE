@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import best from '@/assets/images/best.png'
 import { useApi } from '@/composables/useApi'
 import { NewArrivalProducts, ProductsResponse, ProductDetails } from '@/types/Interfaces/products'
 

@@ -17,6 +17,7 @@ const selectedSize = ref<string>('')
 onMounted(async () => {
   const slug = route.params.slug as string
   await store.getProductDetails(slug)
+  console.log(store.cardProductDetails.reviews)
 })
 </script>
 
@@ -86,11 +87,14 @@ onMounted(async () => {
 
           <div class="text-xl sm:text-2xl mb-6">${{ store.cardProductDetails.price }}</div>
 
-          <p class="ml-2 text-sm border-b-black border-b pb-6">
+          <p class="ml-2 text-sm pb-1">
             {{ store.cardProductDetails.description }}
           </p>
 
-          <div class="mt-6">
+          <div
+            v-if="store.cardProductDetails.colors && store.cardProductDetails.sizes.length"
+            class="mt-6"
+          >
             <div class="mb-4 flex flex-wrap items-center">
               <p class="font-medium text-xl">Colours:</p>
               <div class="flex gap-3 ml-4 mt-2 sm:mt-0">
@@ -107,7 +111,10 @@ onMounted(async () => {
               </div>
             </div>
 
-            <div class="mb-4 flex flex-wrap items-center">
+            <div
+              v-if="store.cardProductDetails.sizes && store.cardProductDetails.sizes.length"
+              class="mb-4 flex flex-wrap items-center"
+            >
               <p class="font-medium text-xl">Size:</p>
               <div class="flex gap-3 ml-4 mt-2 sm:mt-0">
                 <button
@@ -144,6 +151,7 @@ onMounted(async () => {
               <img
                 src="@/assets/icons/delivery.svg"
                 alt="icon"
+                class="w-[60px] h-[70px]"
               />
               <div>
                 <div class="font-semibold text-lg">Free Delivery</div>
@@ -155,6 +163,7 @@ onMounted(async () => {
               <img
                 src="@/assets/icons/return.svg"
                 alt="icon"
+                class="w-[60px] h-[60px]"
               />
               <div>
                 <div class="font-semibold text-lg">Return Delivery</div>
@@ -162,6 +171,28 @@ onMounted(async () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <h3 class="text-2xl font-semibold mb-6">Reviews</h3>
+        <div
+          v-for="review in store.cardProductDetails.reviews"
+          :key="review.id"
+          class="mb-6 p-4 border border-gray-200 rounded-lg bg-white shadow-sm"
+        >
+          <Vue3StarRatings
+            v-model="review.rating"
+            :star-size="16"
+            :number-of-stars="5"
+            :read-only="true"
+            :disable-click="true"
+            inactive-color="#DDD"
+            class="mb-3"
+          />
+          <p class="text-gray-800">
+            {{ review.text }}
+          </p>
         </div>
       </div>
 

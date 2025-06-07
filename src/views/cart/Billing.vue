@@ -22,8 +22,12 @@ const { onSubmit, fields, errors, metas } = useValidation({
 const coupon = ref('')
 
 const submitOrder = onSubmit(() => {
-  router.push({ name: 'billingCompleted' })
-  store.clearCart()
+  router
+    .push({ name: 'billingCompleted' })
+
+    .then(() => {
+      store.clearCart()
+    })
 })
 
 onMounted(() => {

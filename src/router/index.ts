@@ -84,6 +84,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { layout: 'main' },
     component: () => import('../views/ProductsExplore.vue'),
   },
+
   {
     path: '/cart',
     component: () => import('@/views/cart/BaseCart.vue'),
@@ -122,6 +123,7 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+
   {
     path: '/:notFound(.*)',
     name: 'error',

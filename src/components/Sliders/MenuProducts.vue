@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 const store = useCategoriesStore()
 const openId = ref<number | null>(null)
 const router = useRouter()
-
+let isLoading = ref(true)
 const goToCategory = (slug: string) => {
   router.push(`/category/${slug}`)
 }
@@ -19,6 +19,7 @@ const toggle = (id: number) => {
 
 onMounted(async () => {
   await store.getCategoriesMenu()
+  isLoading.value = false
 })
 </script>
 
@@ -27,50 +28,70 @@ onMounted(async () => {
     <section class="pt-[130px] pb-[70px]">
       <div class="container">
         <div class="flex flex-col lg:flex-row gap-8 items-stretch px-4 min-h-[100%]">
-          <ul class="flex flex-[0_1_20%] flex-col font-inter font-medium gap-2 pr-6 border-r-0 lg:border-r lg:border-gray-200">
-            <li
-              v-for="item in store.categoriesMenu"
-              :key="item.id"
-              class="flex flex-col"
-            >
-              <div class="flex items-center justify-between w-full px-1.5 py-1.5">
-                <button
-                  type="button"
-                  class="text-left flex-1 hover:text-secondary-red transition"
-                  @click="item.children.length ? toggle(item.id) : goToCategory(item.slug)"
-                >
-                  {{ item.name }}
-                </button>
-
-                <button
-                  v-if="item.children.length"
-                  type="button"
-                  class="p-1"
-                  @click.stop="toggle(item.id)"
-                >
-                  <ChevronRightIcon
-                    class="w-5 h-5 text-black transition-transform duration-300"
-                    :class="{ 'rotate-90': openId === item.id }"
-                  />
-                </button>
-              </div>
-
-              <ul
-                v-if="item.children.length && openId === item.id"
-                class="flex flex-col pl-4 gap-1 mt-1"
-              >
+          <div class="flex flex-[0_1_20%] flex-col gap-4 pr-6 border-r-0 lg:border-r lg:border-gray-200">
+            <template v-if="!isLoading">
+              <ul class="flex flex-col font-inter font-medium gap-2">
                 <li
-                  v-for="(child, index) in item.children"
-                  :key="index"
-                  class="py-1 cursor-pointer text-sm hover:text-secondary-red transition"
-                  @click="goToCategory(child.slug)"
+                  v-for="item in store.categoriesMenu"
+                  :key="item.id"
+                  class="flex flex-col"
                 >
-                  {{ child.name }}
+                  <div class="flex items-center justify-between w-full px-1.5 py-1.5">
+                    <button
+                      type="button"
+                      class="text-left flex-1 hover:text-secondary-red transition"
+                      @click="item.children.length ? toggle(item.id) : goToCategory(item.slug)"
+                    >
+                      {{ item.name }}
+                    </button>
+
+                    <button
+                      v-if="item.children.length"
+                      type="button"
+                      class="p-1"
+                      @click.stop="toggle(item.id)"
+                    >
+                      <ChevronRightIcon
+                        class="w-5 h-5 text-black transition-transform duration-300"
+                        :class="{ 'rotate-90': openId === item.id }"
+                      />
+                    </button>
+                  </div>
+
+                  <ul
+                    v-if="item.children.length && openId === item.id"
+                    class="flex flex-col pl-4 gap-1 mt-1"
+                  >
+                    <li
+                      v-for="(child, index) in item.children"
+                      :key="index"
+                      class="py-1 cursor-pointer text-sm hover:text-secondary-red transition"
+                      @click="goToCategory(child.slug)"
+                    >
+                      {{ child.name }}
+                    </li>
+                  </ul>
                 </li>
               </ul>
-            </li>
-          </ul>
-
+            </template>
+            <template v-else>
+              <ContentLoader
+                v-for="n in 8"
+                :key="n"
+                :height="40"
+                :width="250"
+              >
+                <rect
+                  x="0"
+                  y="0"
+                  rx="4"
+                  ry="4"
+                  width="250"
+                  height="16"
+                />
+              </ContentLoader>
+            </template>
+          </div>
           <Slider
             :slides-view="1"
             :space-between="0"

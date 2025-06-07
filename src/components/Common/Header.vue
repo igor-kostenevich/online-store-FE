@@ -1,17 +1,31 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
 import { ChevronDownIcon, HeartIcon, ShoppingCartIcon, UserIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
+import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
+
 const isOpen = ref(false)
 const language = [{ name: 'English' }, { name: 'Українська' }, { name: 'Deutsch' }]
-const selectedPerson = ref(language[0])
+const selectedLanguage = ref(language[0])
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value
   document.body.style.overflow = isOpen.value ? 'hidden' : 'auto'
 }
+
+const people = ['Durward Reynolds', 'Kenton Towne', 'Therese Wunsch', 'Benedict Kessler', 'Katelyn Rohan']
+const selectedPerson = ref(people[0])
+const query = ref('')
+
+const filteredPeople = computed(() =>
+  query.value === ''
+    ? people
+    : people.filter(person => {
+        return person.toLowerCase().includes(query.value.toLowerCase())
+      }),
+)
 </script>
 
 <template>
@@ -28,11 +42,12 @@ const toggleMenu = () => {
             >
           </div>
         </div>
+
         <div class="ml-auto">
-          <Listbox v-model="selectedPerson">
+          <Listbox v-model="selectedLanguage">
             <div class="relative">
               <ListboxButton class="relative cursor-pointer rounded-lg py-2 pl-3 pr-10 text-left sm:text-sm">
-                <span class="block truncate">{{ selectedPerson.name }}</span>
+                <span class="block truncate">{{ selectedLanguage.name }}</span>
                 <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                   <ChevronDownIcon
                     class="h-5 w-5 text-gray-400"
@@ -158,15 +173,73 @@ const toggleMenu = () => {
 
           <div class="flex items-center gap-4">
             <div class="relative w-[243px]">
-              <input
-                type="text"
-                placeholder="What are you looking for?"
-                class="bg-[#f5f5f5] rounded-s pt-2 pb-2 pr-8 pl-3 text-sm w-full border border-transparent focus:border-gray-400 hover:border-gray-300 focus:outline-none transition"
-              />
-              <MagnifyingGlassIcon class="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5" />
+              <Combobox v-model="selectedPerson">
+                <ComboboxInput
+                  class="bg-[#f5f5f5] rounded-s pt-2 pb-2 pr-8 pl-3 text-sm w-full border border-transparent focus:border-gray-400 hover:border-gray-300 focus:outline-none transition"
+                  placeholder="What are you looking for?"
+                  @input="query = $event.target.value"
+                />
+                <MagnifyingGlassIcon class="absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5" />
+                <ComboboxOptions
+                  class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm z-50"
+                >
+                  <ComboboxOption
+                    v-for="person in filteredPeople"
+                    :key="person"
+                    :value="person"
+                    class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
+                  >
+                    {{ person }}
+                  </ComboboxOption>
+                </ComboboxOptions>
+              </Combobox>
             </div>
+
             <HeartIcon class="h-5 w-5 text-black cursor-pointer" />
             <ShoppingCartIcon class="h-5 w-5 text-black cursor-pointer" />
+
+            <Menu
+              as="div"
+              class="relative"
+            >
+              <MenuButton>
+                <UserIcon class="h-5 w-5 text-black cursor-pointer mt-1" />
+              </MenuButton>
+              <MenuItems class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md text-sm z-40">
+                <MenuItem v-slot="{ active }">
+                  <router-link
+                    :to="{ path: '/account/profile' }"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
+                  >
+                    Manage My Account
+                  </router-link>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <router-link
+                    :to="{ path: '/orders' }"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
+                  >
+                    My Orders
+                  </router-link>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <router-link
+                    :to="{ path: '/reviews' }"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
+                  >
+                    My Reviews
+                  </router-link>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <router-link
+                    :to="{ path: '/logout' }"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
+                  >
+                    Logout
+                  </router-link>
+                </MenuItem>
+              </MenuItems>
+            </Menu>
           </div>
         </div>
       </div>
@@ -191,23 +264,23 @@ const toggleMenu = () => {
                 <router-link
                   to="/home"
                   class="text-xl"
-                  >Home</router-link
-                >
+                  >Home
+                </router-link>
                 <router-link
                   to="/contact"
                   class="text-xl"
-                  >Contact</router-link
-                >
+                  >Contact
+                </router-link>
                 <router-link
                   to="/about"
                   class="text-xl"
-                  >About</router-link
-                >
+                  >About
+                </router-link>
                 <router-link
                   to="/signup "
                   class="text-xl"
-                  >Sign Up</router-link
-                >
+                  >Sign Up
+                </router-link>
               </nav>
             </div>
           </div>

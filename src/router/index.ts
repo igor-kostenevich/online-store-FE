@@ -1,4 +1,3 @@
-// src/router/index.ts
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Login from '@/views/Auth/Login.vue'
@@ -36,12 +35,14 @@ const routes: Array<RouteRecordRaw> = [
     meta: { layout: 'main' },
     component: ResetPassword,
   },
+
   {
     path: '/category/:slug',
     name: 'сategory',
     meta: { layout: 'main' },
     component: () => import('../views/Category.vue'),
   },
+
   {
     path: '/account',
     component: AccountPage,
@@ -122,6 +123,24 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
     ],
+  },
+
+
+  {
+    path: '/contact',
+    name: 'contact',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/ContactPage.vue'),
+  },
+  {
+    path: '/about',
+    name: 'about',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/AboutPage.vue'),
   },
 
   {

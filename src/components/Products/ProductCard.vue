@@ -4,12 +4,16 @@ import { ProductCard } from '@/types/Interfaces/products'
 import { HeartIcon, EyeIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 
+import { useCartStore } from '@/stores/cart'
+
 const props = defineProps<{
   product: ProductCard
 }>()
 
 const rating = ref(props.product.averageRating)
 const isFavorite = ref(props.product.isNew)
+
+const store = useCartStore()
 
 const discountForCard = computed(() => {
   const price = props.product.price
@@ -42,7 +46,10 @@ const discountForCard = computed(() => {
 
       <EyeIcon class="w-8 bg-white rounded-xl p-1 absolute top-[25%] right-3" />
 
-      <BaseButton class="absolute w-full bg-text-black bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <BaseButton
+        class="absolute w-full bg-text-black bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        @click.stop="store.addToCart(product)"
+      >
         Add To Cart
       </BaseButton>
     </div>

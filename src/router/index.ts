@@ -7,57 +7,46 @@ import AccountPage from '@/views/AccountPage.vue'
 import Profile from '@/views/Account/Profile.vue'
 import ProductDetails from '@/views/ProductDetails.vue'
 import NotFoundComponent from '@/components/NotFoundComponent.vue'
+import { useCartStore } from '@/stores/cart'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: Home,
     alias: '/home',
   },
   {
     path: '/login',
     name: 'login',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: Login,
   },
   {
     path: '/sign-up',
     name: 'sign-up',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: SignUp,
   },
   {
     path: '/reset-password',
     name: 'reset-password',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: ResetPassword,
   },
 
   {
     path: '/category/:slug',
     name: 'сategory',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: () => import('../views/Category.vue'),
   },
 
   {
     path: '/account',
     component: AccountPage,
-    meta: {
-      layout: 'main',
-    },
-
+    meta: { layout: 'main' },
     children: [
       {
         path: 'profile',
@@ -66,47 +55,76 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-
   {
     path: '/gaming',
     component: ProductDetails,
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
   },
   {
     path: '/details/:slug',
     name: 'productDetails',
     props: true,
     component: ProductDetails,
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
   },
   {
     path: '/products/discount',
     name: 'discountProducts',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: () => import('../views/ProductsDiscount.vue'),
   },
   {
     path: '/products/best-selling',
     name: 'best-selling',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: () => import('../views/ProductBestSelling.vue'),
   },
   {
     path: '/products/explore',
     name: 'explore',
-    meta: {
-      layout: 'main',
-    },
+    meta: { layout: 'main' },
     component: () => import('../views/ProductsExplore.vue'),
   },
+
+  {
+    path: '/cart',
+    component: () => import('@/views/cart/BaseCart.vue'),
+    meta: { layout: 'main' },
+    children: [
+      {
+        path: '',
+        name: 'cartOverview',
+        component: () => import('@/views/cart/CartPage.vue'),
+      },
+      {
+        path: 'billing',
+        name: 'billing',
+        component: () => import('@/views/cart/Billing.vue'),
+        beforeEnter: (to, from, next) => {
+          const cartStore = useCartStore()
+          cartStore.loadFromLocalStorage()
+          if (!cartStore.cartProducts.length) {
+            return next({ name: 'home' })
+          }
+          next()
+        },
+      },
+      {
+        path: 'billing/completed',
+        name: 'billingCompleted',
+        component: () => import('@/views/cart/Completed.vue'),
+        beforeEnter: (to, from, next) => {
+          const cartStore = useCartStore()
+          cartStore.loadFromLocalStorage()
+          if (!cartStore.cartProducts.length) {
+            return next({ name: 'home' })
+          }
+          next()
+        },
+      },
+    ],
+  },
+
 
   {
     path: '/contact',
@@ -129,7 +147,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/:notFound(.*)',
     name: 'error',
     meta: { layout: 'main' },
-
     component: NotFoundComponent,
   },
 ]
@@ -137,6 +154,14 @@ const routes: Array<RouteRecordRaw> = [
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const cartStore = useCartStore()
+  if (!cartStore.cartProducts.length) {
+    cartStore.loadFromLocalStorage()
+  }
+  next()
 })
 
 export default router

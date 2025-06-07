@@ -3,7 +3,21 @@ import * as yup from 'yup'
 import type { Ref } from 'vue'
 import type { FieldMeta } from 'vee-validate'
 
-type FieldKey = 'email' | 'password' | 'text' | 'firstName' | 'lastName' | 'newPassword' | 'confirmPassword' | 'address' | 'phone' | 'name' | 'message'
+type FieldKey =
+  | 'email'
+  | 'password'
+  | 'text'
+  | 'firstName'
+  | 'lastName'
+  | 'newPassword'
+  | 'confirmPassword'
+  | 'address'
+  | 'phone'
+  | 'companyName'
+  | 'apartment'
+  | 'town'
+  | 'name'
+  | 'message'
 
 type ValidationOptions = Partial<Record<FieldKey, boolean>>
 
@@ -38,14 +52,15 @@ export function useValidation(options: ValidationOptions = {}) {
       : yup.string(),
 
     address: options.address ? yup.string().required('Address is required') : yup.string(),
+    companyName: options.companyName ? yup.string().required('Company name is required') : yup.string(),
+    apartment: options.apartment ? yup.string().required('Apartment is required') : yup.string(),
+    town: options.town ? yup.string().required('Town is required') : yup.string(),
     phone: options.phone
       ? yup
           .string()
           .matches(/^\+380\d{9}$/, 'Phone number must be in format +380')
           .required('Phone number is required')
       : yup.string(),
-
-    name: options.phone ? yup.string().max(100, 'Maximum 100 symbols').required('Name is required') : yup.string(),
     message: options.phone ? yup.string().max(2000, 'Maximum 2000 symbols').min(10, 'Minimum 10 symbols').required('message is required') : yup.string(),
   }
 

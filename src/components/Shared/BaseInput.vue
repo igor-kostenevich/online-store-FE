@@ -19,7 +19,7 @@ const emit = defineEmits<{
 const inputClass = computed(() => {
   if (props.view === 'secondary') {
     return [
-      'block bg-secondary-medium-white mt-2 text-text-gray rounded-[5px]',
+      'block bg-secondary-medium-white   text-text-gray rounded-[5px]',
       'pt-3 pb-3 pl-4 w-full',
       props.disabled ? 'cursor-not-allowed bg-black-300' : '',
       props.error ? 'border border-red-500' : 'border border-transparent',
@@ -39,7 +39,7 @@ const inputClass = computed(() => {
   <label class="block w-full">
     <span
       v-if="label"
-      class="block mb-1 text-sm font-medium text-gray-700"
+      class="block mb-2 text-sm font-medium text-gray-400"
     >
       {{ label }}
     </span>

@@ -1,8 +1,9 @@
-// src/stores/cart.ts
 import { defineStore } from 'pinia'
 import { ProductDetails } from '@/types/Interfaces/products'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { useApi } from '@/composables/useApi'
 
+const { api } = useApi()
 export const useCartStore = defineStore('cart', {
   state: () => {
     return {
@@ -59,6 +60,9 @@ export const useCartStore = defineStore('cart', {
       this.cartProducts = this.cartProducts.filter(p => p.id !== id)
       const { setItem } = useLocalStorage()
       setItem('cart', this.cartProducts)
+    },
+    async submitOrder(payload: { items: { productId: number; quantity: number }[]; customerEmail: string; customerName: string; customerPhone: string }) {
+      await api.post('/order', payload)
     },
   },
 })

@@ -42,6 +42,7 @@ export interface ProductCard {
   discount: number
   isNew: boolean
   currency: string
+  reviews: ProductReview[]
   name: string
 }
 
@@ -116,7 +117,7 @@ export interface ProductDetails {
   description: string
   averageRating: number
   reviewCount: number
-  inStock: boolean
+  stock: boolean
   isNew: boolean
   slug: string
   images: ProductImage[]

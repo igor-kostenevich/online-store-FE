@@ -6,7 +6,7 @@ const { breadcrumbs } = useBreadcrumbs()
 <template>
   <section>
     <div class="container px-4">
-      <div class="flex flex-wrap items-center px-4 mb-6 text-sm text-text-gray gap-2 pt-[140px]">
+      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2 pt-[140px]">
         <template
           v-for="(crumb, index) in breadcrumbs"
           :key="index"

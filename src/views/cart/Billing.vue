@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
-import { onMounted, ref } from 'vue'
 import { useValidation } from '@/composables/useValidation'
-import paymentIcon from '@/assets/icons/paymentpng.png'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { billingMethod } from '@/types/types/billing'
 
@@ -21,28 +20,30 @@ const { onSubmit, fields, errors, metas } = useValidation({
 
 const coupon = ref('')
 
-const submitOrder = onSubmit(() => {
-  router
-    .push({ name: 'billingCompleted' })
-
-    .then(() => {
-      store.clearCart()
-    })
+const submitOrder = onSubmit(async () => {
+  const payload = {
+    items: store.cartProducts.map(p => ({ productId: p.id, quantity: p.quantity })),
+    customerEmail: fields.email.value,
+    customerName: fields.firstName.value,
+    customerPhone: fields.phone.value,
+  }
+  await store.submitOrder(payload)
+  await router.push({ name: 'billingCompleted' })
+  store.clearCart()
 })
 
 onMounted(() => {
   store.loadFromLocalStorage()
 })
-
 const paymentMethod = ref<billingMethod>('card')
 </script>
 
 <template>
-  <section>
-    <div class="container px-4 lg:px-0">
-      <div class="flex flex-col lg:flex-row lg:justify-between gap-10">
+  <section class="pb-[50px] lg:pb-[70px]">
+    <div class="container">
+      <div class="flex flex-col lg:flex-row lg:justify-between gap-x-10">
         <div class="w-full lg:flex-[0_1_38%]">
-          <h1 class="text-3xl lg:text-4xl font-medium pb-10">Billing Details</h1>
+          <h1 class="text-3xl lg:text-4xl font-medium pb-10 pt-7">Billing Details</h1>
 
           <form
             class="flex flex-col gap-6"
@@ -142,7 +143,7 @@ const paymentMethod = ref<billingMethod>('card')
                   alt="Product"
                   class="w-[54px] h-[54px] object-contain"
                 />
-                <span class="font-medium">{{ product.name }}</span>
+                <span>{{ product.name }}</span>
               </div>
               <div>${{ product.price }}</div>
             </div>
@@ -166,35 +167,34 @@ const paymentMethod = ref<billingMethod>('card')
           <div class="mt-6 space-y-5">
             <div
               class="flex items-center justify-between px-2 py-3 rounded cursor-pointer transition-all duration-200 hover:bg-gray-100"
-              :class="paymentMethod === 'bank' ? 'bg-gray-100 text-black' : 'text-gray-600'"
-              @click="paymentMethod = 'bank'"
+              :class="paymentMethod === 'card' ? 'bg-gray-100 text-black' : 'text-gray-600'"
+              @click="paymentMethod = 'card'"
             >
               <div class="flex items-center gap-3">
                 <span class="w-5 h-5 rounded-full border border-black flex items-center justify-center transition-all duration-200">
                   <span
-                    v-if="paymentMethod === 'bank'"
+                    v-if="paymentMethod === 'card'"
                     class="w-3 h-3 rounded-full bg-black"
                   />
                 </span>
-                <span class="text-base">Bank</span>
+                <span class="text-base">Card</span>
               </div>
-
               <img
-                :src="paymentIcon"
-                alt="Payment"
+                src="@/assets/icons/paymentpng.png"
+                alt="Card"
                 class="h-5"
               />
             </div>
 
             <div
               class="flex items-center justify-between px-2 py-3 rounded cursor-pointer transition-all duration-200 hover:bg-gray-100"
-              :class="paymentMethod === 'cod' ? 'bg-gray-100 text-black' : 'text-gray-600'"
-              @click="paymentMethod = 'cod'"
+              :class="paymentMethod === 'cash' ? 'bg-gray-100 text-black' : 'text-gray-600'"
+              @click="paymentMethod = 'cash'"
             >
               <div class="flex items-center gap-3">
                 <span class="w-5 h-5 rounded-full border border-black flex items-center justify-center transition-all duration-200">
                   <span
-                    v-if="paymentMethod === 'cod'"
+                    v-if="paymentMethod === 'cash'"
                     class="w-3 h-3 rounded-full bg-black"
                   />
                 </span>
@@ -202,7 +202,6 @@ const paymentMethod = ref<billingMethod>('card')
               </div>
             </div>
           </div>
-
           <div class="flex flex-col gap-6 mt-8 lg:flex-row lg:justify-between">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-start w-full">
               <BaseInput

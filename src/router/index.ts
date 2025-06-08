@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/sign-up',
-    name: 'sign-up',
+    name: 'signUp',
     meta: { layout: 'main' },
     component: SignUp,
   },
@@ -124,7 +124,6 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-
 
   {
     path: '/contact',

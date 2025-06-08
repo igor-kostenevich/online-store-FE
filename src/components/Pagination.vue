@@ -11,6 +11,7 @@ const emit = defineEmits(['change-page'])
 function changePage(page: number) {
   if (page !== props.currentPage) {
     emit('change-page', page)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 }
 
@@ -84,3 +85,9 @@ const pages = computed(() => {
     </button>
   </div>
 </template>
+
+<style>
+html {
+  scroll-behavior: smooth;
+}
+</style>

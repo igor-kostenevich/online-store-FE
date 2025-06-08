@@ -6,25 +6,30 @@ import { useProductsStore } from '@/stores/products'
 import Vue3StarRatings from 'vue3-star-ratings'
 import { HeartIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
+import Icon from '@/components/Common/Icon.vue'
+import { useCartStore } from '@/stores/cart'
 
 const { breadcrumbs } = useBreadcrumbs()
 const store = useProductsStore()
 const quantity = ref(1)
 const route = useRoute()
+const cartStore = useCartStore()
+
 const selectedColor = ref<string>('')
 const selectedSize = ref<string>('')
 
 onMounted(async () => {
   const slug = route.params.slug as string
   await store.getProductDetails(slug)
-  console.log(store.cardProductDetails.reviews)
+  selectedColor.value = store.cardProductDetails.colors?.[0] ?? ''
+  selectedSize.value = store.cardProductDetails.sizes?.[0] ?? ''
 })
 </script>
 
 <template>
   <section class="pt-[120px]">
-    <div class="container px-4 lg:px-0">
-      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2">
+    <div class="container">
+      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2 pb-[70px]">
         <template
           v-for="(crumb, index) in breadcrumbs"
           :key="index"
@@ -55,10 +60,10 @@ onMounted(async () => {
             </template>
 
             <template #thumb="{ item }">
-              <div class="w-[110px] h-[130px] rounded-md overflow-hidden border border-gray-300 flex items-center justify-center transition">
+              <div class="w-[110px] h-[130px] rounded-md overflow-hidden border border-gray-300/50 flex items-center justify-center transition">
                 <img
                   :src="item.url"
-                  class="w-full h-full object-cover"
+                  class="w-full h-full object-contain py-3"
                 />
               </div>
             </template>
@@ -66,7 +71,7 @@ onMounted(async () => {
         </div>
 
         <div class="flex flex-col">
-          <h2 class="font-semibold text-xl sm:text-2xl mb-3">
+          <h2 class="font-semibold text-xl sm:text-2xl mb-4">
             {{ store.cardProductDetails.name }}
           </h2>
 
@@ -79,18 +84,22 @@ onMounted(async () => {
               inactive-color="#999"
               :number-of-stars="5"
               :disable-click="true"
-              class="block w-fit"
+              class="-translate-y-0.3"
             />
-            <div class="text-sm text-text-gray">({{ store.cardProductDetails.reviewCount }} Reviews)</div>
-            <div class="text-secondary-red">In Stock</div>
+            <div class="text-sm text-text-gray border-r-2 pr-2 translate-y-0.5">({{ store.cardProductDetails.reviewCount }} Reviews)</div>
+
+            <div :class="[store.cardProductDetails.stock > 0 ? 'text-secondary-red' : 'text-text-gray', 'font-medium']">
+              {{ store.cardProductDetails.stock > 0 ? 'In Stock' : 'Out of stock' }}
+            </div>
           </div>
 
           <div class="text-xl sm:text-2xl mb-6">${{ store.cardProductDetails.price }}</div>
 
-          <p class="ml-2 text-sm pb-1">
+          <p
+            :class="['ml-2 text-sm pb-6', store.cardProductDetails.colors?.length && store.cardProductDetails.sizes?.length ? 'border-b border-black-300' : '']"
+          >
             {{ store.cardProductDetails.description }}
           </p>
-
           <div
             v-if="store.cardProductDetails.colors && store.cardProductDetails.sizes.length"
             class="mt-6"
@@ -138,7 +147,12 @@ onMounted(async () => {
               :min="1"
               :max="20"
             />
-            <BaseButton class="!py-2 !px-12">Buy Now</BaseButton>
+            <BaseButton
+              class="!py-2 !px-12"
+              @click.stop="cartStore.addToCart(store.cardProductDetails)"
+              >Buy Now</BaseButton
+            >
+
             <HeartIcon
               class="w-10 border border-black rounded-[4px] p-2.5 cursor-pointer"
               :class="{ 'text-secondary-red': store.cardProductDetails.isNew }"
@@ -147,11 +161,10 @@ onMounted(async () => {
           </div>
 
           <div class="border rounded-[5px] border-black py-6 px-4">
-            <div class="border-b border-black pb-4 flex items-start gap-4">
-              <img
-                src="@/assets/icons/delivery.svg"
-                alt="icon"
-                class="w-[60px] h-[70px]"
+            <div class="border-b border-black pb-4 flex items-center gap-4">
+              <Icon
+                name="delivery"
+                class="w-[40px] h-[40px]"
               />
               <div>
                 <div class="font-semibold text-lg">Free Delivery</div>
@@ -159,11 +172,10 @@ onMounted(async () => {
               </div>
             </div>
 
-            <div class="pt-4 flex items-start gap-4">
-              <img
-                src="@/assets/icons/return.svg"
-                alt="icon"
-                class="w-[60px] h-[60px]"
+            <div class="pt-4 flex items-center gap-4">
+              <Icon
+                name="returns"
+                class="w-[40px] h-[40px]"
               />
               <div>
                 <div class="font-semibold text-lg">Return Delivery</div>

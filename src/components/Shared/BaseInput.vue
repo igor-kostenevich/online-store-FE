@@ -39,7 +39,7 @@ const inputClass = computed(() => {
   <label class="block w-full">
     <span
       v-if="label"
-      class="block mb-2 text-sm font-medium text-gray-400"
+      class="block mb-2 text-sm text-gray-400"
     >
       {{ label }}
     </span>

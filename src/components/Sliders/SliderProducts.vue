@@ -3,11 +3,9 @@ import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 import { useProductsStore } from '@/stores/products'
 import Slider from '@/components/Common/Slider.vue'
 import BaseDate from '@/components/Shared/BaseDate.vue'
-import { ProductDetails } from '@/types/Interfaces/products'
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
+import { onMounted } from 'vue'
+
 const productSlider = useProductsStore()
 
 const breakpoints = {
@@ -20,15 +18,10 @@ const breakpoints = {
 onMounted(async () => {
   await productSlider.getDiscountProducts(20, 1)
 })
-
-function toDetails(item: ProductDetails) {
-  productSlider.setProductDetails(item)
-  router.push({ name: 'productDetails', params: { slug: item.slug } })
-}
 </script>
 
 <template>
-  <section class="pt-[70px] pb-[70px]">
+  <section class="pt-[70px] pb-[10px]">
     <div class="container">
       <div class="flex flex-col md:flex-row md:justify-between relative">
         <div class="flex flex-col md:flex-row gap-x-20">
@@ -45,17 +38,17 @@ function toDetails(item: ProductDetails) {
 
         <div class="absolute bottom-[75%] md:bottom-[33%] right-[5%] md:right-[0%] z-10 flex gap-2">
           <button
-            class="flex items-center justify-center bg-[#f5f5f5] !w-[46px] !h-[46px] p-1 transition rounded-full cursor-pointer products-slider-next rotate-180"
+            class="products-slider-prev flex items-center justify-center bg-[#f5f5f5] w-[46px] h-[46px] p-1 rounded-full cursor-pointer transition"
             type="button"
           >
-            <ArrowRightIcon class="!w-[19px] !h-[16px] text-black" />
+            <ArrowLeftIcon class="w-[19px] h-[16px]" />
           </button>
 
           <button
-            class="flex items-center justify-center bg-[#f5f5f5] !w-[46px] !h-[46px] p-1 transition rounded-full cursor-pointer products-slider-prev rotate-180"
+            class="products-slider-next flex items-center justify-center bg-[#f5f5f5] w-[46px] h-[46px] p-1 rounded-full cursor-pointer transition"
             type="button"
           >
-            <ArrowLeftIcon class="!w-[19px] !h-[16px] text-black" />
+            <ArrowRightIcon class="w-[19px] h-[16px]" />
           </button>
         </div>
       </div>

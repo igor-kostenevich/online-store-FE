@@ -6,7 +6,7 @@
       <div class="flex justify-center sm:justify-between items-center gap-10 flex-wrap">
         <div class="flex flex-col gap-2 justify-center items-center">
           <img
-            src="@/assets/images/info/01.svg"
+            src="@/assets/images/info/03.svg"
             alt="photo"
           />
           <div class="text-xl font-semibold">FREE AND FAST DELIVERY</div>
@@ -14,7 +14,7 @@
         </div>
         <div class="flex flex-col gap-2 justify-center items-center">
           <img
-            src="@/assets/images/info/01.svg"
+            src="@/assets/images/info/02.svg"
             alt="photo"
           />
           <div class="text-xl font-semibold">24/7 CUSTOMER SERVICE</div>
@@ -22,7 +22,7 @@
         </div>
         <div class="flex flex-col gap-2 justify-center items-center">
           <img
-            src="@/assets/images/info/03.svg"
+            src="@/assets/images/info/01.svg"
             alt="photo"
           />
           <div class="text-xl font-semibold">MONEY BACK GUARANTEE</div>

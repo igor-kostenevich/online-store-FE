@@ -24,7 +24,7 @@ const { breadcrumbs } = useBreadcrumbs()
         <div class="flex flex-col lg:flex-row items-center gap-12">
           <div class="w-full lg:w-1/2 lg:pt-[100px]">
             <h2 class="font-semibold text-5xl pb-10">Our Story</h2>
-            <div>
+            <div class="max-w-[525px]">
               <p class="text-base leading-relaxed pb-6">
                 Launched in 2015, Exclusive is South Asia’s premier online shopping marketplace with an active presence in Bangladesh. Supported by a wide range
                 of tailored marketing, data and service solutions, Exclusive has 10,500 sellers and 300 brands and serves 3 million customers across the region.
@@ -39,7 +39,7 @@ const { breadcrumbs } = useBreadcrumbs()
             <img
               src="@/assets/about/SideImage.png"
               alt="photo"
-              class="w-full h-auto object-cover"
+              class="w-full h-auto object-contain"
             />
           </div>
         </div>
@@ -97,7 +97,7 @@ const { breadcrumbs } = useBreadcrumbs()
     <div class="container">
       <div class="grid grid-cols-1 justify-items-center sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div class="flex flex-col">
-          <div class="pb-6 w-full max-w-[370px]">
+          <div class="pb-8 w-full max-w-[370px]">
             <img
               src="../assets/about/01.png"
               alt="photo"
@@ -114,7 +114,7 @@ const { breadcrumbs } = useBreadcrumbs()
         </div>
 
         <div class="flex flex-col">
-          <div class="pb-6 w-full max-w-[370px]">
+          <div class="pb-6 rounded-[4px] w-full max-w-[370px]">
             <img
               src="../assets/about/02.png"
               alt="photo"

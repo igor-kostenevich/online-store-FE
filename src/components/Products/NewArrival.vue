@@ -10,7 +10,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="pt-[70px] pb-[70px]">
+  <section class="pt-[70px] pb-[10px]">
     <div class="container">
       <div>
         <div class="section-subtitle">Featured</div>

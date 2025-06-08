@@ -10,7 +10,7 @@ onMounted(() => {
 </script>
 <template>
   <section class="pt-[70px] pb-[70px]">
-    <div class="container px-0 sm:px-4">
+    <div class="container">
       <div class="h-px bg-gray-200 mb-[50px]" />
       <div class="flex md:flex-row flex-col justify-between">
         <div>

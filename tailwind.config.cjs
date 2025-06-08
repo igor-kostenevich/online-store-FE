@@ -12,6 +12,9 @@ module.exports = {
       xl: '1280px',
     },
     extend: {
+      boxShadow: {
+        card: '0 1px 13px 0 rgba(0, 0, 0, 0.05)',
+      },
       colors: {
         primary: {
           white: '#FFFFFF',

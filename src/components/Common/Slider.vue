@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <swiper
+      v-if="items && items.length"
       class="w-full order-2"
       :modules="modules"
       :slides-per-view="slidesView"
@@ -74,6 +75,8 @@ defineProps<{
   slideStart: number
   loop?: boolean
   items: any[]
+  required: false
+  default: () => []
   pagination?: boolean | { clickable: boolean }
   navigation?: boolean
   breakpoints?: Record<string, any>

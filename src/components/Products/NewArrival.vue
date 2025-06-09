@@ -4,8 +4,9 @@ import { computed, onMounted } from 'vue'
 
 const store = useProductsStore()
 const products = computed(() => store.newArrivalProducts)
-onMounted(() => {
-  store.getNewArrivalProducts()
+
+onMounted(async () => {
+  await store.fetchHomePageData()
 })
 </script>
 

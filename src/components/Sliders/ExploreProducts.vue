@@ -29,8 +29,8 @@ const breakpoints = {
   },
 }
 
-onMounted(() => {
-  store.getExploreProducts(16, 1)
+onMounted(async () => {
+  await store.fetchHomePageData(20, 1)
 })
 </script>
 
@@ -61,8 +61,7 @@ onMounted(() => {
       </div>
 
       <Slider
-        v-if="store.exploreProducts.data"
-        :items="store.exploreProducts.data"
+        :items="store.exploreProducts"
         :slides-view="4"
         :slides-per-group="4"
         :space-between="20"

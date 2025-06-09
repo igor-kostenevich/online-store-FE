@@ -15,6 +15,7 @@
     "@kyvg/vue3-notification": "^3.4.1",
     "@skeleton-elements/vue": "^2.0.0",
     "axios": "^1.5.1",
+    "lodash.debounce": "^4.0.8",
     "moment": "^2.29.4",
     "pinia": "^2.1.6",
     "swiper": "^11.2.6",

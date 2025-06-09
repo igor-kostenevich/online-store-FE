@@ -8,7 +8,10 @@ import Pagination from '@/components/Pagination.vue'
 const store = useProductsStore()
 const route = useRoute()
 const router = useRouter()
-const currentPage = computed(() => Number(route.query.page))
+const currentPage = computed(() => {
+  const page = Number(route.query.page)
+  return isNaN(page) || page < 1 ? 1 : page
+})
 
 watch(
   currentPage,

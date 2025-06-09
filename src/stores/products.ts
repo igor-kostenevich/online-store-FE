@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { NewArrivalProducts, ProductsResponse, ProductDetails } from '@/types/Interfaces/products'
+import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults } from '@/types/Interfaces/products'
 
 const { api } = useApi()
 
@@ -9,9 +9,10 @@ export const useProductsStore = defineStore('products', {
     products: {} as ProductsResponse,
     newArrivalProducts: [] as NewArrivalProducts[],
     exploreProducts: {},
-    bestSellingProducts: [] as ProductsResponse,
+    bestSellingProducts: {} as ProductsResponse,
     cardProduct: [],
     cardProductDetails: {} as ProductDetails,
+    searchResults: {} as SearchResults,
   }),
 
   actions: {
@@ -42,6 +43,9 @@ export const useProductsStore = defineStore('products', {
 
     async getExploreProducts(limit: number, page: number) {
       this.exploreProducts = await api.get('/product/', { limit, page })
+    },
+    async searchProducts(q: string) {
+      this.searchResults = await api.get('/product/search', { q })
     },
   },
 })

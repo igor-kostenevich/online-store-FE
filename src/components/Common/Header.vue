@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import {
   Listbox,
   ListboxButton,
@@ -16,14 +16,19 @@ import {
   ComboboxOption,
 } from '@headlessui/vue'
 import { ChevronDownIcon, HeartIcon, ShoppingCartIcon, UserIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
+import debounce from 'lodash.debounce'
 import { useCartStore } from '@/stores/cart'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth'
+import { useProductsStore } from '@/stores/products'
+import { ProductComplete } from '@/types/Interfaces/products'
 
 const route = useRoute()
+const router = useRouter()
 const authStore = useAuthStore()
 const cartStore = useCartStore()
-const isOpen = ref(false)
+const productStore = useProductsStore()
 
+const isOpen = ref(false)
 const language = [{ name: 'English' }, { name: 'Українська' }, { name: 'Deutsch' }]
 const selectedLanguage = ref(language[0])
 
@@ -32,12 +37,31 @@ const toggleMenu = () => {
   document.body.style.overflow = isOpen.value ? 'hidden' : 'auto'
 }
 
-const people = ['Durward Reynolds', 'Kenton Towne', 'Therese Wunsch', 'Benedict Kessler', 'Katelyn Rohan']
-const selectedPerson = ref(people[0])
-const query = ref('')
-const filteredPeople = computed(() => (query.value === '' ? people : people.filter(p => p.toLowerCase().includes(query.value.toLowerCase()))))
-
 const isAuthenticated = computed(() => Object.keys(authStore.user).length > 0)
+
+const query = ref<string>('')
+const selectedProduct = ref<ProductComplete | null>(null)
+const debouncedSearch = debounce((q: string) => {
+  productStore.searchProducts(q)
+}, 300)
+
+watch(
+  query,
+  q => {
+    debouncedSearch(q)
+  },
+  { immediate: true },
+)
+
+const filteredProducts = computed(() => {
+  return productStore.searchResults.filter((p: ProductComplete) => p.name.toLowerCase().includes(query.value.toLowerCase()))
+})
+
+watch(selectedProduct, product => {
+  if (product) {
+    router.push({ name: 'productDetails', params: { slug: product.slug } })
+  }
+})
 </script>
 
 <template>
@@ -143,9 +167,9 @@ const isAuthenticated = computed(() => Object.keys(authStore.user).length > 0)
             class="flex flex-col gap-y-1"
             @click="toggleMenu"
           >
-            <span :class="['block h-[2px] w-6 transition-transform', isOpen ? 'rotate-45 translate-y-1.5' : 'bg-black']" />
-            <span :class="['block h-[2px] w-6 transition-opacity', isOpen ? 'opacity-0' : 'bg-black']" />
-            <span :class="['block h-[2px] w-6 transition-transform', isOpen ? '-rotate-45 -translate-y-1.5' : 'bg-black']" />
+            <span :class="['block h-[2px] w-6 transition-transform bg-black', isOpen ? 'rotate-45 translate-y-1.5' : 'bg-black']" />
+            <span :class="['block h-[2px] w-6 transition-opacity bg-black', isOpen ? 'opacity-0' : 'bg-black']" />
+            <span :class="['block h-[2px] w-6 transition-transform bg-black', isOpen ? '-rotate-45 -translate-y-1.5' : 'bg-black']" />
           </button>
         </div>
 
@@ -183,22 +207,37 @@ const isAuthenticated = computed(() => Object.keys(authStore.user).length > 0)
 
           <div class="flex items-center gap-4">
             <div class="relative w-[243px]">
-              <Combobox v-model="selectedPerson">
+              <Combobox
+                v-model="selectedProduct"
+                as="div"
+              >
                 <ComboboxInput
-                  class="w-full rounded-s bg-[#f5f5f5] pt-2 pb-2 pr-8 pl-3 text-sm border-transparent focus:border-gray-400 hover:border-gray-300 transition"
+                  class="w-full rounded bg-[#f5f5f5] py-2 pl-3 pr-8 text-sm border-transparent focus:border-gray-400 hover:border-gray-300 transition"
                   placeholder="What are you looking for?"
-                  @input="query = $event.target.value"
+                  @input="
+                    e => {
+                      query = e.target.value
+                    }
+                  "
                 />
                 <MagnifyingGlassIcon class="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2" />
-                <ComboboxOptions
-                  class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none z-50"
-                >
+                <ComboboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
                   <ComboboxOption
-                    v-for="person in filteredPeople"
-                    :key="person"
-                    :value="person"
+                    v-for="product in filteredProducts"
+                    :key="product.id"
+                    as="div"
+                    :value="product"
                     class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
-                    >{{ person }}
+                  >
+                    <div class="flex !text-[14px]">
+                      {{ product.name }}
+
+                      <img
+                        :src="product.image.url"
+                        alt="photo"
+                        class="h-12 w-12"
+                      />
+                    </div>
                   </ComboboxOption>
                 </ComboboxOptions>
               </Combobox>
@@ -265,28 +304,38 @@ const isAuthenticated = computed(() => Object.keys(authStore.user).length > 0)
           class="lg:hidden fixed top-[90px] bottom-0 left-0 w-full bg-white overflow-y-auto z-40"
         >
           <div class="container p-3">
-            <Combobox
-              v-model="selectedPerson"
-              class="mb-4"
-            >
-              <ComboboxInput
-                class="w-full rounded-s bg-[#f5f5f5] pt-2 pb-2 pr-8 pl-3 text-sm border-transparent focus:border-gray-400 hover:border-gray-300 transition"
-                placeholder="What are you looking for?"
-                @input="query = $event.target.value"
-              />
-              <MagnifyingGlassIcon class="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2" />
-              <ComboboxOptions
-                class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none z-50"
+            <div class="mb-4 relative w-full">
+              <Combobox
+                v-model="selectedProduct"
+                as="div"
               >
-                <ComboboxOption
-                  v-for="person in filteredPeople"
-                  :key="person"
-                  :value="person"
-                  class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
-                  >{{ person }}
-                </ComboboxOption>
-              </ComboboxOptions>
-            </Combobox>
+                <ComboboxInput
+                  class="w-full rounded bg-[#f5f5f5] py-2 pl-3 pr-8 text-sm border-transparent focus:border-gray-400 hover:border-gray-300 transition"
+                  placeholder="What are you looking for?"
+                  @input="
+                    e => {
+                      query = e.target.value
+                    }
+                  "
+                />
+                <MagnifyingGlassIcon class="absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 pointer-events-none" />
+                <ComboboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
+                  <ComboboxOption
+                    v-for="product in filteredProducts"
+                    :key="product.id"
+                    :value="product"
+                    class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    <img
+                      :src="product.image.url"
+                      alt="photo"
+                      class="h-12 w-12 object-cover"
+                    />
+                    <span class="text-[14px]">{{ product.name }}</span>
+                  </ComboboxOption>
+                </ComboboxOptions>
+              </Combobox>
+            </div>
 
             <nav class="flex flex-col gap-4 border-t border-b border-gray-200 py-4 text-base">
               <router-link

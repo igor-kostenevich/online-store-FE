@@ -124,3 +124,23 @@ export interface ProductDetails {
   colors: string[]
   sizes: string[]
 }
+
+export interface SearchResults {
+  id: string
+  images: {
+    id: string
+    url: string
+  }[]
+  slug: string
+  name: string
+  price: number
+}
+
+export interface ProductComplete {
+  id: string
+  name: string
+  slug: string
+  image: {
+    url: string
+  }
+}

@@ -29,7 +29,7 @@ onMounted(async () => {
 <template>
   <section class="pt-[120px]">
     <div class="container">
-      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2 pb-[70px]">
+      <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2 pb-[30px] lg:pb-[70px]">
         <template
           v-for="(crumb, index) in breadcrumbs"
           :key="index"

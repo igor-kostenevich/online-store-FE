@@ -38,17 +38,17 @@ onMounted(() => {
 
         <div class="absolute bottom-[60%] md:bottom-[0%] right-[1%] md:right-[0%] z-10 flex gap-2">
           <button
-            class="category-slider-next flex items-center justify-center bg-[#f5f5f5] !w-[46px] !h-[46px] p-1 transition rounded-full cursor-pointer rotate-180"
+            class="category-slider-prev flex items-center justify-center bg-[#f5f5f5] w-[46px] h-[46px] p-1 rounded-full cursor-pointer transition"
             type="button"
           >
-            <ArrowRightIcon class="!w-[19px] !h-[16px] text-black" />
+            <ArrowLeftIcon class="w-[19px] h-[16px]" />
           </button>
 
           <button
-            class="category-slider-prev flex items-center justify-center bg-[#f5f5f5] !w-[46px] !h-[46px] p-1 transition rounded-full cursor-pointer rotate-180"
+            class="category-slider-next flex items-center justify-center bg-[#f5f5f5] w-[46px] h-[46px] p-1 rounded-full cursor-pointer transition"
             type="button"
           >
-            <ArrowLeftIcon class="!w-[19px] !h-[16px] text-black" />
+            <ArrowRightIcon class="w-[19px] h-[16px]" />
           </button>
         </div>
       </div>

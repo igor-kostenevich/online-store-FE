@@ -1,34 +1,30 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults } from '@/types/Interfaces/products'
+import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults, ProductCard, Product } from '@/types/Interfaces/products'
 
 const { api } = useApi()
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
-    products: {} as ProductsResponse,
+    products: {} as Product,
     newArrivalProducts: [] as NewArrivalProducts[],
-    exploreProducts: {},
-    bestSellingProducts: {} as ProductsResponse,
+    exploreProducts: [] as ProductsResponse[], // тимчасово порожній
+    bestSellingProducts: [] as ProductsResponse[],
     cardProduct: [],
     cardProductDetails: {} as ProductDetails,
     searchResults: {} as SearchResults,
+    banner: {} as any,
   }),
 
   actions: {
-    async getDiscountProducts(limit: number, page: number) {
-      this.products = await api.get('/product/discounts', {
-        limit,
-        page,
-      })
-    },
+    async fetchHomePageData(limit: number = 20, page: number = 1) {
+      const response = await api.get('/product/homepage', { limit, page })
 
-    async getNewArrivalProducts() {
-      this.newArrivalProducts = await api.get('/product/new-arrivals')
-    },
-
-    setProductDetails(details: ProductDetails) {
-      this.cardProductDetails = details
+      this.products = response.discounts
+      this.newArrivalProducts = response.newArrivals
+      this.bestSellingProducts = response.bestSelling
+      this.banner = response.banner
+      this.exploreProducts = response.allProducts
     },
 
     async getProductDetails(slug: string) {
@@ -37,13 +33,10 @@ export const useProductsStore = defineStore('products', {
       }
     },
 
-    async getBestSellingProducts(limit: number, page: number) {
-      this.bestSellingProducts = await api.get('/product/best-selling', { limit, page })
+    setProductDetails(details: ProductDetails) {
+      this.cardProductDetails = details
     },
 
-    async getExploreProducts(limit: number, page: number) {
-      this.exploreProducts = await api.get('/product/', { limit, page })
-    },
     async searchProducts(q: string) {
       this.searchResults = await api.get('/product/search', { q })
     },

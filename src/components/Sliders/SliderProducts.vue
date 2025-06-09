@@ -16,7 +16,7 @@ const breakpoints = {
 }
 
 onMounted(async () => {
-  await productSlider.getDiscountProducts(20, 1)
+  await productSlider.fetchHomePageData(20, 1)
 })
 </script>
 
@@ -54,7 +54,8 @@ onMounted(async () => {
       </div>
 
       <Slider
-        :items="productSlider.products.items"
+        v-if="productSlider.products"
+        :items="productSlider.products"
         :slides-view="4"
         :space-between="20"
         slide-effect="slide"
@@ -71,7 +72,6 @@ onMounted(async () => {
             :key="item.id"
             :product="item"
             class="h-full"
-            @click="toDetails(item)"
           />
         </template>
       </Slider>

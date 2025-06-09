@@ -4,8 +4,8 @@ import { onMounted } from 'vue'
 
 const store = useProductsStore()
 
-onMounted(() => {
-  store.getBestSellingProducts(4, 1)
+onMounted(async () => {
+  await store.fetchHomePageData(20, 1)
 })
 </script>
 <template>
@@ -25,7 +25,7 @@ onMounted(() => {
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         <ProductCard
-          v-for="product in store.bestSellingProducts.data"
+          v-for="product in store.bestSellingProducts"
           :key="product.id"
           :product="product"
         />

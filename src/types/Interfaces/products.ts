@@ -94,6 +94,7 @@ export interface Product {
   currency: string
   updatedAt: string
   expiresAt: string
+  items: any[]
 }
 
 export interface ProductMeta {

@@ -51,10 +51,10 @@ onMounted(async () => {
             :use-thumbs="true"
           >
             <template #slide="{ item }">
-              <div class="bg-secondary-medium-white h-[100%] flex items-center justify-center">
+              <div class="bg-secondary-medium-white h-[100%] flex items-center justify-center max-h-[550px] p-6">
                 <img
                   :src="item.url"
-                  class="main-img w-full h-full object-cover"
+                  class="main-img w-full h-full object-contain"
                 />
               </div>
             </template>
@@ -88,8 +88,8 @@ onMounted(async () => {
             />
             <div class="text-sm text-text-gray border-r-2 pr-2 translate-y-0.5">({{ store.cardProductDetails.reviewCount }} Reviews)</div>
 
-            <div :class="[store.cardProductDetails.stock > 0 ? 'text-secondary-red' : 'text-text-gray', 'font-medium']">
-              {{ store.cardProductDetails.stock > 0 ? 'In Stock' : 'Out of stock' }}
+            <div :class="[store.cardProductDetails.stock ? 'text-secondary-red' : 'text-text-gray', 'font-medium']">
+              {{ store.cardProductDetails.stock ? 'In Stock' : 'Out of stock' }}
             </div>
           </div>
 

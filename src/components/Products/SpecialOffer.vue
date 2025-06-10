@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useTimer } from '@/composables/useTimer'
 
 import { useProductsStore } from '@/stores/products'
@@ -59,18 +59,22 @@ const store = useProductsStore()
 let intervalId: any
 
 onMounted(async () => {
-
-  timer.setTargetDate(store.banner.expiresAt)
-
-  intervalId = setInterval(() => {
-    timer.tick()
-    if (timer.isFinished.value) {
-      clearInterval(intervalId)
-    }
-  }, 1000)
-})
-onUnmounted(() => {
-  clearInterval(intervalId)
+  const stopWatch = watch(
+    () => store.banner.expiresAt,
+    expiresAt => {
+      if (expiresAt) {
+        timer.setTargetDate(expiresAt)
+        intervalId = setInterval(() => {
+          timer.tick()
+          if (timer.isFinished.value) {
+            clearInterval(intervalId)
+          }
+        }, 1000)
+        stopWatch()
+      }
+    },
+    { immediate: true },
+  )
 })
 </script>
 

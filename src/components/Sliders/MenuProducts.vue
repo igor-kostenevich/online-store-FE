@@ -28,7 +28,7 @@ onMounted(async () => {
     <section class="pt-[130px] pb-[10px]">
       <div class="container">
         <div class="flex flex-col lg:flex-row gap-8 items-stretch min-h-[100%]">
-          <div class="flex flex-[0_1_20%] flex-col gap-4 pr-6 border-r-0 lg:border-r lg:border-gray-200 order-2 lg:order-1">
+          <div class="flex flex-[0_1_20%] flex-col gap-4 lg:pr-6 border-r-0 lg:border-r lg:border-gray-200 order-2 lg:order-1">
             <template v-if="!isLoading">
               <ul class="flex flex-col font-inter font-medium gap-2">
                 <li

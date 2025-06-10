@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
 
-
 const store = useProductsStore()
-
-
 </script>
 <template>
   <section class="pt-[70px] pb-[70px]">

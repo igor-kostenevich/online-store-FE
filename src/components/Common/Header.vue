@@ -206,7 +206,7 @@ watch(selectedProduct, product => {
           </nav>
 
           <div class="flex items-center gap-4">
-            <div class="relative w-[243px]">
+            <div class="relative w-[290px]">
               <Combobox
                 v-model="selectedProduct"
                 as="div"
@@ -221,7 +221,7 @@ watch(selectedProduct, product => {
                   "
                 />
                 <MagnifyingGlassIcon class="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2" />
-                <ComboboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
+                <ComboboxOptions class="absolute mt-1 max-h-80 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
                   <ComboboxOption
                     v-for="product in filteredProducts"
                     :key="product.id"
@@ -229,9 +229,9 @@ watch(selectedProduct, product => {
                     :value="product"
                     class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
                   >
-                    <div class="flex !text-[14px]">
-                      {{ product.name }}
-
+                    <div class="flex items-center gap-2 text-[12px]">
+                      <span class="flex-[0_1_60%]">{{ product.name }}</span>
+                      <span class="text-secondary-red flex-[0_1_30%]">${{ product.price }}</span>
                       <img
                         :src="product.image.url"
                         alt="photo"
@@ -331,7 +331,8 @@ watch(selectedProduct, product => {
                       alt="photo"
                       class="h-12 w-12 object-cover"
                     />
-                    <span class="text-[14px]">{{ product.name }}</span>
+                    <span class="text-[14px] flex-[0_1_70%]">{{ product.name }}</span>
+                    <span class="text-secondary-red flex-[0_1_30%]">${{ product.price }}</span>
                   </ComboboxOption>
                 </ComboboxOptions>
               </Combobox>

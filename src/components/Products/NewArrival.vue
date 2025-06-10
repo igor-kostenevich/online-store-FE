@@ -4,8 +4,6 @@ import { computed } from 'vue'
 
 const store = useProductsStore()
 const products = computed(() => store.newArrivalProducts)
-
-
 </script>
 
 <template>

@@ -4,7 +4,6 @@ import { useProductsStore } from '@/stores/products'
 import Slider from '@/components/Common/Slider.vue'
 import BaseDate from '@/components/Shared/BaseDate.vue'
 
-
 const productSlider = useProductsStore()
 
 const breakpoints = {
@@ -13,8 +12,6 @@ const breakpoints = {
   1024: { slidesPerView: 3 },
   1280: { slidesPerView: 4 },
 }
-
-
 </script>
 
 <template>
@@ -51,8 +48,7 @@ const breakpoints = {
       </div>
 
       <Slider
-        v-if="productSlider.products"
-        :items="productSlider.products"
+        :items="productSlider.products.items"
         :slides-view="4"
         :space-between="20"
         slide-effect="slide"

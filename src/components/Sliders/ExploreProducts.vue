@@ -27,7 +27,6 @@ const breakpoints = {
     grid: { rows: 2, fill: 'row' },
   },
 }
-
 </script>
 
 <template>

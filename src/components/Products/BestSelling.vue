@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import { onMounted } from 'vue'
+
 
 const store = useProductsStore()
 
-onMounted(async () => {
-  await store.fetchHomePageData(20, 1)
-})
+
 </script>
 <template>
   <section class="pt-[70px] pb-[70px]">

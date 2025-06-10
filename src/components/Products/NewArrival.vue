@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 
 const store = useProductsStore()
 const products = computed(() => store.newArrivalProducts)
 
-onMounted(async () => {
-  await store.fetchHomePageData()
-})
+
 </script>
 
 <template>

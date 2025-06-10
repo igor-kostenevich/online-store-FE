@@ -4,7 +4,6 @@ import { useProductsStore } from '@/stores/products'
 import Slider from '@/components/Common/Slider.vue'
 import BaseDate from '@/components/Shared/BaseDate.vue'
 
-import { onMounted } from 'vue'
 
 const productSlider = useProductsStore()
 
@@ -15,9 +14,7 @@ const breakpoints = {
   1280: { slidesPerView: 4 },
 }
 
-onMounted(async () => {
-  await productSlider.fetchHomePageData(20, 1)
-})
+
 </script>
 
 <template>

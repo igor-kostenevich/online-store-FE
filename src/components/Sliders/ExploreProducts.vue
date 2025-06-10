@@ -2,7 +2,6 @@
 import { useProductsStore } from '@/stores/products'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Common/Slider.vue'
-import { onMounted } from 'vue'
 
 const store = useProductsStore()
 
@@ -29,9 +28,6 @@ const breakpoints = {
   },
 }
 
-onMounted(async () => {
-  await store.fetchHomePageData(20, 1)
-})
 </script>
 
 <template>

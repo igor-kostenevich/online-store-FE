@@ -59,7 +59,6 @@ const store = useProductsStore()
 let intervalId: any
 
 onMounted(async () => {
-  await store.fetchHomePageData()
 
   timer.setTargetDate(store.banner.expiresAt)
 

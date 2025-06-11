@@ -79,14 +79,14 @@ onMounted(async () => {
                 v-for="n in 8"
                 :key="n"
                 :height="40"
-                :width="250"
+                :width="`100%`"
               >
                 <rect
                   x="0"
                   y="0"
                   rx="4"
                   ry="4"
-                  width="250"
+                  width="100%"
                   height="16"
                 />
               </ContentLoader>

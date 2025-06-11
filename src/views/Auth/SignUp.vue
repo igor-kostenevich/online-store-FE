@@ -61,10 +61,10 @@ const handleSubmit = onSubmit(async () => {
           <div class="mt-11 flex items-center gap-4 justify-between">
             <BaseButton type="submit">Log In</BaseButton>
             <router-link
-              :to="{ name: 'reset-password' }"
+              :to="{ name: 'login' }"
               class="text-secondary-red cursor-pointer"
             >
-              Forget Password?
+              LogIn
             </router-link>
           </div>
         </form>

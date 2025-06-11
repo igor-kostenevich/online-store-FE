@@ -16,7 +16,7 @@ const currentPage = computed(() => {
 watch(
   currentPage,
   newPage => {
-    store.getExploreProducts(20, newPage)
+    store.getAllProducts(20, newPage)
   },
   { immediate: true },
 )
@@ -29,6 +29,11 @@ function onChangePage(newPage: number) {
     },
   })
 }
+
+const loading = computed(() => {
+  const items = store.allProducts.all.items.data
+  return !items || items.length === 0
+})
 </script>
 
 <template>
@@ -36,18 +41,32 @@ function onChangePage(newPage: number) {
     <div class="container">
       <div class="section-title mb-10">explore Products</div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        v-if="loading"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
         <ProductCard
-          v-for="item in store.exploreProducts.data"
+          v-for="n in 24"
+          :key="n"
+          loading
+          class="h-full"
+        />
+      </div>
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <ProductCard
+          v-for="item in store.allProducts.all.items.data"
           :key="item.id"
           :product="item"
         />
       </div>
 
       <Pagination
+        v-if="!loading"
         :current-page="currentPage"
-        :total-pages="store.exploreProducts.meta?.totalPages"
-        class="mt-10"
+        :total-pages="store.allProducts.all.items.meta?.totalPages ?? 1"
         @change-page="onChangePage"
       />
     </div>

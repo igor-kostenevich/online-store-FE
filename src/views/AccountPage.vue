@@ -1,7 +1,18 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useBreadcrumbs } from '@/composables/breadcrumbs'
+import { useValidation } from '@/composables/useValidation'
+import { useAuthStore } from '@/stores/auth'
 import SideBarAccount from '@/components/Common/SideBarAccount.vue'
+
+const authStore = useAuthStore()
+const { fields } = useValidation({ firstName: true })
 const { breadcrumbs } = useBreadcrumbs()
+
+onMounted(async () => {
+  await authStore.getProfile()
+  fields.firstName.value = authStore.user.firstName
+})
 </script>
 
 <template>
@@ -18,7 +29,9 @@ const { breadcrumbs } = useBreadcrumbs()
           </template>
         </div>
 
-        <div>Welcome! <span class="text-secondary-red">Md Rimel</span></div>
+        <div>
+          Welcome! <span class="text-secondary-red">{{ fields.firstName.value }}</span>
+        </div>
       </div>
 
       <div class="flex md:flex-row flex-col pt-20">

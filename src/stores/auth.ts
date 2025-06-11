@@ -8,9 +8,13 @@ export const useAuthStore = defineStore('auth', {
   state: () => {
     return {
       user: {} as User,
+      accessToken: localStorage.getItem('accessToken') as string | null,
     }
   },
 
+  getters: {
+    isAuthenticated: (state): boolean => !!state.accessToken,
+  },
   actions: {
     async register(userData: RegisterValues) {
       await api.post('/auth/register', userData)
@@ -26,6 +30,11 @@ export const useAuthStore = defineStore('auth', {
 
     async updateProfile(data: UpdatedValues) {
       this.user = await api.patch('/auth/profile', data)
+    },
+    async logOut() {
+      await api.post('/auth/logout')
+      localStorage.removeItem('accessToken')
+      this.user = {} as User
     },
   },
 })

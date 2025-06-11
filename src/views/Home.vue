@@ -13,7 +13,7 @@ import { onMounted } from 'vue'
 const store = useProductsStore()
 
 onMounted(async () => {
-  await store.fetchHomePageData(20, 1)
+  await store.fetchHomePageData()
 })
 </script>
 

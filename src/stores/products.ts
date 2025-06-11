@@ -15,10 +15,16 @@ export const useProductsStore = defineStore('products', {
     searchResults: {} as SearchResults,
     banner: {} as bannerResult,
     isHomePageLoaded: false,
+
+    allProducts: {
+      discounts: { items: [] as ProductsResponse[], loaded: false },
+      bestSelling: { data: [] as ProductsResponse[], loaded: false },
+      all: { items: [] as ProductsResponse[], loaded: false },
+    },
   }),
 
   actions: {
-    async fetchHomePageData(limit: number = 20, page: number = 1) {
+    async fetchHomePageData(limit = 20, page = 1) {
       if (this.isHomePageLoaded) return
 
       const response = await api.get('/product/homepage', { limit, page })
@@ -28,7 +34,6 @@ export const useProductsStore = defineStore('products', {
       this.bestSellingProducts = response.bestSelling
       this.banner = response.banner
       this.exploreProducts = response.allProducts
-      console.log(response)
 
       this.isHomePageLoaded = true
     },
@@ -47,6 +52,27 @@ export const useProductsStore = defineStore('products', {
       if (q.length > 3) {
         this.searchResults = await api.get('/product/search', { q })
       }
+    },
+
+    async getDiscountProducts(limit: number, page: number) {
+      if (this.allProducts.discounts.loaded) return
+      const response = await api.get('/product/discounts', { limit, page })
+      this.allProducts.discounts.items = response
+      this.allProducts.discounts.loaded = true
+    },
+
+    async getBestSelling(limit: number, page: number) {
+      if (this.allProducts.bestSelling.loaded) return
+      const response = await api.get('/product/best-selling', { limit, page })
+      this.allProducts.bestSelling.data = response
+      this.allProducts.bestSelling.loaded = true
+    },
+
+    async getAllProducts(limit: number, page: number) {
+      if (this.allProducts.all.loaded) return
+      const response = await api.get('/product/', { limit, page })
+      this.allProducts.all.items = response
+      this.allProducts.all.loaded = true
     },
   },
 })

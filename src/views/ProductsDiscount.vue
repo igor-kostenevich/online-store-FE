@@ -29,6 +29,11 @@ function onChangePage(newPage: number) {
     },
   })
 }
+
+const loading = computed(() => {
+  const items = store.allProducts.discounts.items?.items
+  return !items || items.length === 0
+})
 </script>
 
 <template>
@@ -36,9 +41,24 @@ function onChangePage(newPage: number) {
     <div class="container">
       <div class="section-title mb-10">Discounted Products</div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        v-if="loading"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
         <ProductCard
-          v-for="item in store.products.items"
+          v-for="n in 24"
+          :key="n"
+          loading
+          class="h-full"
+        />
+      </div>
+
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <ProductCard
+          v-for="item in store.allProducts.discounts.items.items"
           :key="item.id"
           :product="item"
         />
@@ -46,7 +66,7 @@ function onChangePage(newPage: number) {
 
       <Pagination
         :current-page="currentPage"
-        :total-pages="store.products.meta?.totalPages"
+        :total-pages="store.allProducts.discounts.items.items.meta.totalPages"
         class="mt-10"
         @change-page="onChangePage"
       />

@@ -17,9 +17,10 @@ export const useProductsStore = defineStore('products', {
     isHomePageLoaded: false,
 
     allProducts: {
-      discounts: { items: [] as ProductsResponse[], loaded: false },
-      bestSelling: { data: [] as ProductsResponse[], loaded: false },
-      all: { items: [] as ProductsResponse[], loaded: false },
+      discounts: {} as { [page: number]: ProductsResponse },
+      bestSelling: {} as { [page: number]: ProductsResponse },
+      all: {} as { [page: number]: ProductsResponse },
+      isLoadingAll: false,
     },
   }),
 
@@ -55,24 +56,26 @@ export const useProductsStore = defineStore('products', {
     },
 
     async getDiscountProducts(limit: number, page: number) {
-      if (this.allProducts.discounts.loaded) return
+      if (this.allProducts.discounts[page]) return
+      this.isLoadingAll = true
       const response = await api.get('/product/discounts', { limit, page })
-      this.allProducts.discounts.items = response
-      this.allProducts.discounts.loaded = true
+      this.allProducts.discounts[page] = response
+      this.isLoadingAll = false
     },
-
     async getBestSelling(limit: number, page: number) {
-      if (this.allProducts.bestSelling.loaded) return
+      if (this.allProducts.bestSelling[page]) return
+      this.isLoadingAll = true
       const response = await api.get('/product/best-selling', { limit, page })
-      this.allProducts.bestSelling.data = response
-      this.allProducts.bestSelling.loaded = true
+      this.allProducts.bestSelling[page] = response
+      this.isLoadingAll = false
     },
 
     async getAllProducts(limit: number, page: number) {
-      if (this.allProducts.all.loaded) return
+      if (this.allProducts.all[page]) return
+      this.isLoadingAll = true
       const response = await api.get('/product/', { limit, page })
-      this.allProducts.all.items = response
-      this.allProducts.all.loaded = true
+      this.allProducts.all[page] = response
+      this.isLoadingAll = false
     },
   },
 })

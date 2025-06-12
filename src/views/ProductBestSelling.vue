@@ -31,11 +31,6 @@ function onChangePage(newPage: number) {
     },
   })
 }
-
-const loading = computed(() => {
-  const items = store.allProducts.bestSelling.data.data
-  return !items || items.length === 0
-})
 </script>
 
 <template>
@@ -44,7 +39,7 @@ const loading = computed(() => {
       <div class="section-title mb-10">Best-Selling Products</div>
 
       <div
-        v-if="loading"
+        v-if="store.isLoadingAll"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard
@@ -59,15 +54,16 @@ const loading = computed(() => {
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard
-          v-for="item in store.allProducts.bestSelling.data.data"
+          v-for="item in store.allProducts.bestSelling[currentPage]?.data"
           :key="item.id"
           :product="item"
         />
       </div>
 
       <Pagination
+        v-if="!store.isLoadingAll"
         :current-page="currentPage"
-        :total-pages="store.allProducts.bestSelling.data.meta?.totalPages"
+        :total-pages="store.allProducts.bestSelling[currentPage]?.meta.totalPages ?? 1"
         class="mt-10"
         @change-page="onChangePage"
       />

@@ -44,6 +44,8 @@ export interface ProductCard {
   currency: string
   reviews: ProductReview[]
   name: string
+  slug: string
+  product: {}
 }
 
 export interface ProductImage {
@@ -95,6 +97,7 @@ export interface Product {
   updatedAt: string
   expiresAt: string
   items: any[]
+  length: number
 }
 
 export interface ProductMeta {

@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import { computed } from 'vue'
+
 import ProductCard from '@/components/Products/ProductCard.vue'
 
 const store = useProductsStore()
-
-const loading = computed(() => {
-  const items = store.products?.items
-  return !items || items.length === 0
-})
 </script>
 <template>
   <section class="pt-[70px] pb-[70px]">
@@ -26,7 +21,7 @@ const loading = computed(() => {
       </div>
 
       <div
-        v-if="loading"
+        v-if="!store.isHomePageLoaded"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard

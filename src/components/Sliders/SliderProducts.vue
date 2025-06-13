@@ -4,7 +4,6 @@ import { useProductsStore } from '@/stores/products'
 import Slider from '@/components/Common/Slider.vue'
 import BaseDate from '@/components/Shared/BaseDate.vue'
 import ProductCard from '@/components/Products/ProductCard.vue'
-import { computed } from 'vue'
 
 const productSlider = useProductsStore()
 
@@ -14,11 +13,6 @@ const breakpoints = {
   1024: { slidesPerView: 3 },
   1280: { slidesPerView: 4 },
 }
-
-const loading = computed(() => {
-  const items = productSlider.products?.items
-  return !items || items.length === 0
-})
 </script>
 
 <template>
@@ -53,7 +47,7 @@ const loading = computed(() => {
       </div>
 
       <div
-        v-if="loading"
+        v-if="!productSlider.isHomePageLoaded"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard

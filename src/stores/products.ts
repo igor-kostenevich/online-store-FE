@@ -20,10 +20,14 @@ export const useProductsStore = defineStore('products', {
       discounts: {} as { [page: number]: ProductsResponse },
       bestSelling: {} as { [page: number]: ProductsResponse },
       all: {} as { [page: number]: ProductsResponse },
-      isLoadingAll: false,
     },
+    wishList: [] as Product[],
+    isLoadingAll: false,
   }),
 
+  getters: {
+    isFavorite: state => (id: string) => state.wishList.some((item: Product) => item.id === id),
+  },
   actions: {
     async fetchHomePageData(limit = 20, page = 1) {
       if (this.isHomePageLoaded) return
@@ -81,6 +85,12 @@ export const useProductsStore = defineStore('products', {
 
     async addToWishList(productId: string) {
       await api.post('/wishlist', { productId })
+    },
+    async getWishList() {
+      this.wishList = await api.get('/wishlist')
+    },
+    async removeFromWishList(productId: string) {
+      await api.delete(`/wishlist/${productId}`)
     },
   },
 })

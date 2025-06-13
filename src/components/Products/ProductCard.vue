@@ -2,11 +2,12 @@
 import { ContentLoader } from 'vue-content-loader'
 import Vue3StarRatings from 'vue3-star-ratings'
 import { ProductCard as ProductCardType } from '@/types/Interfaces/products'
-import { HeartIcon } from '@heroicons/vue/24/outline'
+import { HeartIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const props = defineProps<{
   product?: ProductCardType
@@ -17,11 +18,13 @@ const loading = props.loading ?? false
 const product = props.product!
 
 const router = useRouter()
+const route = useRoute()
 const productStore = useProductsStore()
 const store = useCartStore()
-
+const authStore = useAuthStore()
 const rating = ref(product?.averageRating || 0)
-const isFavorite = ref(false)
+
+const isFavorite = computed(() => productStore.isFavorite(product.id))
 
 const discountForCard = computed(() => {
   if (!product || !product.oldPrice) return 0
@@ -33,6 +36,14 @@ const discountForCard = computed(() => {
 function toDetails() {
   productStore.setProductDetails(product)
   router.push({ name: 'productDetails', params: { slug: product.slug } })
+}
+
+function toggleFavorite() {
+  if (isFavorite.value) {
+    productStore.removeFromWishList(product.id)
+  } else {
+    productStore.addToWishList(product.id)
+  }
 }
 </script>
 
@@ -133,13 +144,21 @@ function toDetails() {
           -{{ discountForCard }}%
         </div>
 
-        <HeartIcon
-          class="w-8 bg-white rounded-xl p-1 absolute top-3 right-3"
-          :class="{ 'text-secondary-red': isFavorite }"
-          @click.stop="isFavorite = !isFavorite"
-          @click="productStore.addToWishList(product.id)"
-        />
-
+        <div v-if="route.name === 'wishlist'">
+          <TrashIcon
+            class="w-8 p-1 rounded-xl absolute top-3 right-3 bg-white cursor-pointer"
+            @click.stop="toggleFavorite"
+          />
+        </div>
+        <div v-else>
+          <div v-if="authStore.isAuthenticated">
+            <HeartIcon
+              class="w-8 p-1 rounded-xl absolute top-3 right-3 bg-white cursor-pointer"
+              :class="isFavorite ? 'text-secondary-red' : 'text-gray-400'"
+              @click.stop="toggleFavorite"
+            />
+          </div>
+        </div>
         <BaseButton
           class="absolute w-full bg-text-black bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           @click.stop="store.addToCart(product)"

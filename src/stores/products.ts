@@ -62,6 +62,7 @@ export const useProductsStore = defineStore('products', {
       this.allProducts.discounts[page] = response
       this.isLoadingAll = false
     },
+
     async getBestSelling(limit: number, page: number) {
       if (this.allProducts.bestSelling[page]) return
       this.isLoadingAll = true
@@ -76,6 +77,10 @@ export const useProductsStore = defineStore('products', {
       const response = await api.get('/product/', { limit, page })
       this.allProducts.all[page] = response
       this.isLoadingAll = false
+    },
+
+    async addToWishList(productId: string) {
+      await api.post('/wishlist', { productId })
     },
   },
 })

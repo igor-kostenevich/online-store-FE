@@ -141,7 +141,14 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('../views/AboutPage.vue'),
   },
-
+  {
+    path: '/wishlist',
+    name: 'wishlist',
+    meta: {
+      layout: 'main',
+    },
+    component: () => import('../views/WishlistPage.vue'),
+  },
   {
     path: '/:notFound(.*)',
     name: 'error',

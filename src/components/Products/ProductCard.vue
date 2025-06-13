@@ -21,7 +21,7 @@ const productStore = useProductsStore()
 const store = useCartStore()
 
 const rating = ref(product?.averageRating || 0)
-const isFavorite = ref(product?.isNew || false)
+const isFavorite = ref(false)
 
 const discountForCard = computed(() => {
   if (!product || !product.oldPrice) return 0
@@ -137,6 +137,7 @@ function toDetails() {
           class="w-8 bg-white rounded-xl p-1 absolute top-3 right-3"
           :class="{ 'text-secondary-red': isFavorite }"
           @click.stop="isFavorite = !isFavorite"
+          @click="productStore.addToWishList(product.id)"
         />
 
         <BaseButton
@@ -173,7 +174,7 @@ function toDetails() {
             :disable-click="true"
             class="block w-fit"
           />
-          <!--          <div class="text-sm opacity-50">({{ product.reviews.length }})</div>-->
+          <div class="text-sm opacity-50">({{ product.reviews.length }})</div>
         </div>
       </div>
     </div>

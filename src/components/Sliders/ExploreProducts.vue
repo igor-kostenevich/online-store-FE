@@ -3,7 +3,6 @@ import { useProductsStore } from '@/stores/products'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Common/Slider.vue'
 import ProductCard from '@/components/Products/ProductCard.vue'
-import { computed } from 'vue'
 
 const store = useProductsStore()
 
@@ -29,11 +28,6 @@ const breakpoints = {
     grid: { rows: 2, fill: 'row' },
   },
 }
-
-const loading = computed(() => {
-  const items = store.products?.items
-  return !items || items.length === 0
-})
 </script>
 
 <template>
@@ -63,7 +57,7 @@ const loading = computed(() => {
       </div>
 
       <div
-        v-if="loading"
+        v-if="!store.isHomePageLoaded"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard

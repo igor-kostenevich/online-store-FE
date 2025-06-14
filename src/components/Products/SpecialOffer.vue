@@ -8,7 +8,7 @@ const store = useProductsStore()
 let intervalId: number
 
 onMounted(() => {
-  const stopWatch = watch(
+  watch(
     () => store.banner.expiresAt,
     expiresAt => {
       if (expiresAt) {
@@ -19,7 +19,6 @@ onMounted(() => {
             clearInterval(intervalId)
           }
         }, 1000)
-        stopWatch()
       }
     },
     { immediate: true },

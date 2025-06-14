@@ -113,7 +113,12 @@ watch(selectedProduct, product => {
         </router-link>
 
         <div class="flex items-center gap-4 lg:hidden">
-          <HeartIcon class="h-5 w-5 cursor-pointer" />
+          <router-link to="/wishlist">
+            <HeartIcon
+              v-if="authStore.isAuthenticated"
+              class="h-5 w-5 cursor-pointer"
+            />
+          </router-link>
           <div class="relative">
             <ShoppingCartIcon class="h-5 w-5 cursor-pointer" />
             <span
@@ -254,9 +259,12 @@ watch(selectedProduct, product => {
                 </ComboboxOptions>
               </Combobox>
             </div>
-
-            <HeartIcon class="h-5 w-5 cursor-pointer" />
-
+            <router-link to="/wishlist">
+              <HeartIcon
+                v-if="authStore.isAuthenticated"
+                class="h-5 w-5 cursor-pointer"
+              />
+            </router-link>
             <div class="relative">
               <router-link to="/cart">
                 <ShoppingCartIcon class="h-5 w-5 cursor-pointer" />

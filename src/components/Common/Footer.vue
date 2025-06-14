@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { PaperAirplaneIcon } from '@heroicons/vue/24/outline'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -79,12 +82,12 @@ import { PaperAirplaneIcon } from '@heroicons/vue/24/outline'
                   Wishlist
                 </router-link>
               </li>
-              <li>
+              <li v-if="authStore.isAuthenticated">
                 <router-link
-                  to="/shop"
+                  to="/account/profile"
                   class="transition hover:text-gray-400"
                 >
-                  Shop
+                  Account
                 </router-link>
               </li>
             </ul>

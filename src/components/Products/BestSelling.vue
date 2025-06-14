@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import { onMounted } from 'vue'
+import { computed } from 'vue'
+import ProductCard from '@/components/Products/ProductCard.vue'
 
 const store = useProductsStore()
 
-onMounted(async () => {
-  await store.fetchHomePageData(20, 1)
+const loading = computed(() => {
+  const items = store.products?.items
+  return !items || items.length === 0
 })
 </script>
 <template>
@@ -23,7 +25,21 @@ onMounted(async () => {
         </router-link>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <div
+        v-if="loading"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <ProductCard
+          v-for="n in 4"
+          :key="n"
+          loading
+          class="h-full"
+        />
+      </div>
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6"
+      >
         <ProductCard
           v-for="product in store.bestSellingProducts"
           :key="product.id"

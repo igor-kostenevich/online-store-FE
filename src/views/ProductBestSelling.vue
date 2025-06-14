@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, computed } from 'vue'
+import { watch, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProductsStore } from '@/stores/products'
 import ProductCard from '@/components/Products/ProductCard.vue'
@@ -16,11 +16,13 @@ const currentPage = computed(() => {
 watch(
   currentPage,
   newPage => {
-    store.getBestSellingProducts(20, newPage)
+    store.getBestSelling(20, newPage)
   },
   { immediate: true },
 )
-
+onMounted(() => {
+  console.log(store.allProducts)
+})
 function onChangePage(newPage: number) {
   router.push({
     path: `/products/best-selling/`,
@@ -36,17 +38,32 @@ function onChangePage(newPage: number) {
     <div class="container">
       <div class="section-title mb-10">Best-Selling Products</div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        v-if="store.isLoadingAll"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
         <ProductCard
-          v-for="item in store.bestSellingProducts.data"
+          v-for="n in 4"
+          :key="n"
+          loading
+          class="h-full"
+        />
+      </div>
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <ProductCard
+          v-for="item in store.allProducts.bestSelling[currentPage]?.data"
           :key="item.id"
           :product="item"
         />
       </div>
 
       <Pagination
+        v-if="!store.isLoadingAll"
         :current-page="currentPage"
-        :total-pages="store.bestSellingProducts.meta?.totalPages"
+        :total-pages="store.allProducts.bestSelling[currentPage]?.meta.totalPages ?? 1"
         class="mt-10"
         @change-page="onChangePage"
       />

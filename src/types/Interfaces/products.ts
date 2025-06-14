@@ -145,3 +145,19 @@ export interface ProductComplete {
     url: string
   }
 }
+
+export interface ExtendedProductDetails extends ProductDetails {
+  category: {
+    createdAt: string
+    id: string
+    name: string
+    parentId: string
+    slug: string
+    description: string
+    updatedAt: string
+  }
+}
+export interface bannerResult {
+  expiresAt: string
+  product: ExtendedProductDetails[]
+}

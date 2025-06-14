@@ -7,6 +7,14 @@ import NewArrival from '@/components/Products/NewArrival.vue'
 import ExploreProducts from '@/components/Sliders/ExploreProducts.vue'
 import SliderCategory from '@/components/Sliders/SliderCategory.vue'
 import SliderProducts from '@/components/Sliders/SliderProducts.vue'
+import { useProductsStore } from '@/stores/products'
+import { onMounted } from 'vue'
+
+const store = useProductsStore()
+
+onMounted(async () => {
+  await store.fetchHomePageData()
+})
 </script>
 
 <template>

@@ -8,6 +8,7 @@ import Pagination from '@/components/Pagination.vue'
 const store = useProductsStore()
 const route = useRoute()
 const router = useRouter()
+
 const currentPage = computed(() => {
   const page = Number(route.query.page)
   return isNaN(page) || page < 1 ? 1 : page
@@ -24,9 +25,7 @@ watch(
 function onChangePage(newPage: number) {
   router.push({
     path: `/products/discount/`,
-    query: {
-      page: newPage,
-    },
+    query: { page: newPage },
   })
 }
 </script>
@@ -36,17 +35,33 @@ function onChangePage(newPage: number) {
     <div class="container">
       <div class="section-title mb-10">Discounted Products</div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div
+        v-if="store.isLoadingAll"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
         <ProductCard
-          v-for="item in store.products.items"
+          v-for="n in 24"
+          :key="n"
+          loading
+          class="h-full"
+        />
+      </div>
+
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <ProductCard
+          v-for="item in store.allProducts.discounts[currentPage]?.items"
           :key="item.id"
           :product="item"
         />
       </div>
 
       <Pagination
+        v-if="!store.isLoadingAll"
         :current-page="currentPage"
-        :total-pages="store.products.meta?.totalPages"
+        :total-pages="store.allProducts.discounts[currentPage]?.meta.totalPages ?? 1"
         class="mt-10"
         @change-page="onChangePage"
       />

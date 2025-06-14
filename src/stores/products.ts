@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults, ProductCard, Product } from '@/types/Interfaces/products'
+import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults, bannerResult, Product } from '@/types/Interfaces/products'
 
 const { api } = useApi()
 
@@ -8,16 +8,26 @@ export const useProductsStore = defineStore('products', {
   state: () => ({
     products: {} as Product,
     newArrivalProducts: [] as NewArrivalProducts[],
-    exploreProducts: [] as ProductsResponse[], // тимчасово порожній
+    exploreProducts: [] as ProductsResponse[],
     bestSellingProducts: [] as ProductsResponse[],
     cardProduct: [],
     cardProductDetails: {} as ProductDetails,
     searchResults: {} as SearchResults,
-    banner: {} as any,
+    banner: {} as bannerResult,
+    isHomePageLoaded: false,
+
+    allProducts: {
+      discounts: {} as { [page: number]: ProductsResponse },
+      bestSelling: {} as { [page: number]: ProductsResponse },
+      all: {} as { [page: number]: ProductsResponse },
+      isLoadingAll: false,
+    },
   }),
 
   actions: {
-    async fetchHomePageData(limit: number = 20, page: number = 1) {
+    async fetchHomePageData(limit = 20, page = 1) {
+      if (this.isHomePageLoaded) return
+
       const response = await api.get('/product/homepage', { limit, page })
 
       this.products = response.discounts
@@ -25,6 +35,8 @@ export const useProductsStore = defineStore('products', {
       this.bestSellingProducts = response.bestSelling
       this.banner = response.banner
       this.exploreProducts = response.allProducts
+
+      this.isHomePageLoaded = true
     },
 
     async getProductDetails(slug: string) {
@@ -38,7 +50,32 @@ export const useProductsStore = defineStore('products', {
     },
 
     async searchProducts(q: string) {
-      this.searchResults = await api.get('/product/search', { q })
+      if (q.length > 3) {
+        this.searchResults = await api.get('/product/search', { q })
+      }
+    },
+
+    async getDiscountProducts(limit: number, page: number) {
+      if (this.allProducts.discounts[page]) return
+      this.isLoadingAll = true
+      const response = await api.get('/product/discounts', { limit, page })
+      this.allProducts.discounts[page] = response
+      this.isLoadingAll = false
+    },
+    async getBestSelling(limit: number, page: number) {
+      if (this.allProducts.bestSelling[page]) return
+      this.isLoadingAll = true
+      const response = await api.get('/product/best-selling', { limit, page })
+      this.allProducts.bestSelling[page] = response
+      this.isLoadingAll = false
+    },
+
+    async getAllProducts(limit: number, page: number) {
+      if (this.allProducts.all[page]) return
+      this.isLoadingAll = true
+      const response = await api.get('/product/', { limit, page })
+      this.allProducts.all[page] = response
+      this.isLoadingAll = false
     },
   },
 })

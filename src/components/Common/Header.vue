@@ -37,7 +37,9 @@ const toggleMenu = () => {
   document.body.style.overflow = isOpen.value ? 'hidden' : 'auto'
 }
 
-const isAuthenticated = computed(() => Object.keys(authStore.user).length > 0)
+const handleLogout = async () => {
+  await authStore.logOut()
+}
 
 const query = ref<string>('')
 const selectedProduct = ref<ProductComplete | null>(null)
@@ -125,7 +127,7 @@ watch(selectedProduct, product => {
             as="div"
             class="relative"
           >
-            <MenuButton>
+            <MenuButton v-if="!authStore.isAuthenticated">
               <UserIcon class="h-5 w-5 cursor-pointer mt-1" />
             </MenuButton>
             <MenuItems class="absolute right-0 mt-2 w-48 rounded-md bg-white shadow-lg text-sm">
@@ -154,12 +156,12 @@ watch(selectedProduct, product => {
                 </router-link>
               </MenuItem>
               <MenuItem v-slot="{ active }">
-                <router-link
-                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                  to="/logout"
+                <button
+                  :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2']"
+                  @click="handleLogout"
                 >
                   Logout
-                </router-link>
+                </button>
               </MenuItem>
             </MenuItems>
           </Menu>
@@ -197,7 +199,7 @@ watch(selectedProduct, product => {
             </router-link>
 
             <router-link
-              v-if="!isAuthenticated"
+              v-if="!authStore.isAuthenticated"
               to="/sign-up"
               class="font-medium"
               :class="route.path === '/sign-up' ? 'text-secondary-red' : 'text-black hover:text-secondary-red transition'"
@@ -206,7 +208,7 @@ watch(selectedProduct, product => {
           </nav>
 
           <div class="flex items-center gap-4">
-            <div class="relative w-[243px]">
+            <div class="relative w-[290px]">
               <Combobox
                 v-model="selectedProduct"
                 as="div"
@@ -221,24 +223,34 @@ watch(selectedProduct, product => {
                   "
                 />
                 <MagnifyingGlassIcon class="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2" />
-                <ComboboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
-                  <ComboboxOption
-                    v-for="product in filteredProducts"
-                    :key="product.id"
-                    as="div"
-                    :value="product"
-                    class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
-                  >
-                    <div class="flex !text-[14px]">
-                      {{ product.name }}
-
-                      <img
-                        :src="product.image.url"
-                        alt="photo"
-                        class="h-12 w-12"
-                      />
-                    </div>
-                  </ComboboxOption>
+                <ComboboxOptions class="absolute mt-1 max-h-80 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
+                  <template v-if="filteredProducts.length === 0">
+                    <ComboboxOption
+                      disabled
+                      class="cursor-default select-none py-2 px-4 text-gray-700"
+                    >
+                      No products found
+                    </ComboboxOption>
+                  </template>
+                  <template v-else>
+                    <ComboboxOption
+                      v-for="product in filteredProducts"
+                      :key="product.id"
+                      as="div"
+                      :value="product"
+                      class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
+                    >
+                      <div class="flex items-center gap-2 text-[12px]">
+                        <span class="flex-[0_1_60%]">{{ product.name }}</span>
+                        <span class="text-secondary-red flex-[0_1_30%]">${{ product.price }}</span>
+                        <img
+                          :src="product.image.url"
+                          alt="photo"
+                          class="h-12 w-12"
+                        />
+                      </div>
+                    </ComboboxOption>
+                  </template>
                 </ComboboxOptions>
               </Combobox>
             </div>
@@ -260,7 +272,7 @@ watch(selectedProduct, product => {
               as="div"
               class="relative"
             >
-              <MenuButton>
+              <MenuButton v-if="authStore.isAuthenticated">
                 <UserIcon class="h-5 w-5 cursor-pointer mt-1" />
               </MenuButton>
               <MenuItems class="absolute right-0 mt-2 w-48 rounded-md bg-white shadow-lg text-sm">
@@ -286,11 +298,12 @@ watch(selectedProduct, product => {
                   </router-link>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <router-link
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                    to="/logout"
-                    >Logout
-                  </router-link>
+                  <button
+                    :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2']"
+                    @click="handleLogout"
+                  >
+                    Logout
+                  </button>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -331,7 +344,8 @@ watch(selectedProduct, product => {
                       alt="photo"
                       class="h-12 w-12 object-cover"
                     />
-                    <span class="text-[14px]">{{ product.name }}</span>
+                    <span class="text-[14px] flex-[0_1_70%]">{{ product.name }}</span>
+                    <span class="text-secondary-red flex-[0_1_30%]">${{ product.price }}</span>
                   </ComboboxOption>
                 </ComboboxOptions>
               </Combobox>
@@ -357,7 +371,7 @@ watch(selectedProduct, product => {
                 >About
               </router-link>
               <router-link
-                v-if="!isAuthenticated"
+                v-if="!authStore.isAuthenticated"
                 to="/sign-up"
                 class="text-xl"
                 :class="route.path === '/sign-up' ? 'text-secondary-red' : 'text-black hover:text-secondary-red transition'"

@@ -33,9 +33,11 @@ export const useCategoriesStore = defineStore('categories', {
 
   actions: {
     async getCategoriesMenu() {
+      if (this.categoriesMenu && Object.keys(this.categoriesMenu).length > 0) return
       this.categoriesMenu = await api.get('/category')
     },
     async getCategoriesBrowse() {
+      if (this.categoriesBrowse && Object.keys(this.categoriesBrowse).length > 0) return
       this.categoriesBrowse = await api.get('/category/electronics/children')
     },
   },

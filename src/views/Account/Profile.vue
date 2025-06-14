@@ -42,7 +42,7 @@ const handleSubmit = onSubmit(async () => {
 
 <template>
   <div class="flex-[0_1_64%] bg-primary-white shadow-md p-5 md:p-10 rounded-sm">
-    <h3 class="text-xl text-secondary-red font-medium">Edit Your Profile</h3>
+    <h3 class="text-xl text-secondary-red font-medium mb-4">Edit Your Profile</h3>
 
     <form @submit.prevent="handleSubmit">
       <div class="flex flex-col gap-6">
@@ -55,6 +55,7 @@ const handleSubmit = onSubmit(async () => {
               :error="metas.firstNameMeta.touched ? errors.firstNameError.value : ''"
               placeholder="Md"
               view="secondary"
+              class="mt-2"
             />
           </div>
 
@@ -66,6 +67,7 @@ const handleSubmit = onSubmit(async () => {
               :error="metas.lastNameMeta.touched ? errors.lastNameError.value : ''"
               placeholder="Rimel"
               view="secondary"
+              class="mt-2"
             />
           </div>
         </div>
@@ -79,6 +81,7 @@ const handleSubmit = onSubmit(async () => {
               :error="metas.emailMeta.touched ? errors.emailError.value : ''"
               placeholder="rimel1111@gmail.com"
               view="secondary"
+              class="mt-2"
             />
           </div>
 
@@ -90,6 +93,7 @@ const handleSubmit = onSubmit(async () => {
               :error="metas.addressMeta.touched ? errors.addressError.value : ''"
               placeholder="Kingston, 5236, United State"
               view="secondary"
+              class="mt-2"
             />
           </div>
         </div>

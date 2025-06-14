@@ -2,7 +2,8 @@
 import { useProductsStore } from '@/stores/products'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Common/Slider.vue'
-import { onMounted } from 'vue'
+import ProductCard from '@/components/Products/ProductCard.vue'
+import { computed } from 'vue'
 
 const store = useProductsStore()
 
@@ -29,8 +30,9 @@ const breakpoints = {
   },
 }
 
-onMounted(async () => {
-  await store.fetchHomePageData(20, 1)
+const loading = computed(() => {
+  const items = store.products?.items
+  return !items || items.length === 0
 })
 </script>
 
@@ -60,7 +62,20 @@ onMounted(async () => {
         </div>
       </div>
 
+      <div
+        v-if="loading"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <ProductCard
+          v-for="n in 8"
+          :key="n"
+          loading
+          class="h-full"
+        />
+      </div>
+
       <Slider
+        v-else
         :items="store.exploreProducts"
         :slides-view="4"
         :slides-per-group="4"

@@ -47,6 +47,8 @@ onMounted(async () => {
             :space-between="0"
             slide-effect="fade"
             :slide-start="0"
+            :default="() => []"
+            :required="false"
             :loop="true"
             :use-thumbs="true"
           >

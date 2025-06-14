@@ -33,7 +33,7 @@ function onChangePage(newPage: number) {
       <div class="section-title mb-10">Explore Products</div>
 
       <div
-        v-if="store.isLoadingAll"
+        v-if="store.loading"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard
@@ -56,7 +56,7 @@ function onChangePage(newPage: number) {
       </div>
 
       <Pagination
-        v-if="!store.isLoadingAll"
+        v-if="!store.loading"
         :current-page="currentPage"
         :total-pages="store.allProducts.all[currentPage]?.meta.totalPages ?? 1"
         @change-page="onChangePage"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   Listbox,
@@ -20,7 +20,7 @@ import debounce from 'lodash.debounce'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
 import { useProductsStore } from '@/stores/products'
-import { ProductComplete } from '@/types/Interfaces/products'
+import type { IProduct } from '@/types/Interfaces/products'
 
 const route = useRoute()
 const router = useRouter()
@@ -42,7 +42,7 @@ const handleLogout = async () => {
 }
 
 const query = ref<string>('')
-const selectedProduct = ref<ProductComplete | null>(null)
+const selectedProduct = ref<IProduct | null>(null)
 const debouncedSearch = debounce((q: string) => {
   productStore.searchProducts(q)
 }, 300)
@@ -225,7 +225,7 @@ watch(selectedProduct, product => {
                 />
                 <MagnifyingGlassIcon class="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2" />
                 <ComboboxOptions class="absolute mt-1 max-h-80 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
-                  <template v-if="productStore.">
+                  <template v-if="!productStore.searchResults.length">
                     <ComboboxOption
                       disabled
                       class="cursor-default select-none py-2 px-4 text-gray-700"

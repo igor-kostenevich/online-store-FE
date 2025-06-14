@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { UserContact } from '@/types/Interfaces/contacts'
+import type { UserContact } from '@/types/Interfaces/contacts'
 
 const { api } = useApi()
 

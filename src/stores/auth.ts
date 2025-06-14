@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = await api.patch('/auth/profile', data)
     },
     async logOut() {
-      await api.post('/auth/logout')
+      await api.post('/auth/logout', {})
       localStorage.removeItem('accessToken')
       this.user = {} as User
     },

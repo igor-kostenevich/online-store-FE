@@ -1,46 +1,42 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults, Product } from '@/types/Interfaces/products'
+import type { IProductsResponse, ISearchResult, IProduct, IProductBanner } from '@/types/Interfaces/products'
 
-const { api } = useApi()
+const { api, loading } = useApi()
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
-    products: [] as Product[],
-    newArrivalProducts: [] as NewArrivalProducts[],
-    exploreProducts: [] as ProductsResponse[],
-    bestSellingProducts: [] as ProductsResponse[],
-    cardProduct: [],
-    cardProductDetails: {} as ProductDetails,
-    searchResults: {} as SearchResults,
-    banner: {} as Product,
-    isHomePageLoaded: false,
+    products: {} as IProductsResponse,
+    newArrivalProducts: [] as IProduct[],
+    exploreProducts: [] as IProduct[],
+    bestSellingProducts: [] as IProduct[],
+    cardProductDetails: {} as IProduct,
+    searchResults: [] as ISearchResult[],
+    banner: {} as IProductBanner,
 
     allProducts: {
-      discounts: {} as { [page: number]: ProductsResponse },
-      bestSelling: {} as { [page: number]: ProductsResponse },
-      all: {} as { [page: number]: ProductsResponse },
+      discounts: {} as { [page: number]: IProductsResponse },
+      bestSelling: {} as { [page: number]: IProductsResponse },
+      all: {} as { [page: number]: IProductsResponse },
     },
-    wishList: [] as Product[],
-    isLoadingAll: false,
+    wishList: [] as IProduct[],
+    loading,
   }),
 
   getters: {
-    isFavorite: state => (id: string) => state.wishList.some((item: Product) => item.id === id),
+    isFavorite: state => (id: string) => state.wishList.some((item: IProduct) => item.id === id),
   },
   actions: {
-    async fetchHomePageData(limit = 20, page = 1) {
-      if (this.isHomePageLoaded) return
+    async fetchHomePageData() {
+      if (this.loading) return
 
-      const response = await api.get('/product/homepage', { limit, page })
+      const {discounts, newArrivals, bestSelling, banner, allProducts} = await api.get('/product/homepage')
 
-      this.products = response.discounts
-      this.newArrivalProducts = response.newArrivals
-      this.bestSellingProducts = response.bestSelling
-      this.banner = response.banner
-      this.exploreProducts = response.allProducts
-
-      this.isHomePageLoaded = true
+      this.products = discounts
+      this.newArrivalProducts = newArrivals
+      this.bestSellingProducts = bestSelling
+      this.banner = banner
+      this.exploreProducts = allProducts
     },
 
     async getProductDetails(slug: string) {
@@ -49,7 +45,7 @@ export const useProductsStore = defineStore('products', {
       }
     },
 
-    setProductDetails(details: ProductDetails) {
+    setProductDetails(details: IProduct) {
       this.cardProductDetails = details
     },
 
@@ -61,26 +57,20 @@ export const useProductsStore = defineStore('products', {
 
     async getDiscountProducts(limit: number, page: number) {
       if (this.allProducts.discounts[page]) return
-      this.isLoadingAll = true
       const response = await api.get('/product/discounts', { limit, page })
       this.allProducts.discounts[page] = response
-      this.isLoadingAll = false
     },
 
     async getBestSelling(limit: number, page: number) {
       if (this.allProducts.bestSelling[page]) return
-      this.isLoadingAll = true
       const response = await api.get('/product/best-selling', { limit, page })
       this.allProducts.bestSelling[page] = response
-      this.isLoadingAll = false
     },
 
     async getAllProducts(limit: number, page: number) {
       if (this.allProducts.all[page]) return
-      this.isLoadingAll = true
       const response = await api.get('/product/', { limit, page })
       this.allProducts.all[page] = response
-      this.isLoadingAll = false
     },
 
     async addToWishList(productId: string) {

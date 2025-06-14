@@ -21,10 +21,6 @@ const breakpoints = {
     slidesPerView: 6,
   },
 }
-
-onMounted(() => {
-  categoryStore.getCategoriesBrowse()
-})
 </script>
 
 <template>
@@ -63,6 +59,8 @@ onMounted(() => {
         next-btn-id=".category-slider-next"
         prev-btn-id=".category-slider-prev"
         :breakpoints="breakpoints"
+        :required="false"
+        :default="() => []"
         class="mt-10"
       >
         <template #slide="{ item }">

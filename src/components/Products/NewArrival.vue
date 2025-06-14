@@ -16,7 +16,7 @@ const products = computed(() => store.newArrivalProducts)
 
       <div class="grid gap-4 text-white grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
         <div
-          v-for="(product, index) in products.slice(0, 4)"
+          v-for="(product, index) in products"
           :key="product.id"
           :class="[
             'relative overflow-hidden',

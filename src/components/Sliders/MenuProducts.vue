@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useCategoriesStore } from '@/stores/categories'
 import { ChevronRightIcon } from '@heroicons/vue/24/outline'
 import Slider from '@/components/Common/Slider.vue'
@@ -8,7 +8,6 @@ import { useRouter } from 'vue-router'
 const store = useCategoriesStore()
 const openId = ref<number | null>(null)
 const router = useRouter()
-let isLoading = ref(true)
 const goToCategory = (slug: string) => {
   router.push(`/category/${slug}`)
 }
@@ -16,11 +15,6 @@ const goToCategory = (slug: string) => {
 const toggle = (id: number) => {
   openId.value = openId.value === id ? null : id
 }
-
-onMounted(async () => {
-  await store.getCategoriesMenu()
-  isLoading.value = false
-})
 </script>
 
 <template>
@@ -29,7 +23,7 @@ onMounted(async () => {
       <div class="container">
         <div class="flex flex-col lg:flex-row gap-8 items-stretch min-h-[100%]">
           <div class="flex flex-[0_1_20%] flex-col gap-4 lg:pr-6 border-r-0 lg:border-r lg:border-gray-200 order-2 lg:order-1">
-            <template v-if="!isLoading">
+            <template v-if="!store.loading">
               <ul class="flex flex-col font-inter font-medium gap-2">
                 <li
                   v-for="item in store.categoriesMenu"
@@ -101,6 +95,8 @@ onMounted(async () => {
             :navigation="true"
             :loop="true"
             :items="store.promoSlides"
+            :required="false"
+            :default="() => []"
             class="flex-[0_1_80%] max-w-full overflow-hidden order-1 lg:order-2"
           >
             <template #slide="{ item }">

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ProductDetails } from '@/types/Interfaces/products'
+import type { IProduct } from '@/types/Interfaces/products'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useApi } from '@/composables/useApi'
 
@@ -7,7 +7,7 @@ const { api } = useApi()
 const { setItem, getItem, removeItem } = useLocalStorage()
 
 interface OrderPayload {
-  items: { productId: number; quantity: number }[];
+  items: { productId: string; quantity: number }[];
   customerEmail: string;
   customerName: string;
   customerPhone: string;
@@ -16,7 +16,7 @@ interface OrderPayload {
 export const useCartStore = defineStore('cart', {
   state: () => {
     return {
-      cartProducts: [] as ProductDetails[],
+      cartProducts: [] as IProduct[],
     }
   },
   getters: {
@@ -31,12 +31,12 @@ export const useCartStore = defineStore('cart', {
     },
   },
   actions: {
-    addToCart(product: ProductDetails) {
+    addToCart(product: IProduct) {
       const existing = this.cartProducts.find(p => p.id === product.id)
       if (existing) {
         existing.quantity += 1
       } else {
-        const productWithQuantity = { ...product, quantity: 1 }
+        const productWithQuantity: IProduct = { ...product, quantity: 1 }
         this.cartProducts.push(productWithQuantity)
       }
 
@@ -44,7 +44,7 @@ export const useCartStore = defineStore('cart', {
     },
 
     loadFromLocalStorage() {
-      const stored: ProductDetails[] = getItem('cart')
+      const stored: IProduct[] = getItem('cart')
       if (stored) {
         this.cartProducts = stored.map(p => ({
           ...p,
@@ -62,7 +62,7 @@ export const useCartStore = defineStore('cart', {
       removeItem('cart')
     },
 
-    removeFromCart(id: number) {
+    removeFromCart(id: string) {
       this.cartProducts = this.cartProducts.filter(p => p.id !== id)
       setItem('cart', this.cartProducts)
     },

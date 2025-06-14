@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ContentLoader } from 'vue-content-loader'
 import Vue3StarRatings from 'vue3-star-ratings'
-import { ProductDetails } from '@/types/Interfaces/products'
+import type { IProduct } from '@/types/Interfaces/products'
 import { HeartIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 import { useCartStore } from '@/stores/cart'
@@ -10,7 +10,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const props = defineProps<{
-  product?: ProductDetails
+  product?: IProduct
   loading?: boolean
 }>()
 
@@ -24,7 +24,7 @@ const store = useCartStore()
 const authStore = useAuthStore()
 const rating = ref(product?.averageRating || 0)
 
-const isFavorite = computed(() => productStore.isFavorite(product.id))
+const isFavorite = computed(() => productStore.isFavorite(String(product.id)))
 
 const discountForCard = computed(() => {
   if (!product || !product.oldPrice) return 0
@@ -40,9 +40,9 @@ function toDetails() {
 
 function toggleFavorite() {
   if (isFavorite.value) {
-    productStore.removeFromWishList(product.id)
+    productStore.removeFromWishList(String(product.id))
   } else {
-    productStore.addToWishList(product.id)
+    productStore.addToWishList(String(product.id))
   }
 }
 </script>

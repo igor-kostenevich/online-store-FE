@@ -5,7 +5,7 @@ import Slider from '@/components/Common/Slider.vue'
 import BaseDate from '@/components/Shared/BaseDate.vue'
 import ProductCard from '@/components/Products/ProductCard.vue'
 
-const productSlider = useProductsStore()
+const productStore = useProductsStore()
 
 const breakpoints = {
   320: { slidesPerView: 1 },
@@ -25,8 +25,8 @@ const breakpoints = {
             <div class="section-title mb-[20px] md:mb-[40px]">Flash Sales</div>
           </div>
           <BaseDate
-            v-if="productSlider.products?.expiresAt"
-            :expires-at="productSlider.products.expiresAt"
+            v-if="productStore.products?.expiresAt"
+            :expires-at="productStore.products.expiresAt"
           />
         </div>
         <div class="absolute bottom-[75%] md:bottom-[33%] right-[5%] md:right-[0%] z-10 flex gap-2">
@@ -47,7 +47,7 @@ const breakpoints = {
       </div>
 
       <div
-        v-if="!productSlider.isHomePageLoaded"
+        v-if="productStore.loading"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard
@@ -60,8 +60,10 @@ const breakpoints = {
 
       <Slider
         v-else
-        :items="productSlider.products.items"
+        :items="productStore.products.data"
         :slides-view="4"
+        :required="false"
+        :default="() => []"
         :space-between="20"
         slide-effect="slide"
         :slide-start="0"

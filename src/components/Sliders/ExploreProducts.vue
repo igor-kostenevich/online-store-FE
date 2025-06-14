@@ -57,7 +57,7 @@ const breakpoints = {
       </div>
 
       <div
-        v-if="!store.isHomePageLoaded"
+        v-if="store.loading"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard
@@ -71,6 +71,8 @@ const breakpoints = {
       <Slider
         v-else
         :items="store.exploreProducts"
+        :required="false"
+        :default="() => []"
         :slides-view="4"
         :slides-per-group="4"
         :space-between="20"

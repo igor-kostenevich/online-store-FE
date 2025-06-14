@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import aside from '@/assets/images/aside.png'
 import { useApi } from '@/composables/useApi'
-import { CategoryMenu } from '@/types/Interfaces/categories'
+import type { CategoryMenu } from '@/types/Interfaces/categories'
+import aside from '@/assets/images/aside.png'
+import { useProductsStore } from './products' 
 
-const { api } = useApi()
+const { api, loading } = useApi()
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -29,9 +30,19 @@ export const useCategoriesStore = defineStore('categories', {
     ],
     categoriesBrowse: [],
     categoriesMenu: [] as CategoryMenu[],
+    loading
   }),
 
   actions: {
+    async getHomePageData() {
+      const productsStore = useProductsStore()
+      
+      await Promise.all([
+        productsStore.fetchHomePageData(),
+        this.getCategoriesMenu(),
+        this.getCategoriesBrowse(),
+      ])
+    },
     async getCategoriesMenu() {
       if (this.categoriesMenu && Object.keys(this.categoriesMenu).length > 0) return
       this.categoriesMenu = await api.get('/category')

@@ -180,7 +180,7 @@ const paymentMethod = ref<billingMethod>('card')
                 <span class="text-base">Card</span>
               </div>
               <img
-                src="@/assets/icons/paymentpng.png"
+                src="@/assets/images/paymentpng.png"
                 alt="Card"
                 class="h-5"
               />

@@ -1,19 +1,19 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults, bannerResult, Product } from '@/types/Interfaces/products'
+import { NewArrivalProducts, ProductsResponse, ProductDetails, SearchResults, Product } from '@/types/Interfaces/products'
 
 const { api } = useApi()
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
-    products: {} as Product,
+    products: [] as Product[],
     newArrivalProducts: [] as NewArrivalProducts[],
     exploreProducts: [] as ProductsResponse[],
     bestSellingProducts: [] as ProductsResponse[],
     cardProduct: [],
     cardProductDetails: {} as ProductDetails,
     searchResults: {} as SearchResults,
-    banner: {} as bannerResult,
+    banner: {} as Product,
     isHomePageLoaded: false,
 
     allProducts: {

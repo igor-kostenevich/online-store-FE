@@ -111,7 +111,7 @@ export interface ProductMeta {
 export interface ProductsResponse {
   items: Product[]
   meta: ProductMeta
-  expiresAt: string
+  expiresAt?: string
 }
 
 export interface ProductDetails {
@@ -127,6 +127,10 @@ export interface ProductDetails {
   images: ProductImage[]
   colors: string[]
   sizes: string[]
+  quantity: number
+  oldPrice: number | null
+  discount: number | null
+  reviews: ProductReview[]
 }
 
 export interface SearchResults {

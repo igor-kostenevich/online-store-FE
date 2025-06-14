@@ -55,10 +55,6 @@ watch(
   { immediate: true },
 )
 
-const filteredProducts = computed(() => {
-  return productStore.searchResults.filter((p: ProductComplete) => p.name.toLowerCase().includes(query.value.toLowerCase()))
-})
-
 watch(selectedProduct, product => {
   if (product) {
     router.push({ name: 'productDetails', params: { slug: product.slug } })
@@ -222,14 +218,14 @@ watch(selectedProduct, product => {
                   class="w-full rounded bg-[#f5f5f5] py-2 pl-3 pr-8 text-sm border-transparent focus:border-gray-400 hover:border-gray-300 transition"
                   placeholder="What are you looking for?"
                   @input="
-                    e => {
-                      query = e.target.value
+                    (e: InputEvent) => {
+                      query = (e.target as HTMLInputElement).value
                     }
                   "
                 />
                 <MagnifyingGlassIcon class="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2" />
                 <ComboboxOptions class="absolute mt-1 max-h-80 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
-                  <template v-if="filteredProducts.length === 0">
+                  <template v-if="productStore.">
                     <ComboboxOption
                       disabled
                       class="cursor-default select-none py-2 px-4 text-gray-700"
@@ -239,7 +235,7 @@ watch(selectedProduct, product => {
                   </template>
                   <template v-else>
                     <ComboboxOption
-                      v-for="product in filteredProducts"
+                      v-for="product in productStore.searchResults"
                       :key="product.id"
                       as="div"
                       :value="product"
@@ -334,15 +330,15 @@ watch(selectedProduct, product => {
                   class="w-full rounded bg-[#f5f5f5] py-2 pl-3 pr-8 text-sm border-transparent focus:border-gray-400 hover:border-gray-300 transition"
                   placeholder="What are you looking for?"
                   @input="
-                    e => {
-                      query = e.target.value
+                    (e: InputEvent) => {
+                      query = (e.target as HTMLInputElement).value
                     }
                   "
                 />
                 <MagnifyingGlassIcon class="absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 pointer-events-none" />
                 <ComboboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
                   <ComboboxOption
-                    v-for="product in filteredProducts"
+                    v-for="product in productStore.searchResults"
                     :key="product.id"
                     :value="product"
                     class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100 flex items-center gap-2"

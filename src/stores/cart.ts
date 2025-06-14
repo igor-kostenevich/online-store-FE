@@ -4,6 +4,15 @@ import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useApi } from '@/composables/useApi'
 
 const { api } = useApi()
+const { setItem, getItem, removeItem } = useLocalStorage()
+
+interface OrderPayload {
+  items: { productId: number; quantity: number }[];
+  customerEmail: string;
+  customerName: string;
+  customerPhone: string;
+}
+
 export const useCartStore = defineStore('cart', {
   state: () => {
     return {
@@ -30,13 +39,12 @@ export const useCartStore = defineStore('cart', {
         const productWithQuantity = { ...product, quantity: 1 }
         this.cartProducts.push(productWithQuantity)
       }
-      const { setItem } = useLocalStorage()
+
       setItem('cart', this.cartProducts)
     },
 
     loadFromLocalStorage() {
-      const { getItem } = useLocalStorage()
-      const stored = getItem<ProductDetails[]>('cart')
+      const stored: ProductDetails[] = getItem('cart')
       if (stored) {
         this.cartProducts = stored.map(p => ({
           ...p,
@@ -46,22 +54,20 @@ export const useCartStore = defineStore('cart', {
     },
 
     saveToLocalStorage() {
-      const { setItem } = useLocalStorage()
       setItem('cart', this.cartProducts)
     },
 
     clearCart() {
       this.cartProducts = []
-      const { removeItem } = useLocalStorage()
       removeItem('cart')
     },
 
     removeFromCart(id: number) {
       this.cartProducts = this.cartProducts.filter(p => p.id !== id)
-      const { setItem } = useLocalStorage()
       setItem('cart', this.cartProducts)
     },
-    async submitOrder(payload: { items: { productId: number; quantity: number }[]; customerEmail: string; customerName: string; customerPhone: string }) {
+
+    async submitOrder(payload: OrderPayload) {
       await api.post('/order', payload)
     },
   },

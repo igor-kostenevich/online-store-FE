@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ContentLoader } from 'vue-content-loader'
 import Vue3StarRatings from 'vue3-star-ratings'
-import { ProductCard as ProductCardType } from '@/types/Interfaces/products'
-import { HeartIcon, TrashIcon } from '@heroicons/vue/24/outline'
+import { ProductDetails } from '@/types/Interfaces/products'
+import { HeartIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
@@ -10,7 +10,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const props = defineProps<{
-  product?: ProductCardType
+  product?: ProductDetails
   loading?: boolean
 }>()
 

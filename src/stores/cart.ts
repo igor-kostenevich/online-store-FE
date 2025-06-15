@@ -7,10 +7,10 @@ const { api } = useApi()
 const { setItem, getItem, removeItem } = useLocalStorage()
 
 interface OrderPayload {
-  items: { productId: string; quantity: number }[];
-  customerEmail: string;
-  customerName: string;
-  customerPhone: string;
+  items: { productId: string; quantity: number }[]
+  customerEmail: string
+  customerName: string
+  customerPhone: string
 }
 
 export const useCartStore = defineStore('cart', {

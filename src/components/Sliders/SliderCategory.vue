@@ -3,7 +3,6 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 import { useCategoriesStore } from '@/stores/categories'
 
 import Slider from '@/components/Common/Slider.vue'
-import { onMounted } from 'vue'
 
 const categoryStore = useCategoriesStore()
 

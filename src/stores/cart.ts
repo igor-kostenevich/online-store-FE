@@ -2,9 +2,12 @@ import { defineStore } from 'pinia'
 import type { IProduct } from '@/types/Interfaces/products'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useApi } from '@/composables/useApi'
+import { useLiqpayRedirect } from '@/composables/useLiqpayRedirect'
+import type { billingMethod } from '@/types/types/billing'
 
 const { api } = useApi()
 const { setItem, getItem, removeItem } = useLocalStorage()
+const { redirectToLiqPay } = useLiqpayRedirect()
 
 interface OrderPayload {
   items: { productId: string; quantity: number }[];
@@ -67,8 +70,12 @@ export const useCartStore = defineStore('cart', {
       setItem('cart', this.cartProducts)
     },
 
-    async submitOrder(payload: OrderPayload) {
-      await api.post('/order', payload)
+    async submitOrder(payload: OrderPayload, billingMethod: billingMethod) {
+      const { liqpay } = await api.post('/order', payload)
+
+      if(billingMethod === 'card' && liqpay && (liqpay.data && liqpay.signature)) {
+        redirectToLiqPay(liqpay.data, liqpay.signature)
+      }
     },
   },
 })

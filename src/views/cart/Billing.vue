@@ -19,6 +19,7 @@ const { onSubmit, fields, errors, metas } = useValidation({
 })
 
 const coupon = ref('')
+const paymentMethod = ref<billingMethod>('card')
 
 const submitOrder = onSubmit(async () => {
   const payload = {
@@ -27,7 +28,7 @@ const submitOrder = onSubmit(async () => {
     customerName: fields.firstName.value,
     customerPhone: fields.phone.value,
   }
-  await store.submitOrder(payload)
+  await store.submitOrder(payload, paymentMethod.value)
   await router.push({ name: 'billingCompleted' })
   store.clearCart()
 })
@@ -35,7 +36,6 @@ const submitOrder = onSubmit(async () => {
 onMounted(() => {
   store.loadFromLocalStorage()
 })
-const paymentMethod = ref<billingMethod>('card')
 </script>
 
 <template>

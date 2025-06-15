@@ -4,8 +4,14 @@ import type { CategoryMenu } from '@/types/Interfaces/categories'
 import aside from '@/assets/images/aside.png'
 import { useProductsStore } from './products'
 import type { IProductsResponse } from '@/types/Interfaces/products'
-
+import { useMemoize } from '@vueuse/core'
 const { api, loading } = useApi()
+
+
+const fetchCategoryProducts = useMemoize(
+  async (categorySlug: string, limit: number, page: number): Promise<IProductsResponse[]> =>
+    api.get(`/product/category-products/${categorySlug}`, { limit, page }),
+)
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -50,7 +56,7 @@ export const useCategoriesStore = defineStore('categories', {
       this.categoriesBrowse = await api.get('/category/electronics/children')
     },
     async getCategoriesMenuProducts(categorySlug: string, limit: number, page: number) {
-      this.categoryProducts = await api.get(`/product/category-products/${categorySlug}`, { limit, page })
+      this.categoryProducts = await fetchCategoryProducts(categorySlug, limit, page)
     },
   },
 })

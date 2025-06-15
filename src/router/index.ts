@@ -113,14 +113,6 @@ const routes: Array<RouteRecordRaw> = [
         path: 'billing/completed',
         name: 'billingCompleted',
         component: () => import('@/views/cart/Completed.vue'),
-        beforeEnter: (to, from, next) => {
-          const cartStore = useCartStore()
-          cartStore.loadFromLocalStorage()
-          if (!cartStore.cartProducts.length) {
-            return next({ name: 'home' })
-          }
-          next()
-        },
       },
     ],
   },

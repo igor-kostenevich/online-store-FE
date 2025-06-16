@@ -8,10 +8,10 @@ import { useRouter } from 'vue-router'
 const store = useCategoriesStore()
 const openId = ref<number | null>(null)
 const router = useRouter()
-const goToCategory = (slug: string) => {
+
+const goToCategory = async (slug: string) => {
   router.push(`/category/${slug}`)
 }
-
 const toggle = (id: number) => {
   openId.value = openId.value === id ? null : id
 }

@@ -10,10 +10,10 @@ const { setItem, getItem, removeItem } = useLocalStorage()
 const { redirectToLiqPay } = useLiqpayRedirect()
 
 interface OrderPayload {
-  items: { productId: string; quantity: number }[];
-  customerEmail: string;
-  customerName: string;
-  customerPhone: string;
+  items: { productId: string; quantity: number }[]
+  customerEmail: string
+  customerName: string
+  customerPhone: string
 }
 
 export const useCartStore = defineStore('cart', {

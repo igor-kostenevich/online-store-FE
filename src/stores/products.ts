@@ -30,7 +30,7 @@ export const useProductsStore = defineStore('products', {
     async fetchHomePageData() {
       if (this.loading) return
 
-      const {discounts, newArrivals, bestSelling, banner, allProducts} = await api.get('/product/homepage')
+      const { discounts, newArrivals, bestSelling, banner, allProducts } = await api.get('/product/homepage')
 
       this.products = discounts
       this.newArrivalProducts = newArrivals

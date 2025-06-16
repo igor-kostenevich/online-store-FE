@@ -32,8 +32,9 @@ function onChangePage(newPage: number) {
     <div class="container">
       <div class="section-title mb-10">Explore Products</div>
 
+
       <div
-        v-if="store.loading"
+        v-if="store.isLoadingAll"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard
@@ -49,14 +50,14 @@ function onChangePage(newPage: number) {
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
         <ProductCard
-          v-for="item in store.allProducts.all[currentPage]?.data"
+          v-for="item in store.allProducts.all[currentPage]?.data || []"
           :key="item.id"
           :product="item"
         />
       </div>
 
       <Pagination
-        v-if="!store.loading"
+        v-if="!store.isLoadingAll"
         :current-page="currentPage"
         :total-pages="store.allProducts.all[currentPage]?.meta.totalPages ?? 1"
         @change-page="onChangePage"

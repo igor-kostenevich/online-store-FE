@@ -182,7 +182,10 @@ function toggleFavorite() {
           </span>
         </div>
 
-        <div class="flex gap-2 mt-auto items-center">
+        <div
+          v-if="rating"
+          class="flex gap-2 mt-auto items-center"
+        >
           <Vue3StarRatings
             v-model="rating"
             :star-size="17"
@@ -193,7 +196,12 @@ function toggleFavorite() {
             :disable-click="true"
             class="block w-fit"
           />
-          <div class="text-sm opacity-50">({{ product.reviews.length }})</div>
+          <div
+            v-if="product.reviews"
+            class="text-sm opacity-50"
+          >
+            ({{ product.reviews?.length }})
+          </div>
         </div>
       </div>
     </div>

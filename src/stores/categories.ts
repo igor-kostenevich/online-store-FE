@@ -2,9 +2,16 @@ import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
 import type { CategoryMenu } from '@/types/Interfaces/categories'
 import aside from '@/assets/images/aside.png'
-import { useProductsStore } from './products' 
-
+import { useProductsStore } from './products'
+import type { IProductsResponse } from '@/types/Interfaces/products'
+import { useMemoize } from '@vueuse/core'
 const { api, loading } = useApi()
+
+
+const fetchCategoryProducts = useMemoize(
+  async (categorySlug: string, limit: number, page: number): Promise<IProductsResponse[]> =>
+    api.get(`/product/category-products/${categorySlug}`, { limit, page }),
+)
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -30,18 +37,15 @@ export const useCategoriesStore = defineStore('categories', {
     ],
     categoriesBrowse: [],
     categoriesMenu: [] as CategoryMenu[],
-    loading
+    categoryProducts: [] as IProductsResponse[],
+    loading,
   }),
 
   actions: {
     async getHomePageData() {
       const productsStore = useProductsStore()
-      
-      await Promise.all([
-        productsStore.fetchHomePageData(),
-        this.getCategoriesMenu(),
-        this.getCategoriesBrowse(),
-      ])
+
+      await Promise.all([productsStore.fetchHomePageData(), this.getCategoriesMenu(), this.getCategoriesBrowse()])
     },
     async getCategoriesMenu() {
       if (this.categoriesMenu && Object.keys(this.categoriesMenu).length > 0) return
@@ -50,6 +54,9 @@ export const useCategoriesStore = defineStore('categories', {
     async getCategoriesBrowse() {
       if (this.categoriesBrowse && Object.keys(this.categoriesBrowse).length > 0) return
       this.categoriesBrowse = await api.get('/category/electronics/children')
+    },
+    async getCategoriesMenuProducts(categorySlug: string, limit: number, page: number) {
+      this.categoryProducts = await fetchCategoryProducts(categorySlug, limit, page)
     },
   },
 })

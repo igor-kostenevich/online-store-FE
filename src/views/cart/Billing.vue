@@ -4,6 +4,7 @@ import { useValidation } from '@/composables/useValidation'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { billingMethod } from '@/types/types/billing'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const store = useCartStore()
@@ -17,7 +18,7 @@ const { onSubmit, fields, errors, metas } = useValidation({
   phone: true,
   email: true,
 })
-
+const authStore = useAuthStore()
 const coupon = ref('')
 const paymentMethod = ref<billingMethod>('card')
 
@@ -33,8 +34,13 @@ const submitOrder = onSubmit(async () => {
   store.clearCart()
 })
 
-onMounted(() => {
+onMounted(async () => {
   store.loadFromLocalStorage()
+  await authStore.getProfile()
+  fields.firstName.value = authStore.user?.firstName || ''
+  fields.address.value = authStore.user?.address || ''
+  fields.email.value = authStore.user?.email || ''
+  fields.phone.value = authStore.user?.phone || ''
 })
 </script>
 

@@ -34,7 +34,19 @@ onMounted(async () => {
           v-for="(crumb, index) in breadcrumbs"
           :key="index"
         >
-          <router-link :to="crumb.to">{{ crumb.name }}</router-link>
+          <template v-if="index === 1">
+            <span class="text-text-gray cursor-not-allowed">
+              {{ crumb.name }}
+            </span>
+          </template>
+          <template v-else>
+            <router-link
+              :to="crumb.to"
+              :class="index === breadcrumbs.length - 1 ? 'text-black' : ''"
+            >
+              {{ crumb.name }}
+            </router-link>
+          </template>
           <span v-if="index < breadcrumbs.length - 1">/</span>
         </template>
       </div>
@@ -152,8 +164,8 @@ onMounted(async () => {
             <BaseButton
               class="!py-2 !px-12"
               @click.stop="cartStore.addToCart(store.cardProductDetails)"
-              >Buy Now</BaseButton
-            >
+              >Buy Now
+            </BaseButton>
 
             <HeartIcon
               class="w-10 border border-black rounded-[4px] p-2.5 cursor-pointer"
@@ -210,19 +222,24 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="bg-gray-200 mb-[50px]" />
-      <div class="flex md:flex-row flex-col justify-between">
-        <div>
-          <div class="section-subtitle">Related Item</div>
+      <div
+        v-if="store.bestSellingProducts.length"
+        class="pt-[70px] pb-[140px]"
+      >
+        <div class="bg-gray-200 mb-[50px]" />
+        <div class="flex md:flex-row flex-col justify-between">
+          <div>
+            <div class="section-subtitle">Related Item</div>
+          </div>
         </div>
-      </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-        <ProductCard
-          v-for="product in store.bestSellingProducts"
-          :key="product.id"
-          :product="product"
-        />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+          <ProductCard
+            v-for="product in store.bestSellingProducts"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
     </div>
   </section>

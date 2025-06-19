@@ -1,8 +1,11 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
 import type { IProductsResponse, ISearchResult, IProduct, IProductBanner } from '@/types/Interfaces/products'
+import { useMemoize } from '@vueuse/core'
 
 const { api, loading } = useApi()
+
+let memoizedFetch: ReturnType<typeof useMemoize>
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -28,10 +31,19 @@ export const useProductsStore = defineStore('products', {
   },
   actions: {
     async fetchHomePageData() {
-      if (this.loading) return
+      if (!memoizedFetch) {
+        memoizedFetch = useMemoize(async () => {
+          return await api.get<{
+            discounts: IProductsResponse
+            newArrivals: IProduct[]
+            bestSelling: IProduct[]
+            banner: IProductBanner
+            allProducts: IProduct[]
+          }>('/product/homepage')
+        })
+      }
 
-      const { discounts, newArrivals, bestSelling, banner, allProducts } = await api.get('/product/homepage')
-
+      const { discounts, newArrivals, bestSelling, banner, allProducts } = await memoizedFetch()
       this.products = discounts
       this.newArrivalProducts = newArrivals
       this.bestSellingProducts = bestSelling
@@ -76,11 +88,17 @@ export const useProductsStore = defineStore('products', {
     async addToWishList(productId: string) {
       await api.post('/wishlist', { productId })
     },
+
     async getWishList() {
       this.wishList = await api.get('/wishlist')
     },
     async removeFromWishList(productId: string) {
       await api.delete(`/wishlist/${productId}`)
+    },
+    async clearWishList() {
+      const ids = this.wishList.map(p => p.id)
+      await Promise.all(ids.map(id => api.delete(`/wishlist/${id}`)))
+      this.wishList = []
     },
   },
 })

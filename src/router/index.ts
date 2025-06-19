@@ -8,7 +8,7 @@ import Profile from '@/views/Account/Profile.vue'
 import ProductDetails from '@/views/ProductDetails.vue'
 import NotFoundComponent from '@/components/NotFoundComponent.vue'
 import { useCartStore } from '@/stores/cart'
-
+import { useAuthStore } from '@/stores/auth'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -46,12 +46,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/account',
     component: AccountPage,
-    meta: { layout: 'main' },
+
+    meta: { layout: 'main', requiresAuth: true },
     children: [
       {
         path: 'profile',
         name: 'profile',
         component: Profile,
+        meta: { requiresAuth: true },
       },
     ],
   },
@@ -89,7 +91,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/cart',
     component: () => import('@/views/cart/BaseCart.vue'),
-    meta: { layout: 'main' },
+    meta: { layout: 'main', requiresAuth: true },
+
     children: [
       {
         path: '',
@@ -138,6 +141,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'wishlist',
     meta: {
       layout: 'main',
+      requiresAuth: true,
     },
     component: () => import('../views/WishlistPage.vue'),
   },
@@ -158,6 +162,11 @@ router.beforeEach((to, from, next) => {
   const cartStore = useCartStore()
   if (!cartStore.cartProducts.length) {
     cartStore.loadFromLocalStorage()
+  }
+
+  const authStore = useAuthStore()
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    return next({ name: 'home' })
   }
   next()
 })

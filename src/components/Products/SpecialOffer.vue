@@ -41,11 +41,9 @@ onMounted(() => {
           <div class="text-primary-white text-xl md:text-3xl max-w-[443px] leading-[1.3]">
             {{ store.banner.product.description }}
           </div>
-
           <div class="mt-5 text-xl font-semibold text-primary-white">
             {{ store.banner.product.category.name }}
           </div>
-
           <div class="flex items-center gap-4 mt-9 flex-wrap">
             <div class="text-center bg-primary-white p-2 rounded-full w-[55px] h-[55px] md:w-[62px] md:h-[62px] flex flex-col items-center justify-center">
               <div class="font-bold">{{ timer.leftDays.value.toString().padStart(2, '0') }}</div>
@@ -65,7 +63,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <router-link to="/contact">
+          <router-link :to="{ name: 'productDetails', params: { slug: store.banner.product.slug } }">
             <base-button class="mt-10 mb-12 self-baseline">Buy Now!</base-button>
           </router-link>
         </div>

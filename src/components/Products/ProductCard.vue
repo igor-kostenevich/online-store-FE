@@ -2,7 +2,7 @@
 import { ContentLoader } from 'vue-content-loader'
 import Vue3StarRatings from 'vue3-star-ratings'
 import type { IProduct } from '@/types/Interfaces/products'
-import { HeartIcon } from '@heroicons/vue/24/outline'
+import { HeartIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'

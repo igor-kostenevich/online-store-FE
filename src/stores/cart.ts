@@ -73,7 +73,7 @@ export const useCartStore = defineStore('cart', {
     async submitOrder(payload: OrderPayload, billingMethod: billingMethod) {
       const { liqpay } = await api.post('/order', payload)
 
-      if(billingMethod === 'card' && liqpay && (liqpay.data && liqpay.signature)) {
+      if (billingMethod === 'card' && liqpay && liqpay.data && liqpay.signature) {
         redirectToLiqPay(liqpay.data, liqpay.signature)
       }
     },

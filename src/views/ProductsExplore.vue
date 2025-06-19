@@ -32,7 +32,6 @@ function onChangePage(newPage: number) {
     <div class="container">
       <div class="section-title mb-10">Explore Products</div>
 
-
       <div
         v-if="store.isLoadingAll"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"

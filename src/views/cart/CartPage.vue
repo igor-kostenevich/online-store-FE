@@ -20,7 +20,7 @@ watch(
 
 <template>
   <section>
-    <div class="container px-4">
+    <div class="container">
       <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2" />
 
       <div class="w-full">

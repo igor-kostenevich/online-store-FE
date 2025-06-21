@@ -2,7 +2,7 @@
 
 <template>
   <section>
-    <div class="container px-4 text-center">
+    <div class="container text-center">
       <div class="max-w-lg mx-auto flex flex-col items-center gap-6">
         <Icon name="arrow" />
 

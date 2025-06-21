@@ -2,6 +2,7 @@
 import { useValidation } from '@/composables/useValidation'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { reactive, onMounted } from 'vue'
 
 const { onSubmit, fields, errors, metas } = useValidation({
   email: true,
@@ -11,13 +12,18 @@ const authStore = useAuthStore()
 const router = useRouter()
 
 const handleSubmit = onSubmit(async () => {
-  const userData = {
-    email: fields.email.value as string,
-    password: fields.password.value as string,
-  }
+  const userData = reactive({
+    email: fields.email.value,
+    password: fields.password.value,
+  })
 
   await authStore.login(userData)
   router.push('/home')
+})
+
+onMounted(() => {
+  fields.email.value = 'bob@example.com',
+  fields.password.value = 'password123'
 })
 </script>
 

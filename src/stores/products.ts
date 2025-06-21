@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
 import type { IProductsResponse, ISearchResult, IProduct, IProductBanner } from '@/types/Interfaces/products'
+import { notify } from '@kyvg/vue3-notification'
+
 
 const { api, loading } = useApi()
 
@@ -74,7 +76,13 @@ export const useProductsStore = defineStore('products', {
     },
 
     async addToWishList(productId: string) {
-      await api.post('/wishlist', { productId })
+      const { api: apiWishList } = useApi()
+      await apiWishList.post('/wishlist', { productId })
+      notify({
+        title: 'Add product to wishlist',
+        text: 'Product has been added to your wishlist',
+        type: 'success',
+      })
     },
     async getWishList() {
       this.wishList = await api.get('/wishlist')

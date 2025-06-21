@@ -63,9 +63,10 @@ export function useApi(): IApiComposition {
       const response: AxiosResponse = await api.get(url, { params })
       return response.data
     } catch (error: any) {
+      console.log(error);
       notify({
         title: 'Error!',
-        text: error.message,
+        text: error.response.data.message,
         type: 'error',
       })
       throw error
@@ -82,7 +83,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: error.message,
+        text: error.response.data.message,
         type: 'error',
       })
       throw error
@@ -99,7 +100,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: error.message,
+        text: error.response.data.message,
         type: 'error',
       })
       throw error
@@ -116,7 +117,7 @@ export function useApi(): IApiComposition {
     } catch (error: any) {
       notify({
         title: 'Error!',
-        text: error.message,
+        text: error.response.data.message,
         type: 'error',
       })
       throw error

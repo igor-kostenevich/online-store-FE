@@ -7,7 +7,9 @@ import type { IProductsResponse } from '@/types/Interfaces/products'
 import { useMemoize } from '@vueuse/core'
 const { api, loading } = useApi()
 
-let memoizedFetch: ReturnType<typeof useMemoize>
+
+let memoizedFetch: ReturnType<typeof useMemoize<Promise<IProductsResponse[]>, [string, number, number]>>
+
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -52,10 +54,12 @@ export const useCategoriesStore = defineStore('categories', {
       this.categoriesBrowse = await api.get('/category/electronics/children')
     },
     async getCategoriesMenuProducts(categorySlug: string, limit: number, page: number) {
-      if (!memoizedFetch) {
-        memoizedFetch = useMemoize(async (slug: string, lim: number, pg: number): Promise<IProductsResponse[]> => {
-          return await api.get(`/product/category-products/${slug}`, { limit: lim, page: pg })
-        })
+  
+        memoizedFetch = useMemoize<Promise<IProductsResponse[]>, [string, number, number]>(
+          async (slug: string, lim: number, pg: number): Promise<IProductsResponse[]> => {
+            return await api.get(`/product/category-products/${slug}`, { limit: lim, page: pg })
+          }
+        )
       }
 
       const res = await memoizedFetch(categorySlug, limit, page)

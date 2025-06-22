@@ -114,8 +114,23 @@ export const useProductsStore = defineStore('products', {
       }
     },
 
-    setProductDetails(details: IProduct) {
-      this.cardProductDetails = details
+    async addToWishList(productId: string) {
+      const { api: apiWishList } = useApi()
+      await apiWishList.post('/wishlist', { productId })
+      notify({
+        title: 'Add product to wishlist',
+        text: 'Product has been added to your wishlist',
+        type: 'success',
+      })
     },
+ async getWishList() {
+      if (!memoizedWishList) {
+        memoizedWishList = useMemoize(async (): Promise<IProduct[]> => {
+          return api.get('/wishlist')
+        })
+      }
+      this.wishList = await memoizedWishList()
+    },
+
   },
 })

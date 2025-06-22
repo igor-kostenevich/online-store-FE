@@ -8,7 +8,7 @@ const { breadcrumbs } = useBreadcrumbs()
 
 <template>
   <section class="pt-[140px] relative overflow-visible">
-    <div class="container px-4 relative z-10">
+    <div class="container relative z-10">
       <div class>
         <div class="flex flex-wrap items-center mb-6 text-sm text-text-gray gap-2">
           <template

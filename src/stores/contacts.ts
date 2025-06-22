@@ -10,11 +10,13 @@ export const useContactStore = defineStore('contact', {
 
   actions: {
     async sendContact(userData: UserContact) {
+
       await api.post('/contact', userData)
       notify({
         title: 'success!',
         text: 'Your message has been sent.',
-        type: 'success',
+
+
       })
     },
   },

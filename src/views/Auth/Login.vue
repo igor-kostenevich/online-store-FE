@@ -17,7 +17,8 @@ const handleSubmit = onSubmit(async () => {
   }
 
   await authStore.login(userData)
-  router.push('/home')
+  await router.push('/home')
+  window.location.reload()
 })
 </script>
 

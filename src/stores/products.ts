@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import { useApi } from '@/composables/useApi'
-import type { IProductsResponse, ISearchResult, IProduct, IProductBanner } from '@/types/Interfaces/products'
+import type { IProductsResponse, ISearchResult, IProduct, IProductBanner, IOrders } from '@/types/Interfaces/products'
 import { useMemoize } from '@vueuse/core'
+import { notify } from '@kyvg/vue3-notification'
 
 const { api, loading } = useApi()
 
 let memoizedFetch: ReturnType<typeof useMemoize>
+let memoizedWishList: ReturnType<typeof useMemoize>
 
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -18,29 +20,29 @@ export const useProductsStore = defineStore('products', {
     banner: {} as IProductBanner,
 
     allProducts: {
-      discounts: {} as { [page: number]: IProductsResponse },
-      bestSelling: {} as { [page: number]: IProductsResponse },
-      all: {} as { [page: number]: IProductsResponse },
+      discounts: {} as Record<number, IProductsResponse>,
+      bestSelling: {} as Record<number, IProductsResponse>,
+      all: {} as Record<number, IProductsResponse>,
     },
     wishList: [] as IProduct[],
     loading,
+    orders: [] as IOrders[],
   }),
 
-  getters: {
-    isFavorite: state => (id: string) => state.wishList.some((item: IProduct) => item.id === id),
-  },
   actions: {
     async fetchHomePageData() {
       if (!memoizedFetch) {
-        memoizedFetch = useMemoize(async () => {
-          return await api.get<{
+        memoizedFetch = useMemoize(
+          async (): Promise<{
             discounts: IProductsResponse
             newArrivals: IProduct[]
             bestSelling: IProduct[]
             banner: IProductBanner
             allProducts: IProduct[]
-          }>('/product/homepage')
-        })
+          }> => {
+            return api.get('/product/homepage')
+          },
+        )
       }
 
       const { discounts, newArrivals, bestSelling, banner, allProducts } = await memoizedFetch()
@@ -51,14 +53,35 @@ export const useProductsStore = defineStore('products', {
       this.exploreProducts = allProducts
     },
 
-    async getProductDetails(slug: string) {
-      if (Object.keys(this.cardProductDetails).length === 0) {
-        this.cardProductDetails = await api.get(`/product/${slug}`)
+    async getWishList() {
+      if (!memoizedWishList) {
+        memoizedWishList = useMemoize(async (): Promise<IProduct[]> => {
+          return api.get('/wishlist')
+        })
       }
+      this.wishList = await memoizedWishList()
     },
 
-    setProductDetails(details: IProduct) {
-      this.cardProductDetails = details
+    async addToWishList(productId: string) {
+      const added = await api.post('/wishlist', { productId })
+      this.wishList.push({ ...added, heart: true })
+    },
+
+    async removeFromWishList(productId: string) {
+      await api.delete(`/wishlist/${productId}`)
+      notify({ title: 'Success!', text: 'Item removed from your wishlist.', type: 'success' })
+      memoizedWishList = undefined
+      this.wishList = this.wishList.filter(p => String(p.id) !== productId)
+    },
+
+    async clearWishList() {
+      const ids = this.wishList.map(p => p.id)
+      await Promise.all(ids.map(id => api.delete(`/wishlist/${id}`)))
+      this.wishList = []
+    },
+
+    async getOrders() {
+      this.orders = await api.get('/order')
     },
 
     async searchProducts(q: string) {
@@ -85,20 +108,14 @@ export const useProductsStore = defineStore('products', {
       this.allProducts.all[page] = response
     },
 
-    async addToWishList(productId: string) {
-      await api.post('/wishlist', { productId })
+    async getProductDetails(slug: string) {
+      if (!this.cardProductDetails.id) {
+        this.cardProductDetails = await api.get(`/product/${slug}`)
+      }
     },
 
-    async getWishList() {
-      this.wishList = await api.get('/wishlist')
-    },
-    async removeFromWishList(productId: string) {
-      await api.delete(`/wishlist/${productId}`)
-    },
-    async clearWishList() {
-      const ids = this.wishList.map(p => p.id)
-      await Promise.all(ids.map(id => api.delete(`/wishlist/${id}`)))
-      this.wishList = []
+    setProductDetails(details: IProduct) {
+      this.cardProductDetails = details
     },
   },
 })

@@ -146,6 +146,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/WishlistPage.vue'),
   },
   {
+    path: '/order',
+    name: 'order',
+    meta: {
+      layout: 'main',
+      requiresAuth: true,
+    },
+    component: () => import('../views/OrderPage.vue'),
+  },
+  {
     path: '/:notFound(.*)',
     name: 'error',
     meta: { layout: 'main' },

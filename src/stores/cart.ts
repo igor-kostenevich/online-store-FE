@@ -4,7 +4,7 @@ import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useApi } from '@/composables/useApi'
 import { useLiqpayRedirect } from '@/composables/useLiqpayRedirect'
 import type { billingMethod } from '@/types/types/billing'
-
+import { notify } from '@kyvg/vue3-notification'
 const { api } = useApi()
 const { setItem, getItem, removeItem } = useLocalStorage()
 const { redirectToLiqPay } = useLiqpayRedirect()
@@ -44,6 +44,12 @@ export const useCartStore = defineStore('cart', {
       }
 
       setItem('cart', this.cartProducts)
+
+      notify({
+        title: 'success!',
+        text: 'your product has been added successfully.',
+        type: 'success',
+      })
     },
 
     loadFromLocalStorage() {
@@ -68,6 +74,11 @@ export const useCartStore = defineStore('cart', {
     removeFromCart(id: string) {
       this.cartProducts = this.cartProducts.filter(p => p.id !== id)
       setItem('cart', this.cartProducts)
+      notify({
+        title: 'success!',
+        text: 'your product has been removed successfully.',
+        type: 'success',
+      })
     },
 
     async submitOrder(payload: OrderPayload, billingMethod: billingMethod) {

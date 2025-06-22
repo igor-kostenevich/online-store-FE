@@ -20,6 +20,9 @@ const sendEmail = onSubmit(async () => {
     hidden: '',
   })
   fields.message.value = ''
+  fields.name.value = ''
+  fields.phone.value = ''
+  fields.email.value = ''
 })
 
 const { breadcrumbs } = useBreadcrumbs()

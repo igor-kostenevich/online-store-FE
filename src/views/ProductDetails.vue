@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { useBreadcrumbs } from '@/composables/breadcrumbs'
-import Slider from '@/components/Common/Slider.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useProductsStore } from '@/stores/products'
-import Vue3StarRatings from 'vue3-star-ratings'
 import { HeartIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
-import Icon from '@/components/Common/Icon.vue'
 import { useCartStore } from '@/stores/cart'
+import { useBreadcrumbs } from '@/composables/breadcrumbs'
+import Slider from '@/components/Common/Slider.vue'
+import Vue3StarRatings from 'vue3-star-ratings'
 
 const { breadcrumbs } = useBreadcrumbs()
 const store = useProductsStore()
@@ -17,6 +16,16 @@ const cartStore = useCartStore()
 
 const selectedColor = ref<string>('')
 const selectedSize = ref<string>('')
+
+const isFavorite = computed(() => store.wishList.some(p => String(p.id) === String(store.cardProductDetails.id)))
+
+function toggleFavorite() {
+  if (isFavorite.value) {
+    store.removeFromWishList(store.cardProductDetails.id)
+  } else {
+    store.addToWishList(store.cardProductDetails.id)
+  }
+}
 
 onMounted(async () => {
   const slug = route.params.slug as string
@@ -169,8 +178,8 @@ onMounted(async () => {
 
             <HeartIcon
               class="w-10 border border-black rounded-[4px] p-2.5 cursor-pointer"
-              :class="{ 'text-secondary-red': store.cardProductDetails.isNew }"
-              @click="store.cardProductDetails.isNew = !store.cardProductDetails.isNew"
+              :class="isFavorite ? 'text-secondary-red' : 'text-gray-400'"
+              @click="toggleFavorite"
             />
           </div>
 

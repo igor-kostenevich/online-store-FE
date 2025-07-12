@@ -23,8 +23,7 @@ const handleSubmit = onSubmit(async () => {
 })
 
 onMounted(() => {
-  fields.email.value = 'bob@example.com',
-  fields.password.value = 'password123'
+  ;(fields.email.value = 'bob@example.com'), (fields.password.value = 'password123')
 })
 </script>
 

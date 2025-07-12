@@ -123,7 +123,7 @@ export const useProductsStore = defineStore('products', {
         type: 'success',
       })
     },
- async getWishList() {
+    async getWishList() {
       if (!memoizedWishList) {
         memoizedWishList = useMemoize(async (): Promise<IProduct[]> => {
           return api.get('/wishlist')
@@ -131,6 +131,5 @@ export const useProductsStore = defineStore('products', {
       }
       this.wishList = await memoizedWishList()
     },
-
   },
 })

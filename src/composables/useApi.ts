@@ -63,7 +63,7 @@ export function useApi(): IApiComposition {
       const response: AxiosResponse = await api.get(url, { params })
       return response.data
     } catch (error: any) {
-      console.log(error);
+      console.log(error)
       notify({
         title: 'Error!',
         text: error.response.data.message,

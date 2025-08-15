@@ -5,10 +5,12 @@ import aside from '@/assets/images/aside.png'
 import { useProductsStore } from './products'
 import type { IProductsResponse } from '@/types/Interfaces/products'
 import { useMemoize } from '@vueuse/core'
+
 const { api, loading } = useApi()
 
-
-let memoizedFetch: ReturnType<typeof useMemoize<Promise<IProductsResponse[]>, [string, number, number]>>
+const memoizedFetch = useMemoize(async (slug: string, lim: number, pg: number): Promise<IProductsResponse[]> => {
+  return await api.get(`/product/category-products/${slug}`, { limit: lim, page: pg })
+})
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -41,26 +43,20 @@ export const useCategoriesStore = defineStore('categories', {
   actions: {
     async getHomePageData() {
       const productsStore = useProductsStore()
-
       await Promise.all([productsStore.fetchHomePageData(), this.getCategoriesMenu(), this.getCategoriesBrowse()])
     },
+
     async getCategoriesMenu() {
-      if (this.categoriesMenu && Object.keys(this.categoriesMenu).length > 0) return
+      if (this.categoriesMenu && this.categoriesMenu.length > 0) return
       this.categoriesMenu = await api.get('/category')
     },
+
     async getCategoriesBrowse() {
-      if (this.categoriesBrowse && Object.keys(this.categoriesBrowse).length > 0) return
+      if (this.categoriesBrowse && this.categoriesBrowse.length > 0) return
       this.categoriesBrowse = await api.get('/category/electronics/children')
     },
-    async getCategoriesMenuProducts(categorySlug: string, limit: number, page: number) {
-      if (!memoizedFetch) {
-        memoizedFetch = useMemoize<Promise<IProductsResponse[]>, [string, number, number]>(
-          async (slug: string, lim: number, pg: number): Promise<IProductsResponse[]> => {
-            return await api.get(`/product/category-products/${slug}`, { limit: lim, page: pg })
-          }
-        )
-      }
 
+    async getCategoriesMenuProducts(categorySlug: string, limit: number, page: number) {
       const res = await memoizedFetch(categorySlug, limit, page)
       this.categoryProducts = res
     },

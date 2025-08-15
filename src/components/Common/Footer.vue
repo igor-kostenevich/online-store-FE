@@ -52,22 +52,6 @@ const authStore = useAuthStore()
             <ul class="flex flex-col gap-4">
               <li>
                 <router-link
-                  to="/account"
-                  class="transition hover:text-gray-400"
-                >
-                  My Account
-                </router-link>
-              </li>
-              <li>
-                <router-link
-                  to="/login"
-                  class="transition hover:text-gray-400"
-                >
-                  Login / Register
-                </router-link>
-              </li>
-              <li>
-                <router-link
                   to="/cart"
                   class="transition hover:text-gray-400"
                 >

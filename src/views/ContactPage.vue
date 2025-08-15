@@ -20,6 +20,9 @@ const sendEmail = onSubmit(async () => {
     hidden: '',
   })
   fields.message.value = ''
+  fields.name.value = ''
+  fields.phone.value = ''
+  fields.email.value = ''
 })
 
 const { breadcrumbs } = useBreadcrumbs()
@@ -33,7 +36,12 @@ const { breadcrumbs } = useBreadcrumbs()
           v-for="(crumb, index) in breadcrumbs"
           :key="index"
         >
-          <router-link :to="crumb.to">{{ crumb.name }}</router-link>
+          <router-link
+            :to="crumb.to"
+            :class="index === breadcrumbs.length - 1 ? 'text-black' : ''"
+          >
+            {{ crumb.name }}
+          </router-link>
           <span v-if="index < breadcrumbs.length - 1">/</span>
         </template>
       </div>

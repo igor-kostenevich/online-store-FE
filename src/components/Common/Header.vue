@@ -39,6 +39,10 @@ const toggleMenu = () => {
 
 const handleLogout = async () => {
   await authStore.logOut()
+
+  router.push({ name: 'login' }).then(() => {
+    window.location.reload()
+  })
 }
 
 const query = ref<string>('')
@@ -57,7 +61,9 @@ watch(
 
 watch(selectedProduct, product => {
   if (product) {
-    router.push({ name: 'productDetails', params: { slug: product.slug } })
+    router.push({ name: 'productDetails', params: { slug: product.slug } }).then(() => {
+      if (isOpen.value) toggleMenu()
+    })
   }
 })
 </script>
@@ -75,16 +81,19 @@ watch(selectedProduct, product => {
               <span class="block truncate">{{ selectedLanguage.name }}</span>
               <ChevronDownIcon class="absolute right-0 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
             </ListboxButton>
-            <ListboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-[11px] xs:text-sm shadow-lg ring-1 ring-black/5">
+            <ListboxOptions
+              class="absolute mt-1 max-h-60 w-full z-10 overflow-auto rounded-md bg-white py-1 text-[11px] xs:text-sm shadow-lg ring-1 ring-black/5"
+            >
               <ListboxOption
                 v-for="lang in language"
                 :key="lang.name"
                 v-slot="{ active, selected }"
                 :value="lang"
+                as="template"
               >
                 <li
                   :class="[
-                    active ? 'bg-gray-100 text-amber-900' : 'text-gray-900',
+                    active ? 'bg-gray-100 text-amber-900 cursor-pointer' : 'text-gray-900',
                     selected ? 'font-medium' : 'font-normal',
                     'relative cursor-default select-none py-2 pl-4 pr-4',
                   ]"
@@ -109,12 +118,20 @@ watch(selectedProduct, product => {
         </router-link>
 
         <div class="flex items-center gap-4 lg:hidden">
-          <router-link to="/wishlist">
-            <HeartIcon
-              v-if="authStore.isAuthenticated"
-              class="h-5 w-5 cursor-pointer"
-            />
-          </router-link>
+          <div class="relative">
+            <router-link to="/wishlist">
+              <HeartIcon
+                v-if="authStore.isAuthenticated"
+                class="h-5 w-5 cursor-pointer"
+              />
+              <span
+                v-if="productStore.wishList.length > 0"
+                class="absolute -top-1 -right-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary-red text-[10px] text-white pointer-events-none"
+                >{{ productStore.wishList.length }}</span
+              >
+            </router-link>
+          </div>
+
           <div class="relative">
             <ShoppingCartIcon class="h-5 w-5 cursor-pointer" />
             <span
@@ -128,37 +145,29 @@ watch(selectedProduct, product => {
             as="div"
             class="relative"
           >
-            <MenuButton v-if="!authStore.isAuthenticated">
+            <MenuButton v-if="authStore.isAuthenticated">
               <UserIcon class="h-5 w-5 cursor-pointer mt-1" />
             </MenuButton>
             <MenuItems class="absolute right-0 mt-2 w-48 rounded-md bg-white shadow-lg text-sm">
-              <MenuItem v-slot="{ active }">
-                <router-link
-                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                  to="/account"
-                >
-                  Manage My Account
-                </router-link>
+              <MenuItem
+                as="button"
+                class="block w-full text-left px-4 py-2 cursor-pointer hover:text-button-secondary-default transition duration-150"
+                @click="router.push({ name: 'profile' })"
+              >
+                Manage My Account
               </MenuItem>
-              <MenuItem v-slot="{ active }">
-                <router-link
-                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                  to="/orders"
-                >
-                  My Orders
-                </router-link>
+
+              <MenuItem
+                as="button"
+                class="block w-full text-left px-4 py-2 cursor-pointer hover:text-button-secondary-default transition duration-150"
+                @click="router.push({ name: 'order' })"
+              >
+                My Orders
               </MenuItem>
-              <MenuItem v-slot="{ active }">
-                <router-link
-                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                  to="/reviews"
-                >
-                  My Reviews
-                </router-link>
-              </MenuItem>
-              <MenuItem v-slot="{ active }">
+
+              <MenuItem>
                 <button
-                  :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2']"
+                  class="block w-full text-left px-4 py-2 cursor-pointer text-button-secondary-default transition duration-150"
                   @click="handleLogout"
                 >
                   Logout
@@ -189,6 +198,7 @@ watch(selectedProduct, product => {
               to="/contact"
               class="font-medium"
               :class="route.path === '/contact' ? 'text-secondary-red' : 'text-black hover:text-secondary-red transition'"
+              @click="toggleMenu"
               >Contact
             </router-link>
 
@@ -240,6 +250,7 @@ watch(selectedProduct, product => {
                       as="div"
                       :value="product"
                       class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
+                      @click="toggleMenu"
                     >
                       <div class="flex items-center gap-2 text-[12px]">
                         <span class="flex-[0_1_60%]">{{ product.name }}</span>
@@ -255,12 +266,20 @@ watch(selectedProduct, product => {
                 </ComboboxOptions>
               </Combobox>
             </div>
-            <router-link to="/wishlist">
-              <HeartIcon
-                v-if="authStore.isAuthenticated"
-                class="h-5 w-5 cursor-pointer"
-              />
-            </router-link>
+            <div class="relative">
+              <router-link to="/wishlist">
+                <HeartIcon
+                  v-if="authStore.isAuthenticated"
+                  class="h-5 w-5 cursor-pointer"
+                />
+                <span
+                  v-if="productStore.wishList.length > 0"
+                  class="absolute -top-1 -right-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary-red text-[10px] text-white pointer-events-none"
+                  >{{ productStore.wishList.length }}</span
+                >
+              </router-link>
+            </div>
+
             <div class="relative">
               <router-link to="/cart">
                 <ShoppingCartIcon class="h-5 w-5 cursor-pointer" />
@@ -280,30 +299,25 @@ watch(selectedProduct, product => {
                 <UserIcon class="h-5 w-5 cursor-pointer mt-1" />
               </MenuButton>
               <MenuItems class="absolute right-0 mt-2 w-48 rounded-md bg-white shadow-lg text-sm">
-                <MenuItem v-slot="{ active }">
-                  <router-link
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                    to="/account/profile"
-                    >Manage My Account
-                  </router-link>
+                <MenuItem
+                  as="button"
+                  class="block w-full text-left px-4 py-2 cursor-pointer hover:text-button-secondary-default transition duration-150"
+                  @click="router.push({ name: 'profile' })"
+                >
+                  Manage My Account
                 </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <router-link
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                    to="/orders"
-                    >My Orders
-                  </router-link>
+
+                <MenuItem
+                  as="button"
+                  class="block w-full text-left px-4 py-2 cursor-pointer hover:text-button-secondary-default transition duration-150"
+                  @click="router.push({ name: 'order' })"
+                >
+                  My Orders
                 </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <router-link
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2']"
-                    to="/reviews"
-                    >My Reviews
-                  </router-link>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
+
+                <MenuItem>
                   <button
-                    :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2']"
+                    class="block w-full text-left px-4 py-2 cursor-pointer text-button-secondary-default transition duration-150"
                     @click="handleLogout"
                   >
                     Logout
@@ -337,20 +351,34 @@ watch(selectedProduct, product => {
                 />
                 <MagnifyingGlassIcon class="absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 pointer-events-none" />
                 <ComboboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
-                  <ComboboxOption
-                    v-for="product in productStore.searchResults"
-                    :key="product.id"
-                    :value="product"
-                    class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100 flex items-center gap-2"
-                  >
-                    <img
-                      :src="product.image.url"
-                      alt="photo"
-                      class="h-12 w-12 object-cover"
-                    />
-                    <span class="text-[14px] flex-[0_1_70%]">{{ product.name }}</span>
-                    <span class="text-secondary-red flex-[0_1_30%]">${{ product.price }}</span>
-                  </ComboboxOption>
+                  <template v-if="!productStore.searchResults.length">
+                    <ComboboxOption
+                      disabled
+                      class="cursor-default select-none py-2 px-4 text-gray-700"
+                    >
+                      No products found
+                    </ComboboxOption>
+                  </template>
+                  <template v-else>
+                    <ComboboxOption
+                      v-for="product in productStore.searchResults"
+                      :key="product.id"
+                      as="div"
+                      :value="product"
+                      class="cursor-pointer select-none py-2 pl-4 pr-4 hover:bg-gray-100"
+                      @click="toggleMenu"
+                    >
+                      <div class="flex items-center gap-2 text-[12px]">
+                        <span class="flex-[0_1_60%]">{{ product.name }}</span>
+                        <span class="text-secondary-red flex-[0_1_30%]">${{ product.price }}</span>
+                        <img
+                          :src="product.image.url"
+                          alt="photo"
+                          class="h-12 w-12"
+                        />
+                      </div>
+                    </ComboboxOption>
+                  </template>
                 </ComboboxOptions>
               </Combobox>
             </div>
@@ -360,18 +388,21 @@ watch(selectedProduct, product => {
                 to="/home"
                 class="text-xl"
                 :class="route.path === '/home' ? 'text-secondary-red' : 'text-black hover:text-secondary-red transition'"
+                @click="isOpen && toggleMenu()"
                 >Home
               </router-link>
               <router-link
                 to="/contact"
                 class="text-xl"
                 :class="route.path === '/contact' ? 'text-secondary-red' : 'text-black hover:text-secondary-red transition'"
+                @click="toggleMenu"
                 >Contact
               </router-link>
               <router-link
                 to="/about"
                 class="text-xl"
                 :class="route.path === '/about' ? 'text-secondary-red' : 'text-black hover:text-secondary-red transition'"
+                @click="toggleMenu"
                 >About
               </router-link>
               <router-link
@@ -379,6 +410,7 @@ watch(selectedProduct, product => {
                 to="/sign-up"
                 class="text-xl"
                 :class="route.path === '/sign-up' ? 'text-secondary-red' : 'text-black hover:text-secondary-red transition'"
+                @click="toggleMenu"
                 >Sign Up
               </router-link>
             </nav>

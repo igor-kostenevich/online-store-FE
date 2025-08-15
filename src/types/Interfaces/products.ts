@@ -43,7 +43,9 @@ export interface IProduct {
   quantity: number
   colors: string[]
   sizes: string[]
+  heart: boolean
   images: IProductImage[]
+  image?: string
   reviews: IProductReview[]
   category: IProductCategory
   createdAt: string
@@ -68,4 +70,12 @@ export interface ISearchResult {
 export interface IProductBanner {
   expiresAt: string
   product: IProduct
+}
+
+export interface IOrders {
+  id: string
+  total: number
+  status: string
+  createdAt: string
+  items: IProduct[]
 }

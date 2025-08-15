@@ -9,10 +9,17 @@ import SliderCategory from '@/components/Sliders/SliderCategory.vue'
 import SliderProducts from '@/components/Sliders/SliderProducts.vue'
 import { useCategoriesStore } from '@/stores/categories'
 import { onMounted } from 'vue'
+import { useProductsStore } from '@/stores/products'
+import { useAuthStore } from '@/stores/auth'
 
 const store = useCategoriesStore()
-
+const productStore = useProductsStore()
+const authStore = useAuthStore()
 onMounted(async () => {
+  if (authStore.isAuthenticated) {
+    await productStore.getWishList()
+  }
+
   await store.getHomePageData()
 })
 </script>

@@ -2,7 +2,7 @@
 import { ContentLoader } from 'vue-content-loader'
 import Vue3StarRatings from 'vue3-star-ratings'
 import type { IProduct } from '@/types/Interfaces/products'
-import { HeartIcon } from '@heroicons/vue/24/outline'
+import { HeartIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
@@ -24,7 +24,17 @@ const store = useCartStore()
 const authStore = useAuthStore()
 const rating = ref(product?.averageRating || 0)
 
-const isFavorite = computed(() => productStore.isFavorite(String(product.id)))
+const isFavorite = computed(() => productStore.wishList.some(p => String(p.id) === String(product.id)))
+
+function toggleFavorite() {
+  if (isFavorite.value) {
+    productStore.removeFromWishList(product.id)
+    product.heart = false
+  } else {
+    productStore.addToWishList(product.id)
+    product.heart = true
+  }
+}
 
 const discountForCard = computed(() => {
   if (!product || !product.oldPrice) return 0
@@ -36,14 +46,6 @@ const discountForCard = computed(() => {
 function toDetails() {
   productStore.setProductDetails(product)
   router.push({ name: 'productDetails', params: { slug: product.slug } })
-}
-
-function toggleFavorite() {
-  if (isFavorite.value) {
-    productStore.removeFromWishList(String(product.id))
-  } else {
-    productStore.addToWishList(String(product.id))
-  }
 }
 </script>
 

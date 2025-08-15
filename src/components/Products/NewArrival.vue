@@ -33,8 +33,8 @@ const products = computed(() => store.newArrivalProducts)
           <div class="absolute bottom-4 left-4 right-4">
             <h2 class="text-xl font-bold drop-shadow-lg">{{ product.name }}</h2>
             <p class="mt-1 text-sm drop-shadow-sm">{{ product.description }}</p>
-            <RouterLink :to="product.slug">
-              <span class="mt-3 inline-block underline drop-shadow-md">Shop Now</span>
+            <RouterLink :to="`/details/${product.slug}`">
+              <span class="mt-3 inline-block underline drop-shadow-md transition-transform duration-300 ease-in-out hover:scale-105"> Shop Now </span>
             </RouterLink>
           </div>
         </div>

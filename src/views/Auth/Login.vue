@@ -18,12 +18,12 @@ const handleSubmit = onSubmit(async () => {
   })
 
   await authStore.login(userData)
-  router.push('/home')
+  await router.push('/home')
+  window.location.reload()
 })
 
 onMounted(() => {
-  fields.email.value = 'bob@example.com',
-  fields.password.value = 'password123'
+  ;(fields.email.value = 'bob@example.com'), (fields.password.value = 'password123')
 })
 </script>
 

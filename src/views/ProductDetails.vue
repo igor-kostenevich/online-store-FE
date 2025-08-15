@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { useBreadcrumbs } from '@/composables/breadcrumbs'
-import Slider from '@/components/Common/Slider.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useProductsStore } from '@/stores/products'
-import Vue3StarRatings from 'vue3-star-ratings'
 import { HeartIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
-import Icon from '@/components/Common/Icon.vue'
 import { useCartStore } from '@/stores/cart'
+import { useBreadcrumbs } from '@/composables/breadcrumbs'
+import Slider from '@/components/Common/Slider.vue'
+import Vue3StarRatings from 'vue3-star-ratings'
 
 const { breadcrumbs } = useBreadcrumbs()
 const store = useProductsStore()
@@ -17,6 +16,16 @@ const cartStore = useCartStore()
 
 const selectedColor = ref<string>('')
 const selectedSize = ref<string>('')
+
+const isFavorite = computed(() => store.wishList.some(p => String(p.id) === String(store.cardProductDetails.id)))
+
+function toggleFavorite() {
+  if (isFavorite.value) {
+    store.removeFromWishList(store.cardProductDetails.id)
+  } else {
+    store.addToWishList(store.cardProductDetails.id)
+  }
+}
 
 onMounted(async () => {
   const slug = route.params.slug as string
@@ -34,7 +43,19 @@ onMounted(async () => {
           v-for="(crumb, index) in breadcrumbs"
           :key="index"
         >
-          <router-link :to="crumb.to">{{ crumb.name }}</router-link>
+          <template v-if="index === 1">
+            <span class="text-text-gray cursor-not-allowed">
+              {{ crumb.name }}
+            </span>
+          </template>
+          <template v-else>
+            <router-link
+              :to="crumb.to"
+              :class="index === breadcrumbs.length - 1 ? 'text-black' : ''"
+            >
+              {{ crumb.name }}
+            </router-link>
+          </template>
           <span v-if="index < breadcrumbs.length - 1">/</span>
         </template>
       </div>
@@ -152,13 +173,13 @@ onMounted(async () => {
             <BaseButton
               class="!py-2 !px-12"
               @click.stop="cartStore.addToCart(store.cardProductDetails)"
-              >Buy Now</BaseButton
-            >
+              >Buy Now
+            </BaseButton>
 
             <HeartIcon
               class="w-10 border border-black rounded-[4px] p-2.5 cursor-pointer"
-              :class="{ 'text-secondary-red': store.cardProductDetails.isNew }"
-              @click="store.cardProductDetails.isNew = !store.cardProductDetails.isNew"
+              :class="isFavorite ? 'text-secondary-red' : 'text-gray-400'"
+              @click="toggleFavorite"
             />
           </div>
 
@@ -210,19 +231,24 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="bg-gray-200 mb-[50px]" />
-      <div class="flex md:flex-row flex-col justify-between">
-        <div>
-          <div class="section-subtitle">Related Item</div>
+      <div
+        v-if="store.bestSellingProducts.length"
+        class="pt-[70px] pb-[140px]"
+      >
+        <div class="bg-gray-200 mb-[50px]" />
+        <div class="flex md:flex-row flex-col justify-between">
+          <div>
+            <div class="section-subtitle">Related Item</div>
+          </div>
         </div>
-      </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-        <ProductCard
-          v-for="product in store.bestSellingProducts"
-          :key="product.id"
-          :product="product"
-        />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+          <ProductCard
+            v-for="product in store.bestSellingProducts"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
     </div>
   </section>

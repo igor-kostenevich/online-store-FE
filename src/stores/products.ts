@@ -6,7 +6,13 @@ import { notify } from '@kyvg/vue3-notification'
 
 const { api, loading } = useApi()
 
-let memoizedFetch: ReturnType<typeof useMemoize>
+let memoizedFetch: ReturnType<typeof useMemoize<Promise<{
+  discounts: IProductsResponse
+  newArrivals: IProduct[]
+  bestSelling: IProduct[]
+  banner: IProductBanner
+  allProducts: IProduct[]
+}>>>
 let memoizedWishList: ReturnType<typeof useMemoize>
 
 export const useProductsStore = defineStore('products', {
@@ -56,15 +62,15 @@ export const useProductsStore = defineStore('products', {
     async getWishList() {
       if (!memoizedWishList) {
         memoizedWishList = useMemoize(async (): Promise<IProduct[]> => {
-          return api.get('/wishlist')
+          const response = await api.get('/wishlist')
+          return response as IProduct[]
         })
       }
-      this.wishList = await memoizedWishList()
+      this.wishList = await memoizedWishList() as IProduct[]
     },
 
-    async addToWishList(productId: string) {
-      const added = await api.post('/wishlist', { productId })
-      this.wishList.push({ ...added, heart: true })
+    async setProductDetails(product: IProduct) {
+      this.cardProductDetails = product
     },
 
     async removeFromWishList(productId: string) {
@@ -122,14 +128,6 @@ export const useProductsStore = defineStore('products', {
         text: 'Product has been added to your wishlist',
         type: 'success',
       })
-    },
-    async getWishList() {
-      if (!memoizedWishList) {
-        memoizedWishList = useMemoize(async (): Promise<IProduct[]> => {
-          return api.get('/wishlist')
-        })
-      }
-      this.wishList = await memoizedWishList()
     },
   },
 })
